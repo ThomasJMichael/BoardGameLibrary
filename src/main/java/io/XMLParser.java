@@ -36,19 +36,23 @@ public class XMLParser {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
+
             NodeList nodeList = doc.getElementsByTagName("game");
             List<Game> games = new ArrayList<>();
+
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element elem = (Element) node;
                     Game game = new Game();
+
                     game.setId(Integer.parseInt(elem.getAttribute("id")));
                     game.setName(elem.getElementsByTagName("name").item(0).getTextContent());
                     game.setYearPublished(Integer.parseInt(elem.getElementsByTagName("yearpublished").item(0).getTextContent()));
                     game.setMinPlayers(Integer.parseInt(elem.getElementsByTagName("minplayers").item(0).getTextContent()));
                     game.setMaxPlayers(Integer.parseInt(elem.getElementsByTagName("maxplayers").item(0).getTextContent()));
                     game.setPlayingTime(Integer.parseInt(elem.getElementsByTagName("playingtime").item(0).getTextContent()));
+
                     games.add(game);
                 }
             }
@@ -83,7 +87,6 @@ public class XMLParser {
 
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
 
