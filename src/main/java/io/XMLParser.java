@@ -20,6 +20,15 @@ import org.xml.sax.SAXException;
 
 public class XMLParser {
 
+    /**
+     Parses an XML file containing game data and returns a list of Game objects.
+
+     @param filePath the path of the XML file to parse
+     @return a list of Game objects parsed from the XML file
+     @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested
+     @throws SAXException if any parse errors occur while parsing the XML file
+     @throws IOException if any I/O errors occur while reading the XML file
+     */
     public static List<Game> parseGames(String filePath) {
         try {
             File xmlFile = new File(filePath);
@@ -51,6 +60,18 @@ public class XMLParser {
         }
     }
 
+    /**
+     Parses the given XML file containing user data and returns a list of User objects.
+     The XML file should contain a root element "users", which has child elements "user".
+     Each "user" element should have attributes "id" and "username", and can optionally
+     contain child elements "name" and "email".
+
+     @param xmlFile the XML file containing user data
+     @return a list of User objects parsed from the XML file
+     @throws ParserConfigurationException if a DocumentBuilder cannot be created
+     @throws IOException if there is an I/O error while parsing the XML file
+     @throws SAXException if there is an error parsing the XML file
+     */
     public static List<User> parseUsers(File xmlFile) {
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -83,6 +104,15 @@ public class XMLParser {
         }
     }
 
+    /**
+     This method parses an XML file containing review data and returns a list of Review objects.
+
+     @param xmlFile the XML file to be parsed.
+     @return a List of Review objects parsed from the XML file. If there is any error during the parsing process, null is returned.
+     @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     @throws SAXException if any parse errors occur.
+     @throws IOException if any IO errors occur.
+     */
     public static List<Review> parseReviews(File xmlFile) {
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -115,6 +145,19 @@ public class XMLParser {
             return null;
         }
     }
+
+    /**
+     Parses an XML file containing the collections of a specific user and returns a list of Collection objects.
+     The XML file must have a structure where there is a top-level "user" element with a unique "id" attribute that matches
+     the provided "userId". Within this element, there can be multiple "collection" elements, each representing a Collection object
+     owned by the user. Each "collection" element must have a "name", "description", and "id" attribute, as well as
+     a list of "item" elements that contain the "objectid" attribute, representing the IDs of the games in the collection.
+
+     @param xmlFile the File object representing the XML file to be parsed
+     @param userId the ID of the user whose collections will be parsed
+     @return a List of Collection objects parsed from the XML file, or null if there was an error parsing the file
+     @throws Exception if there was an error parsing the file
+     */
     public static List<Collection> parseCollections(File xmlFile, String userId) throws Exception {
         try {
             List<Collection> collections = new ArrayList<>();
@@ -161,8 +204,6 @@ public class XMLParser {
             e.printStackTrace();
             System.out.println("Failed to parse collections.");
             return null;
+            }
         }
-        }
-
-
 }
