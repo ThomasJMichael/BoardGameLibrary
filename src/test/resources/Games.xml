@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<games>
+    <game id="1">
+        <name>Chess</name>
+        <description>Classic strategy board game for two players</description>
+        <yearpublished>1475</yearpublished>
+        <minplayers>2</minplayers>
+        <maxplayers>2</maxplayers>
+        <playingtime>30</playingtime>
+        <minage>6</minage>
+        <category>Strategy</category>
+        <category>Abstract Strategy</category>
+        <mechanic>Grid Movement</mechanic>
+        <mechanic>Hand Management</mechanic>
+        <designer>Unknown</designer>
+        <publisher>Parker Brothers</publisher>
+    </game>
+    <game id="2">
+        <name>Catan</name>
+        <description>Multiplayer strategy board game</description>
+        <yearpublished>1995</yearpublished>
+        <minplayers>3</minplayers>
+        <maxplayers>4</maxplayers>
+        <playingtime>60</playingtime>
+        <minage>10</minage>
+        <category>Strategy</category>
+        <category>City Building</category>
+        <mechanic>Trading</mechanic>
+        <mechanic>Resource Management</mechanic>
+        <designer>Klaus Teuber</designer>
+        <publisher>Catan Studio</publisher>
+    </game>
+</games>

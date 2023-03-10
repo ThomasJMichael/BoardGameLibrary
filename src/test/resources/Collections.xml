@@ -1,0 +1,21 @@
+<collections>
+    <user id="123456">
+        <collection name="Favorites" id="1">
+            <description>A list of my favorite games</description>
+            <game>12345</game>
+            <game>67890</game>
+        </collection>
+        <collection name="Wishlist" id="2">
+            <description>A list of games I want to buy</description>
+            <game>24680</game>
+            <game>13579</game>
+        </collection>
+    </user>
+    <user id="2">
+        <collection name="Completed" id="3">
+            <description>A list of games I have completed</description>
+            <game>98765</game>
+            <game>43210</game>
+        </collection>
+    </user>
+</collections>

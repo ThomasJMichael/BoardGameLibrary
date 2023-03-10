@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reviews>
+    <review>
+        <username>JohnDoe</username>
+        <game_id>123</game_id>
+        <text>Great game, highly recommend!</text>
+        <rating>5</rating>
+    </review>
+    <review>
+        <username>JaneSmith</username>
+        <game_id>456</game_id>
+        <text>Could be better, but still fun.</text>
+        <rating>3</rating>
+    </review>
+    <review>
+        <username>BobJohnson</username>
+        <game_id>789</game_id>
+        <text>Not my cup of tea.</text>
+        <rating>2</rating>
+    </review>
+</reviews>
