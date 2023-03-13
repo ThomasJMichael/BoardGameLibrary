@@ -174,7 +174,7 @@ public class UserDataManager implements Loadable, Savable {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("users.xml"));
+            StreamResult result = new StreamResult(new File(USER_FILE_PATH));
             transformer.transform(source, result);
 
         } catch (TransformerException | ParserConfigurationException e) {
