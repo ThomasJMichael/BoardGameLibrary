@@ -1,3 +1,8 @@
+/**
+  * Represents a board game with various attributes such as name, year published, min and max players, and game mechanics.
+  * Provides methods to access and modify these attributes.
+ **/
+
 package main.java.model;
 
 import java.util.List;

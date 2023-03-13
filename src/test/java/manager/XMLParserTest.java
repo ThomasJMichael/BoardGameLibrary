@@ -37,7 +37,7 @@ public class XMLParserTest {
             System.out.println(collection.getName() + " (" + collection.getId() + ")");
             System.out.println("Description: " + collection.getDescription());
             System.out.println("Games:");
-            for (String gameId : collection.getGameIds()) {
+            for (String gameId : collection.getGamesIdStrings()) {
                 System.out.println("- " + gameId);
             }
         }
@@ -47,7 +47,7 @@ public class XMLParserTest {
         List<Review> reviews = XMLParser.parseReviews(reviewsFile);
         System.out.println(reviews.size() + " reviews found:");
         for (Review review : reviews) {
-            System.out.println("Review by " + review.getUser() + " for " + review.getGame() + ":");
+            System.out.println("Review by " + review.getUsername() + " for " + review.getGameId() + ":");
             System.out.println("Rating: " + review.getRating() + "/5");
             System.out.println("Review text: " + review.getText());
         }

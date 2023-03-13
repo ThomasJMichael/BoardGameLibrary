@@ -53,7 +53,6 @@ public class XMLParser {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFile);
-            System.out.println("Document parsed: " + doc.getDocumentElement().getNodeName());
             doc.getDocumentElement().normalize();
 
             NodeList nodeList = doc.getElementsByTagName("item");

@@ -9,15 +9,31 @@ import java.util.Properties;
 public class ConfigManager implements Loadable, Savable {
     private static final String PROPERTIES_FILE = "config.properties";
     private static final String PROPERTIES_PATH = "src/test/resources/";
-    private final Properties properties;
+    private static ConfigManager instance;
+    private Properties properties;
 
-    public  ConfigManager() throws IOException{
-        this.properties = new Properties();
-        load();
+    private  ConfigManager() {
     }
-
+    synchronized public static ConfigManager getInstance() {
+        if (instance == null) {
+            instance = new ConfigManager();
+            instance.properties = new Properties();
+            try {
+                instance.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Failed to load properties.");
+            }
+        }
+        return instance;
+    }
     public String getProperty(String key){
-        return properties.getProperty(key);
+        String result = properties.getProperty(key);
+        if (result == null){
+            System.out.println("Failed to read property for key: " + key);
+            System.out.println("ConfigManager Properties: " + properties);
+        }
+        return result;
     }
 
     public void setProperty(String key, String value){
@@ -28,9 +44,6 @@ public class ConfigManager implements Loadable, Savable {
     @Override
     public void load() throws IOException {
         File propertiesFile = new File(PROPERTIES_PATH, PROPERTIES_FILE);
-        if (!propertiesFile.exists()){
-            propertiesFile.createNewFile();
-        }
         try (FileInputStream in = new FileInputStream(propertiesFile)){
             properties.load(in);
         }

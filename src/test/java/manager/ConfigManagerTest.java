@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class ConfigManagerTest {
     public static void main(String[] args) throws IOException {
-        ConfigManager configManager = new ConfigManager();
+        ConfigManager configManager = ConfigManager.getInstance();
 
         // Test loading of existing properties
         String key1 = "key1";
