@@ -9,28 +9,15 @@ public class Game {
     private int minPlayers;
     private int maxPlayers;
     private int playingTime;
+    private int minPlaytime;
+    private int maxPlaytime;
     private int minAge;
+    private String description;
+    private String thumbnailUrl;
+    private String imageUrl;
     private List<String> categories;
     private List<String> mechanics;
-    private String description;
-
-    public Game(int id, String name, int yearPublished, int minPlayers, int maxPlayers, int playingTime, int minAge, List<String> categories, List<String> mechanics, String description) {
-        this.id = id;
-        this.name = name;
-        this.yearPublished = yearPublished;
-        this.minPlayers = minPlayers;
-        this.maxPlayers = maxPlayers;
-        this.playingTime = playingTime;
-        this.minAge = minAge;
-        this.categories = categories;
-        this.mechanics = mechanics;
-        this.description = description;
-    }
-
-    public Game() {
-    }
-
-    // getters and setters for all fields
+    private List<String> designers;
 
     public int getId() {
         return id;
@@ -76,8 +63,20 @@ public class Game {
         return playingTime;
     }
 
-    public void setPlayingTime(int playingTime) {
-        this.playingTime = playingTime;
+    public int getMinPlaytime() {
+        return minPlaytime;
+    }
+
+    public void setMinPlaytime(int minPlaytime) {
+        this.minPlaytime = minPlaytime;
+    }
+
+    public int getMaxPlaytime() {
+        return maxPlaytime;
+    }
+
+    public void setMaxPlaytime(int maxPlaytime) {
+        this.maxPlaytime = maxPlaytime;
     }
 
     public int getMinAge() {
@@ -86,6 +85,34 @@ public class Game {
 
     public void setMinAge(int minAge) {
         this.minAge = minAge;
+    }
+
+    public void setPlayingTime(int playingTime) {
+        this.playingTime = playingTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public List<String> getCategories() {
@@ -104,12 +131,11 @@ public class Game {
         this.mechanics = mechanics;
     }
 
-    public String getDescription() {
-        return description;
+    public List<String> getDesigners(){
+        return designers;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesigners(List<String> designers){
+        this.designers = designers;
     }
 }
-

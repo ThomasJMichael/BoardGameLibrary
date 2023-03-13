@@ -37,7 +37,7 @@ public class XMLParser {
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
 
-            NodeList nodeList = doc.getElementsByTagName("game");
+            NodeList nodeList = doc.getElementsByTagName("boardgame");
             List<Game> games = new ArrayList<>();
 
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -46,12 +46,43 @@ public class XMLParser {
                     Element elem = (Element) node;
                     Game game = new Game();
 
-                    game.setId(Integer.parseInt(elem.getAttribute("id")));
+                    //Get main fields
+                    game.setId(Integer.parseInt(elem.getAttribute("objectid")));
                     game.setName(elem.getElementsByTagName("name").item(0).getTextContent());
+                    game.setDescription(elem.getElementsByTagName("description").item(0).getTextContent());
                     game.setYearPublished(Integer.parseInt(elem.getElementsByTagName("yearpublished").item(0).getTextContent()));
                     game.setMinPlayers(Integer.parseInt(elem.getElementsByTagName("minplayers").item(0).getTextContent()));
                     game.setMaxPlayers(Integer.parseInt(elem.getElementsByTagName("maxplayers").item(0).getTextContent()));
                     game.setPlayingTime(Integer.parseInt(elem.getElementsByTagName("playingtime").item(0).getTextContent()));
+                    game.setMinPlaytime(Integer.parseInt(elem.getElementsByTagName("minplaytime").item(0).getTextContent()));
+                    game.setMaxPlaytime(Integer.parseInt(elem.getElementsByTagName("maxplaytime").item(0).getTextContent()));
+                    game.setMinAge(Integer.parseInt(elem.getElementsByTagName("minage").item(0).getTextContent()));
+                    game.setThumbnailUrl(elem.getElementsByTagName("thumbnail").item(0).getTextContent());
+                    game.setImageUrl(elem.getElementsByTagName("image").item(0).getTextContent());
+
+                    // get game category
+                    NodeList categories = elem.getElementsByTagName("boardgamecategory");
+                    List<String> categoryList = new ArrayList<>();
+                    for (int j = 0; j < categories.getLength(); j++) {
+                        categoryList.add(categories.item(j).getTextContent());
+                    }
+                    game.setCategories(categoryList);
+
+                    // get game mechanic
+                    NodeList mechanics = elem.getElementsByTagName("boardgamemechanic");
+                    List<String> mechanicList = new ArrayList<>();
+                    for (int j = 0; j < mechanics.getLength(); j++) {
+                        mechanicList.add(mechanics.item(j).getTextContent());
+                    }
+                    game.setMechanics(mechanicList);
+
+                    // get game designer
+                    NodeList designers = elem.getElementsByTagName("boardgamedesigner");
+                    List<String> designerList = new ArrayList<>();
+                    for (int j = 0; j < designers.getLength(); j++) {
+                        designerList.add(designers.item(j).getTextContent());
+                    }
+                    game.setDesigners(designerList);
 
                     games.add(game);
                 }
@@ -64,6 +95,7 @@ public class XMLParser {
         }
     }
 
+
     /**
      Parses the given XML file containing user data and returns a list of User objects.
      The XML file should contain a root element "users", which has child elements "user".
@@ -72,7 +104,7 @@ public class XMLParser {
 
      @param xmlFile the XML file containing user data
      @return a list of User objects parsed from the XML file
-     @throws ParserConfigurationException if a DocumentBuilder cannot be created
+     @throws  ParserConfigurationException if a DocumentBuilder cannot be created
      @throws IOException if there is an I/O error while parsing the XML file
      @throws SAXException if there is an error parsing the XML file
      */
@@ -159,9 +191,11 @@ public class XMLParser {
      @param xmlFile the File object representing the XML file to be parsed
      @param userId the ID of the user whose collections will be parsed
      @return a List of Collection objects parsed from the XML file, or null if there was an error parsing the file
-     @throws Exception if there was an error parsing the file
+     @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     @throws SAXException if any parse errors occur.
+     @throws IOException if any IO errors occur.
      */
-    public static List<Collection> parseCollections(File xmlFile, String userId) throws Exception {
+    public static List<Collection> parseCollections(File xmlFile, String userId) {
         try {
             List<Collection> collections = new ArrayList<>();
 
