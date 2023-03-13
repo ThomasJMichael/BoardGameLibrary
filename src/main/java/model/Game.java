@@ -92,6 +92,9 @@ public class Game {
     }
 
     public String getDescription() {
+        if (description.isEmpty()){
+            return "No information.";
+        }
         return description;
     }
 
@@ -138,4 +141,21 @@ public class Game {
     public void setDesigners(List<String> designers){
         this.designers = designers;
     }
+
+    @Override
+    public String toString() {
+        return "Game: " + getName() +
+                "\nDescription: " + getDescription() +
+                "\nYear Published: " + getYearPublished() +
+                "\nMin Players: " + getMinPlayers() +
+                "\nMax Players: " + getMaxPlayers() +
+                "\nPlaying Time: " + getPlayingTime() +
+                "\nMin Age: " + getMinAge() +
+                "\nMechanics: " + getMechanics().toString() +
+                "\nCategories: " + getCategories().toString() +
+                "\nGame Designers: " + getDesigners().toString() +
+                "\nThumbnail URL: " + getThumbnailUrl() +
+                "\nImage URL: " + getImageUrl();
+    }
+
 }

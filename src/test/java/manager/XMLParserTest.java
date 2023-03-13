@@ -21,8 +21,8 @@ public class XMLParserTest {
         }
 
         // Test parsing games
-        File gamesFile = new File("src/test/resources/bgg90Games.xml");
-        List<Game> games = XMLParser.parseGames(String.valueOf(gamesFile));
+        File gamesFile = new File("src/test/resources/Games.xml");
+        List<Game> games = XMLParser.parseGames(gamesFile);
         System.out.println(games.size() + " games found:");
         for (Game game : games) {
             System.out.println(game.getName() + " (" + game.getId() + ")");

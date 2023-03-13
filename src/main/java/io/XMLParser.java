@@ -1,3 +1,22 @@
+/*
+ * XMLParser.java
+ *
+ *
+ * This class provides methods to parse XML data and convert it into Java objects for various board game related data,
+ * including users, games, reviews, and collections.
+ *
+ * Supported data formats:
+ * - Users: Custom format created for BGL
+ * - Games: BGG XML Game format
+ * - Reviews: Custom format created for BGL
+ * - Collections: Custom format created for BGL
+ *
+ * To use this parser, simply call the appropriate static method for the data type you wish to parse, passing in the
+ * XML data as an XML File. The method will return a Java object representing the parsed data.
+ *
+ * Note: This parser does not perform any validation of the XML data beyond basic syntax checking.
+ */
+
 package main.java.io;
 
 import java.io.File;
@@ -23,21 +42,21 @@ public class XMLParser {
     /**
      Parses an XML file containing game data and returns a list of Game objects.
 
-     @param filePath the path of the XML file to parse
+     @param xmlFile the xml file for the game database
      @return a list of Game objects parsed from the XML file
      @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested
      @throws SAXException if any parse errors occur while parsing the XML file
      @throws IOException if any I/O errors occur while reading the XML file
      */
-    public static List<Game> parseGames(String filePath) {
+    public static List<Game> parseGames(File xmlFile) {
         try {
-            File xmlFile = new File(filePath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFile);
+            System.out.println("Document parsed: " + doc.getDocumentElement().getNodeName());
             doc.getDocumentElement().normalize();
 
-            NodeList nodeList = doc.getElementsByTagName("boardgame");
+            NodeList nodeList = doc.getElementsByTagName("item");
             List<Game> games = new ArrayList<>();
 
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -47,40 +66,58 @@ public class XMLParser {
                     Game game = new Game();
 
                     //Get main fields
-                    game.setId(Integer.parseInt(elem.getAttribute("objectid")));
-                    game.setName(elem.getElementsByTagName("name").item(0).getTextContent());
+                    game.setId(Integer.parseInt(elem.getAttribute("id")));
+                    game.setName(elem.getElementsByTagName("name").item(0).getAttributes().getNamedItem("value").getTextContent());
                     game.setDescription(elem.getElementsByTagName("description").item(0).getTextContent());
-                    game.setYearPublished(Integer.parseInt(elem.getElementsByTagName("yearpublished").item(0).getTextContent()));
-                    game.setMinPlayers(Integer.parseInt(elem.getElementsByTagName("minplayers").item(0).getTextContent()));
-                    game.setMaxPlayers(Integer.parseInt(elem.getElementsByTagName("maxplayers").item(0).getTextContent()));
-                    game.setPlayingTime(Integer.parseInt(elem.getElementsByTagName("playingtime").item(0).getTextContent()));
-                    game.setMinPlaytime(Integer.parseInt(elem.getElementsByTagName("minplaytime").item(0).getTextContent()));
-                    game.setMaxPlaytime(Integer.parseInt(elem.getElementsByTagName("maxplaytime").item(0).getTextContent()));
-                    game.setMinAge(Integer.parseInt(elem.getElementsByTagName("minage").item(0).getTextContent()));
+                    game.setYearPublished(Integer.parseInt(elem.getElementsByTagName("yearpublished").item(0).getAttributes().getNamedItem("value").getTextContent()));
+                    game.setMinPlayers(Integer.parseInt(elem.getElementsByTagName("minplayers").item(0).getAttributes().getNamedItem("value").getTextContent()));
+                    game.setMaxPlayers(Integer.parseInt(elem.getElementsByTagName("maxplayers").item(0).getAttributes().getNamedItem("value").getTextContent()));
+                    game.setPlayingTime(Integer.parseInt(elem.getElementsByTagName("playingtime").item(0).getAttributes().getNamedItem("value").getTextContent()));
+                    game.setMinPlaytime(Integer.parseInt(elem.getElementsByTagName("minplaytime").item(0).getAttributes().getNamedItem("value").getTextContent()));
+                    game.setMaxPlaytime(Integer.parseInt(elem.getElementsByTagName("maxplaytime").item(0).getAttributes().getNamedItem("value").getTextContent()));
+                    game.setMinAge(Integer.parseInt(elem.getElementsByTagName("minage").item(0).getAttributes().getNamedItem("value").getTextContent()));
                     game.setThumbnailUrl(elem.getElementsByTagName("thumbnail").item(0).getTextContent());
                     game.setImageUrl(elem.getElementsByTagName("image").item(0).getTextContent());
 
                     // get game category
-                    NodeList categories = elem.getElementsByTagName("boardgamecategory");
+                    NodeList categories = elem.getElementsByTagName("link");
                     List<String> categoryList = new ArrayList<>();
                     for (int j = 0; j < categories.getLength(); j++) {
-                        categoryList.add(categories.item(j).getTextContent());
+                        Node categoryNode = categories.item(j);
+                        if (categoryNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element categoryElem = (Element) categoryNode;
+                            if ("boardgamecategory".equals(categoryElem.getAttribute("type"))) {
+                                categoryList.add(categoryElem.getAttribute("value"));
+                            }
+                        }
                     }
                     game.setCategories(categoryList);
 
-                    // get game mechanic
-                    NodeList mechanics = elem.getElementsByTagName("boardgamemechanic");
+                    // get game mechanics
+                    NodeList mechanics = elem.getElementsByTagName("link");
                     List<String> mechanicList = new ArrayList<>();
                     for (int j = 0; j < mechanics.getLength(); j++) {
-                        mechanicList.add(mechanics.item(j).getTextContent());
+                        Node mechanicNode = mechanics.item(j);
+                        if (mechanicNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element mechanicElem = (Element) mechanicNode;
+                            if ("boardgamemechanic".equals(mechanicElem.getAttribute("type"))) {
+                                mechanicList.add(mechanicElem.getAttribute("value"));
+                            }
+                        }
                     }
                     game.setMechanics(mechanicList);
 
-                    // get game designer
-                    NodeList designers = elem.getElementsByTagName("boardgamedesigner");
+                    //Gets a list of the board game designers
+                    NodeList designerNodes = elem.getElementsByTagName("link");
                     List<String> designerList = new ArrayList<>();
-                    for (int j = 0; j < designers.getLength(); j++) {
-                        designerList.add(designers.item(j).getTextContent());
+                    for (int j = 0; j < designerNodes.getLength(); j++) {
+                        Node designerNode = designerNodes.item(j);
+                        if (designerNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element designerElem = (Element) designerNode;
+                            if ("boardgamedesigner".equals(designerElem.getAttribute("type"))) {
+                                designerList.add(designerElem.getAttribute("value"));
+                            }
+                        }
                     }
                     game.setDesigners(designerList);
 
