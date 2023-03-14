@@ -16,6 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class UserDataManager implements Loadable, Savable {
@@ -26,13 +27,17 @@ public class UserDataManager implements Loadable, Savable {
     private User currentUser = null;
 
 
-    private UserDataManager() {
-    }
+    private UserDataManager() {}
     synchronized public static UserDataManager getInstance(){
         if (instance == null){
             instance = new UserDataManager();
             USER_FILE_PATH = ConfigManager.getInstance().getProperty("userfile");
-            instance.load();
+            try {
+                instance.load();
+            } catch (IOException e){
+                e.printStackTrace();
+                System.out.println("Failed to load User File.");
+            }
         }
         return instance;
     }
@@ -129,7 +134,7 @@ public class UserDataManager implements Loadable, Savable {
     }
 
     @Override
-    public void load() {
+    public void load() throws IOException {
         if (instance == null){
             getInstance();
         }

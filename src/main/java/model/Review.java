@@ -46,6 +46,8 @@ public class Review {
         return rating;
     }
 
+    public String getRatingString() { return rating.toString(); }
+
     public void setRating(Integer rating) {
         this.rating = rating;
     }
