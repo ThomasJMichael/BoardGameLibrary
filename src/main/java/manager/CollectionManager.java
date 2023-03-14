@@ -1,4 +1,18 @@
 package main.java.manager;
 
-public class CollectionManager {
+import main.java.io.Loadable;
+import main.java.io.Savable;
+
+import java.io.IOException;
+
+public class CollectionManager implements Loadable, Savable {
+    @Override
+    public void load() throws IOException {
+
+    }
+
+    @Override
+    public void save() throws IOException {
+
+    }
 }

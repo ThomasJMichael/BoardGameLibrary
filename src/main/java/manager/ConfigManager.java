@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class ConfigManager implements Loadable, Savable {
     private static final String PROPERTIES_FILE = "config.properties";
-    private static final String PROPERTIES_PATH = "src/test/resources/";
+    private static final String PROPERTIES_PATH = "src/main/resources/";
     private static ConfigManager instance;
     private Properties properties;
 

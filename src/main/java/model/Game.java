@@ -163,4 +163,7 @@ public class Game {
                 "\nImage URL: " + getImageUrl();
     }
 
+    public String getIDString() {
+        return Integer.toString(id);
+    }
 }
