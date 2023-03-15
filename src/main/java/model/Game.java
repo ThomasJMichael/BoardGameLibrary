@@ -8,7 +8,7 @@ package main.java.model;
 import java.util.List;
 
 public class Game {
-    private int id;
+    private String id;
     private String name;
     private int yearPublished;
     private int minPlayers;
@@ -24,11 +24,11 @@ public class Game {
     private List<String> mechanics;
     private List<String> designers;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -97,7 +97,7 @@ public class Game {
     }
 
     public String getDescription() {
-        if (description.isEmpty()){
+        if (description.isEmpty()) {
             return "No information.";
         }
         return description;
@@ -139,11 +139,11 @@ public class Game {
         this.mechanics = mechanics;
     }
 
-    public List<String> getDesigners(){
+    public List<String> getDesigners() {
         return designers;
     }
 
-    public void setDesigners(List<String> designers){
+    public void setDesigners(List<String> designers) {
         this.designers = designers;
     }
 
@@ -161,9 +161,5 @@ public class Game {
                 "\nGame Designers: " + getDesigners().toString() +
                 "\nThumbnail URL: " + getThumbnailUrl() +
                 "\nImage URL: " + getImageUrl();
-    }
-
-    public String getIDString() {
-        return Integer.toString(id);
     }
 }

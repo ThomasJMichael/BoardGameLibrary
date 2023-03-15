@@ -34,7 +34,7 @@ public class UserDataManager implements Loadable, Savable {
             USER_FILE_PATH = ConfigManager.getInstance().getProperty("userfile");
             try {
                 instance.load();
-            } catch (IOException e){
+            } catch (Exception e){
                 e.printStackTrace();
                 System.out.println("Failed to load User File.");
             }
@@ -134,7 +134,7 @@ public class UserDataManager implements Loadable, Savable {
     }
 
     @Override
-    public void load() throws IOException {
+    public void load() {
         if (instance == null){
             getInstance();
         }

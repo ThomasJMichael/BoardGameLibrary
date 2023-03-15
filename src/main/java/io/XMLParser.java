@@ -65,7 +65,7 @@ public class XMLParser {
                     Game game = new Game();
 
                     //Get main fields
-                    game.setId(Integer.parseInt(elem.getAttribute("id")));
+                    game.setId(elem.getAttribute("id"));
                     game.setName(elem.getElementsByTagName("name").item(0).getAttributes().getNamedItem("value").getTextContent());
                     game.setDescription(elem.getElementsByTagName("description").item(0).getTextContent());
                     game.setYearPublished(Integer.parseInt(elem.getElementsByTagName("yearpublished").item(0).getAttributes().getNamedItem("value").getTextContent()));
