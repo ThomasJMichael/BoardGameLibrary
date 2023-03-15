@@ -7,6 +7,8 @@ import main.java.model.Game;
 import main.java.model.GameDetails;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +27,6 @@ public class GameDatabaseManager implements Loadable, Savable {
             try {
                 instance.load();
             } catch (Exception e){
-                e.printStackTrace();
                 System.out.println("Failed to load Game File.");
             }
         }
@@ -36,15 +37,23 @@ public class GameDatabaseManager implements Loadable, Savable {
         return gameDetailsMap.get(game.getId());
     }
 
+    public static GameDetails getGameDetailsByID(String id){
+        return gameDetailsMap.get(id);
+    }
+
     @Override
     public void load() {
         if (instance == null){
             getInstance();
         }
         List<Game> allGames = XMLParser.parseGames(new File(GAME_FILE_PATH));
-        assert allGames != null;
-        for (Game game : allGames){
-            gameDetailsMap.put(game.getId(), new GameDetails(game));
+        gameDetailsMap = new HashMap<>();
+        if (!allGames.isEmpty()){
+            for (Game game : allGames){
+                gameDetailsMap.put(game.getId(), new GameDetails(game));
+            }
+        } else {
+            System.out.println("Game file is empty.");
         }
     }
 

@@ -51,6 +51,11 @@ public class ReviewManager implements Loadable, Savable {
         if (instance == null){
             getInstance();
         }
+        try {
+            load();
+        } catch (IOException e){
+            System.out.println("Failed to load reviews.");
+        }
         ArrayList<Review> gameReviews = new ArrayList<>();
 
         for (Review review : reviewList){

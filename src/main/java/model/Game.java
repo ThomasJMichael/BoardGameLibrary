@@ -8,6 +8,7 @@ package main.java.model;
 import java.util.List;
 
 public class Game {
+    public static GameCategory Category;
     private String id;
     private String name;
     private int yearPublished;
