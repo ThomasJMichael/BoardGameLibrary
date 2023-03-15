@@ -51,4 +51,14 @@ public class Review {
     public void setRating(Integer rating) {
         this.rating = rating;
     }
+
+    public String toString() {
+        return "Review{" +
+                "username='" + username + '\'' +
+                ", gameId='" + gameId + '\'' +
+                ", text='" + text + '\'' +
+                ", rating=" + rating +
+                '}';
+    }
+
 }

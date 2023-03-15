@@ -2,6 +2,7 @@ package test.java.manager;
 
 
 import main.java.manager.GameDatabaseManager;
+import main.java.manager.ReviewManager;
 import main.java.model.GameDetails;
 
 public class GameDatabaseManagerTest {
@@ -19,6 +20,8 @@ public class GameDatabaseManagerTest {
 
         // Add a review for the test game
         gameDetails.addReview("testuser", "This is a test review", 5);
+
+        System.out.println(ReviewManager.getInstance().getReviews("381247"));
 
         // Get the average rating for the test game
         double averageRating = gameDetails.averageRating();

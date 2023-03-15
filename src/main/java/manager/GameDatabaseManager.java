@@ -7,7 +7,6 @@ import main.java.model.Game;
 import main.java.model.GameDetails;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +47,7 @@ public class GameDatabaseManager implements Loadable, Savable {
         }
         List<Game> allGames = XMLParser.parseGames(new File(GAME_FILE_PATH));
         gameDetailsMap = new HashMap<>();
+        assert allGames != null;
         if (!allGames.isEmpty()){
             for (Game game : allGames){
                 gameDetailsMap.put(game.getId(), new GameDetails(game));

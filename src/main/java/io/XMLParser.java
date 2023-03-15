@@ -190,22 +190,29 @@ public class XMLParser {
             Document document = builder.parse(xmlFile);
             document.getDocumentElement().normalize();
 
-            NodeList nodeList = document.getElementsByTagName("review");
+            NodeList gameList = document.getElementsByTagName("game");
             List<Review> reviewList = new ArrayList<>();
 
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+            for (int i = 0; i < gameList.getLength(); i++) {
+                Node gameNode = gameList.item(i);
+                if (gameNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element gameElement = (Element) gameNode;
+                    String gameId = gameElement.getAttribute("id");
 
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element = (Element) node;
+                    NodeList reviewListNodes = gameElement.getElementsByTagName("review");
 
-                    String username = element.getElementsByTagName("username").item(0).getTextContent();
-                    String gameId = element.getElementsByTagName("game_id").item(0).getTextContent();
-                    String text = element.getElementsByTagName("text").item(0).getTextContent();
-                    int rating = Integer.parseInt(element.getElementsByTagName("rating").item(0).getTextContent());
+                    for (int j = 0; j < reviewListNodes.getLength(); j++) {
+                        Node reviewNode = reviewListNodes.item(j);
+                        if (reviewNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element reviewElement = (Element) reviewNode;
+                            String username = reviewElement.getElementsByTagName("username").item(0).getTextContent();
+                            String text = reviewElement.getElementsByTagName("text").item(0).getTextContent();
+                            int rating = Integer.parseInt(reviewElement.getElementsByTagName("rating").item(0).getTextContent());
 
-                    Review review = new Review(username, gameId, text, rating);
-                    reviewList.add(review);
+                            Review review = new Review(username, gameId, text, rating);
+                            reviewList.add(review);
+                        }
+                    }
                 }
             }
 
@@ -216,6 +223,7 @@ public class XMLParser {
             return null;
         }
     }
+
 
     /**
      Parses an XML file containing the collections of a specific user and returns a list of Collection objects.

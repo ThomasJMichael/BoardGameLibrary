@@ -29,7 +29,8 @@ public class GameDetails {
 
     public void addReview(String username, String text, Integer rating){
         Review review = new Review(username, game.getId(), text, rating);
-        ReviewManager.getInstance().addReview(review);
+        ReviewManager.getInstance().addReview(game.getId(), review);
+        reviews.add(review);
     }
 
     public double averageRating(){
@@ -37,6 +38,6 @@ public class GameDetails {
         for (Review review : reviews){
             total += review.getRating();
         }
-        return total;
+        return total / reviews.size();
     }
 }

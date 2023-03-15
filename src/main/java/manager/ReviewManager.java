@@ -25,11 +25,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ReviewManager implements Loadable, Savable {
     private static String REVIEW_FILE_PATH;
     private static ReviewManager instance = null;
     private List<Review> reviewList;
+    private Map<String, List<Review>> reviewsByGameId;
 
     private ReviewManager(){}
 
@@ -56,20 +59,27 @@ public class ReviewManager implements Loadable, Savable {
         } catch (IOException e){
             System.out.println("Failed to load reviews.");
         }
-        ArrayList<Review> gameReviews = new ArrayList<>();
-
-        for (Review review : reviewList){
-            if (review.getGameId().equals(gameId)){
-                gameReviews.add(review);
-            }
+        if (reviewsByGameId.get(gameId) == null){
+            return new ArrayList<>();
         }
-        return gameReviews;
+        return reviewsByGameId.get(gameId);
     }
-    public void addReview(Review reviewToAdd){
+
+    public List<Review> getFullReviewList(){
+        return reviewList;
+    }
+
+    public void addReview(String gameId, Review reviewToAdd){
         if (instance == null){
             getInstance();
         }
-        reviewList.add(reviewToAdd);
+        if (!reviewsByGameId.containsKey(gameId)) {
+            ArrayList<Review> newReviewList = new ArrayList<>();
+            newReviewList.add(reviewToAdd);
+            reviewsByGameId.put(gameId, newReviewList);
+        } else {
+            reviewsByGameId.get(gameId).add(reviewToAdd);
+        }
         save();
     }
     @Override
@@ -78,11 +88,13 @@ public class ReviewManager implements Loadable, Savable {
             getInstance();
         }
         reviewList = XMLParser.parseReviews(new File(REVIEW_FILE_PATH));
+        reviewsByGameId = reviewList.stream().collect(Collectors.groupingBy(Review::getGameId));
     }
 
+
     @Override
-    public void save() {
-        if (instance == null){
+    public  void save() {
+        if (instance == null) {
             getInstance();
         }
         try {
@@ -94,28 +106,33 @@ public class ReviewManager implements Loadable, Savable {
             Element rootElement = doc.createElement("reviews");
             doc.appendChild(rootElement);
 
-            // For each review, create a new "review" element with child elements and attributes
-            for (Review review : reviewList) {
-                Element reviewElement = doc.createElement("review");
+            // For each game ID, create a new "game" element with child "review" elements
+            for (Map.Entry<String, List<Review>> entry : reviewsByGameId.entrySet()) {
+                String gameId = entry.getKey();
+                List<Review> gameReviews = entry.getValue();
 
+                Element gameElement = doc.createElement("game");
+                gameElement.setAttribute("id", gameId);
 
-                Element usernameElement = doc.createElement("username");
-                usernameElement.appendChild(doc.createTextNode(review.getUsername()));
-                reviewElement.appendChild(usernameElement);
+                for (Review review : gameReviews) {
+                    Element reviewElement = doc.createElement("review");
 
-                Element gameIdElement = doc.createElement("game_id");
-                gameIdElement.appendChild(doc.createTextNode(review.getGameId()));
-                reviewElement.appendChild(gameIdElement);
+                    Element usernameElement = doc.createElement("username");
+                    usernameElement.appendChild(doc.createTextNode(review.getUsername()));
+                    reviewElement.appendChild(usernameElement);
 
-                Element textElement = doc.createElement("text");
-                textElement.appendChild(doc.createTextNode(review.getText()));
-                reviewElement.appendChild(textElement);
+                    Element textElement = doc.createElement("text");
+                    textElement.appendChild(doc.createTextNode(review.getText()));
+                    reviewElement.appendChild(textElement);
 
-                Element ratingElement = doc.createElement("rating");
-                ratingElement.appendChild(doc.createTextNode(review.getRatingString()));
-                reviewElement.appendChild(ratingElement);
+                    Element ratingElement = doc.createElement("rating");
+                    ratingElement.appendChild(doc.createTextNode(review.getRatingString()));
+                    reviewElement.appendChild(ratingElement);
 
-                rootElement.appendChild(reviewElement);
+                    gameElement.appendChild(reviewElement);
+                }
+
+                rootElement.appendChild(gameElement);
             }
 
             // Use a Transformer to write the Document to an XML file
@@ -127,7 +144,7 @@ public class ReviewManager implements Loadable, Savable {
 
         } catch (TransformerException | ParserConfigurationException e) {
             e.printStackTrace();
-            System.out.println("Failed to save users.");
+            System.out.println("Failed to save reviews.");
         }
     }
 }
