@@ -22,7 +22,9 @@ package main.java.io;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -233,15 +235,14 @@ public class XMLParser {
      a list of "item" elements that contain the "objectid" attribute, representing the IDs of the games in the collection.
 
      @param xmlFile the File object representing the XML file to be parsed
-     @param userId the ID of the user whose collections will be parsed
-     @return a List of Collection objects parsed from the XML file, or null if there was an error parsing the file
+     @return a Map of Collection objects parsed from the XML file, or null if there was an error parsing the file
      @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested.
      @throws SAXException if any parse errors occur.
      @throws IOException if any IO errors occur.
      */
-    public static List<Collection> parseCollections(File xmlFile, String userId) {
+    public static Map<String, List<Collection>> parseCollections(File xmlFile) {
         try {
-            List<Collection> collections = new ArrayList<>();
+            Map<String, List<Collection>> collectionsByUser = new HashMap<>();
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -252,39 +253,43 @@ public class XMLParser {
             for (int i = 0; i < userList.getLength(); i++) {
                 Node userNode = userList.item(i);
                 Element userElement = (Element) userNode;
-                if (userElement.getAttribute("id").equals(userId)) {
-                    NodeList collectionList = userElement.getElementsByTagName("collection");
-                    for (int j = 0; j < collectionList.getLength(); j++) {
-                        Node collectionNode = collectionList.item(j);
-                        Element collectionElement = (Element) collectionNode;
+                String userId = userElement.getAttribute("id");
 
-                        String collectionName = collectionElement.getAttribute("name");
-                        String collectionDesc = collectionElement.getElementsByTagName("description").item(0).getTextContent();
-                        String collectionId = collectionElement.getAttribute("id");
+                List<Collection> collections = new ArrayList<>();
 
-                        List<String> gameIds = new ArrayList<>();
-                        NodeList gameList = collectionElement.getElementsByTagName("item");
-                        for (int k = 0; k < gameList.getLength(); k++) {
-                            Node gameNode = gameList.item(k);
-                            if (gameNode.getNodeType() == Node.ELEMENT_NODE) {
-                                Element gameElement = (Element) gameNode;
-                                String gameId = gameElement.getAttribute("objectid");
-                                gameIds.add(gameId);
-                            }
+                NodeList collectionList = userElement.getElementsByTagName("collection");
+                for (int j = 0; j < collectionList.getLength(); j++) {
+                    Node collectionNode = collectionList.item(j);
+                    Element collectionElement = (Element) collectionNode;
+
+                    String collectionName = collectionElement.getAttribute("name");
+                    String collectionDesc = collectionElement.getElementsByTagName("description").item(0).getTextContent();
+                    String collectionId = collectionElement.getAttribute("id");
+
+                    List<String> gameIds = new ArrayList<>();
+                    NodeList gameList = collectionElement.getElementsByTagName("item");
+                    for (int k = 0; k < gameList.getLength(); k++) {
+                        Node gameNode = gameList.item(k);
+                        if (gameNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element gameElement = (Element) gameNode;
+                            String gameId = gameElement.getAttribute("objectid");
+                            gameIds.add(gameId);
                         }
-
-                        Collection collection = new Collection(collectionName, collectionDesc, collectionId, gameIds);
-                        collections.add(collection);
                     }
-                    break;
+
+                    Collection collection = new Collection(collectionName, collectionDesc, collectionId, gameIds);
+                    collections.add(collection);
                 }
+
+                collectionsByUser.put(userId, collections);
             }
 
-            return collections;
+            return collectionsByUser;
         } catch (SAXException | ParserConfigurationException | IOException e) {
             e.printStackTrace();
             System.out.println("Failed to parse collections.");
             return null;
-            }
         }
+    }
+
 }

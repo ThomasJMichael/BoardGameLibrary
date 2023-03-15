@@ -8,6 +8,7 @@ import main.java.model.User;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 public class XMLParserTest {
 
@@ -34,16 +35,11 @@ public class XMLParserTest {
         // Test parsing collections for a specific user
         String userId = "123456";
         File collectionsFile = new File("src/test/resources/Collections.xml");
-        List<Collection> collections = XMLParser.parseCollections(collectionsFile, userId);
-        assert collections != null;
+        Map<String, List<Collection>> collections = XMLParser.parseCollections(collectionsFile);
+        List<Collection> collectionsAsList = collections.get(userId);
         System.out.println(collections.size() + " collections found for user " + userId + ":");
-        for (Collection collection : collections) {
-            System.out.println(collection.getName() + " (" + collection.getId() + ")");
-            System.out.println("Description: " + collection.getDescription());
-            System.out.println("Games:");
-            for (String gameId : collection.getGamesIdStrings()) {
-                System.out.println("- " + gameId);
-            }
+        for (Collection collection : collectionsAsList){
+            System.out.println(collection.getName());
         }
 
         // Test parsing reviews

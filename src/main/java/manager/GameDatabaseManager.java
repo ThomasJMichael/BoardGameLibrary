@@ -1,7 +1,6 @@
 package main.java.manager;
 
 import main.java.io.Loadable;
-import main.java.io.Savable;
 import main.java.io.XMLParser;
 import main.java.model.Game;
 import main.java.model.GameDetails;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameDatabaseManager implements Loadable, Savable {
+public class GameDatabaseManager implements Loadable {
 
     private static String GAME_FILE_PATH;
     private static GameDatabaseManager instance = null;
@@ -55,10 +54,5 @@ public class GameDatabaseManager implements Loadable, Savable {
         } else {
             System.out.println("Game file is empty.");
         }
-    }
-
-    @Override
-    public void save() {
-
     }
 }
