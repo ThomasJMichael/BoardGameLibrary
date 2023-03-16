@@ -5,19 +5,40 @@
  **/
 package main.java.model;
 
-import java.util.List;
+import java.util.*;
 
 public class Collection {
     private String name;
     private String description;
     private String id;
     private List<String> games;
+    private static Set<String> usedIds = new HashSet<>();
 
     public Collection(String name, String description, String id, List<String> gamesIdsStrings) {
         this.name = name;
         this.description = description;
         this.id = id;
         this.games = gamesIdsStrings;
+    }
+
+    public Collection(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.id = generateCollectionId();
+        games = new ArrayList<>();
+    }
+
+    public void addGame(String gameId) {
+        if (games == null) {
+            games = new ArrayList<>();
+        }
+        games.add(gameId);
+    }
+
+    public void removeGame(String gameId) {
+        if (games != null) {
+            games.remove(gameId);
+        }
     }
 
     public String getName() {
@@ -50,6 +71,15 @@ public class Collection {
 
     public void setGames(List<String> games) {
         this.games = games;
+    }
+    public static String generateCollectionId() {
+        Random random = new Random();
+        String id = String.valueOf(random.nextInt(900000) + 100000); // Generate a random 6-digit number
+        while (usedIds.contains(id)) {
+            id = String.valueOf(random.nextInt(900000) + 100000);
+        }
+        usedIds.add(id);
+        return id;
     }
 }
 
