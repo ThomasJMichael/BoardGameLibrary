@@ -11,15 +11,13 @@ public class Collection {
     private String name;
     private String description;
     private String id;
-    //TODO Add convert for gameIdStrings to games so that the collection stores Game objects and not just the Ids for the games
-    private List<Game> games;
-    private List<String> gamesIdStrings;
+    private List<String> games;
 
     public Collection(String name, String description, String id, List<String> gamesIdsStrings) {
         this.name = name;
         this.description = description;
         this.id = id;
-        this.gamesIdStrings = gamesIdsStrings;
+        this.games = gamesIdsStrings;
     }
 
     public String getName() {
@@ -46,20 +44,12 @@ public class Collection {
         this.id = id;
     }
 
-    public List<Game> getGames() {
+    public List<String> getGames() {
         return games;
     }
 
-    public void setGames(List<Game> games) {
+    public void setGames(List<String> games) {
         this.games = games;
-    }
-
-    public List<String> getGamesIdStrings() {
-        return gamesIdStrings;
-    }
-
-    public void setGamesIdStrings(List<String> gamesIdStrings) {
-        this.gamesIdStrings = gamesIdStrings;
     }
 }
 
