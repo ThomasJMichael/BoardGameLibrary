@@ -2,15 +2,18 @@ package main.java.manager;
 
 import main.java.io.Loadable;
 import main.java.io.Savable;
+import main.java.io.XMLParser;
 import main.java.model.Collection;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class CollectionManager implements Loadable, Savable {
     private static String COLLECTIONS_FILE_PATH;
     private static CollectionManager instance = null;
-
+    private Map<String, List<Collection>> collectionMap;
 
     private CollectionManager() {}
 
@@ -35,8 +38,7 @@ public class CollectionManager implements Loadable, Savable {
         if (!file.exists()){
             save();
         }
-        //TODO Add implementation for loading the parsed xml into data structures
-
+        collectionMap = XMLParser.parseCollections(new File(COLLECTIONS_FILE_PATH));
     }
 
     @Override
