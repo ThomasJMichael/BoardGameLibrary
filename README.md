@@ -1,4 +1,4 @@
-# BoardGameLibrary
+# Board Game Library
 ## Team 1
 ### Members
 - Asia Garvida
