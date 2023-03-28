@@ -28,6 +28,22 @@ public class Collection {
         games = new ArrayList<>();
     }
 
+    // if you don't want to add a description
+    public Collection(String name) {
+        this.name = name;
+        this.description = "No description.";
+        this.id = generateCollectionId();
+        games = new ArrayList<>();
+    }
+
+    // if you dont have a name
+    public Collection() {
+        this.name = "untitled";
+        this.description = "No description.";
+        this.id = generateCollectionId();
+        games = new ArrayList<>();
+    }
+
     public void addGame(String gameId) {
         if (games == null) {
             games = new ArrayList<>();
