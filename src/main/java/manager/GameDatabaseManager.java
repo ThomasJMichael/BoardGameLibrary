@@ -46,7 +46,12 @@ public class GameDatabaseManager implements Loadable {
         return gameDetailsMap.get(id);
     }
 
-    public static Map<String, GameDetails> getDetailsMap () { return gameDetailsMap; }
+    public static Map<String, GameDetails> getDetailsMap () {
+        if (instance == null){
+            getInstance();
+        }
+        return gameDetailsMap;
+    }
 
     @Override
     public void load() {
