@@ -5,11 +5,13 @@ import main.java.io.Savable;
 import main.java.io.XMLParser;
 import main.java.model.Collection;
 import main.java.model.Game;
+import main.java.model.GameDetails;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class CollectionManager implements Loadable, Savable {
     private static String COLLECTIONS_FILE_PATH;
@@ -25,26 +27,11 @@ public class CollectionManager implements Loadable, Savable {
             try {
                 instance.load();
             } catch (Exception e){
+                e.printStackTrace();
                 System.out.println("Failed to load Collections File.");
             }
         }
         return instance;
-    }
-    @Override
-    public void load() throws IOException {
-        if (instance == null){
-            load();
-        }
-        File file = new File(COLLECTIONS_FILE_PATH);
-        if (!file.exists()){
-            save();
-        }
-        collectionMap = XMLParser.parseCollections(new File(COLLECTIONS_FILE_PATH));
-    }
-
-    @Override
-    public void save() throws IOException {
-
     }
 
     public void createCollection(String id) {
@@ -107,5 +94,21 @@ public class CollectionManager implements Loadable, Savable {
             int collectionIndex = userCollection.indexOf(collection);
             userCollection.get(collectionIndex).removeGame(game.getId());
         }
+    }
+    @Override
+    public void load() throws IOException {
+        if (instance == null){
+            load();
+        }
+        File file = new File(COLLECTIONS_FILE_PATH);
+        if (!file.exists()){
+            save();
+        }
+        collectionMap = XMLParser.parseCollections(new File(COLLECTIONS_FILE_PATH));
+    }
+
+    @Override
+    public void save() throws IOException {
+
     }
 }

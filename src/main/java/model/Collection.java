@@ -18,7 +18,9 @@ public class Collection {
         this.name = name;
         this.description = description;
         this.id = id;
-        this.games = gamesIdsStrings;
+        for (String gameId : gamesIdsStrings) {
+            addGame(gameId);
+        }
     }
 
     public Collection(String name, String description) {

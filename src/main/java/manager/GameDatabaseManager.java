@@ -36,6 +36,13 @@ public class GameDatabaseManager implements Loadable {
     }
 
     public static GameDetails getGameDetailsByID(String id){
+        if (instance == null){
+            GameDatabaseManager.getInstance();
+        }
+        if (gameDetailsMap.get(id) == null){
+            System.out.println("Game not found.");
+            return null;
+        }
         return gameDetailsMap.get(id);
     }
 

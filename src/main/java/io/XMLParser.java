@@ -267,12 +267,11 @@ public class XMLParser {
                     String collectionId = collectionElement.getAttribute("id");
 
                     List<String> gameIds = new ArrayList<>();
-                    NodeList gameList = collectionElement.getElementsByTagName("item");
+                    NodeList gameList = collectionElement.getElementsByTagName("game");
                     for (int k = 0; k < gameList.getLength(); k++) {
                         Node gameNode = gameList.item(k);
                         if (gameNode.getNodeType() == Node.ELEMENT_NODE) {
-                            Element gameElement = (Element) gameNode;
-                            String gameId = gameElement.getAttribute("objectid");
+                            String gameId = gameNode.getTextContent();
                             gameIds.add(gameId);
                         }
                     }
