@@ -40,8 +40,7 @@ public class CollectionManager implements Loadable, Savable {
         // collectionMap.put(user, );
 
         if (collectionMap.get(id) == null) {
-            // user not found
-            return;
+            System.out.println("User not found.");
         }
         else {
             List<Collection> userCollection = collectionMap.get(id);
@@ -52,8 +51,7 @@ public class CollectionManager implements Loadable, Savable {
 
     public void deleteCollection(String id, Collection collection) {
         if (collectionMap.get(id) == null) {
-            // user not found
-            return;
+            System.out.println("User not found.");
         }
         else {
             List<Collection> userCollection = collectionMap.get(id);
@@ -68,7 +66,7 @@ public class CollectionManager implements Loadable, Savable {
 
     public List<Collection> getCollections(String id) {
         if (collectionMap.get(id) == null) {
-            // user not found
+            System.out.println("User not found.");
             return null;
         }
         else {
@@ -79,8 +77,7 @@ public class CollectionManager implements Loadable, Savable {
 
     public void addGameToCollection(String id, Game game, Collection collection) {
         if (collectionMap.get(id) == null) {
-            // user not found
-            return;
+            System.out.println("User not found.");
         }
         else {
             List<Collection> userCollection = collectionMap.get(id); // find a user's specific set of collections
@@ -99,8 +96,7 @@ public class CollectionManager implements Loadable, Savable {
 
     public void removeGameFromCollection(String id, Game game, Collection collection) {
         if (collectionMap.get(id) == null) {
-            // user not found
-            return;
+            System.out.println("User not found.");
         }
         else {
             List<Collection> userCollection = collectionMap.get(id);
