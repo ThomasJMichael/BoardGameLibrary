@@ -41,6 +41,7 @@ public class CollectionManager implements Loadable, Savable {
 
         if (collectionMap.get(id) == null) {
             // user not found
+            return;
         }
         else {
             List<Collection> userCollection = collectionMap.get(id);
@@ -52,10 +53,15 @@ public class CollectionManager implements Loadable, Savable {
     public void deleteCollection(String id, Collection collection) {
         if (collectionMap.get(id) == null) {
             // user not found
+            return;
         }
         else {
             List<Collection> userCollection = collectionMap.get(id);
             int index = userCollection.indexOf(collection);
+            if (index == -1) {
+                System.out.println("Collection to delete not found.");
+                return;
+            }
             userCollection.remove(index);
         }
     }
@@ -79,7 +85,14 @@ public class CollectionManager implements Loadable, Savable {
         else {
             List<Collection> userCollection = collectionMap.get(id); // find a user's specific set of collections
             int collectionIndex = userCollection.indexOf(collection); // get the index of the collection their trying to add to
-            userCollection.get(collectionIndex).addGame(game.getId()); // add the game to the found collection
+            Collection foundCollection = userCollection.get(collectionIndex);
+            if (!foundCollection.getGames().contains(game.getId())) {
+                foundCollection.addGame(game.getId()); // add the game to the found collection
+            }
+            else {
+                System.out.println("Game " + game.getName() + " already in collection.");
+            }
+
         }
 
     }
@@ -92,7 +105,14 @@ public class CollectionManager implements Loadable, Savable {
         else {
             List<Collection> userCollection = collectionMap.get(id);
             int collectionIndex = userCollection.indexOf(collection);
-            userCollection.get(collectionIndex).removeGame(game.getId());
+            Collection foundCollection = userCollection.get(collectionIndex);
+            if (foundCollection.getGames().contains(game.getId())) {
+                foundCollection.removeGame(game.getId());
+            }
+            else {
+                System.out.println("Game " + game.getName() + " is not currently in collection.");
+            }
+
         }
     }
     @Override
