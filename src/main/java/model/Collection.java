@@ -91,7 +91,7 @@ public class Collection {
         this.games = games;
     }
     public static String generateCollectionId() {
-        Random random = new Random();
+        Random random = new Random(System.currentTimeMillis());
         String id = String.valueOf(random.nextInt(900000) + 100000); // Generate a random 6-digit number
         while (usedIds.contains(id)) {
             id = String.valueOf(random.nextInt(900000) + 100000);
