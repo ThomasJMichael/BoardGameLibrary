@@ -1,6 +1,7 @@
 package test.java.manager;
 
 import main.java.manager.UserDataManager;
+import main.java.model.User;
 
 public class UserDataManagerTest {
     public static void main(String[] args) {
@@ -33,6 +34,19 @@ public class UserDataManagerTest {
         } else {
             System.out.println("Logout failed!");
         }
+
+        // Change the user's password
+        manager.login("alice123", "password123");
+
+        boolean passwordChanged = manager.changePassword("password123", "newpassword");
+
+        if (passwordChanged) {
+            System.out.println("Password updated successfully");
+        }
+        else {
+            System.out.println("Failed to update password");
+        }
+        manager.logout();
     }
 }
 
