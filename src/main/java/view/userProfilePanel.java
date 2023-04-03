@@ -2,11 +2,14 @@ package main.java.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import main.java.manager.CollectionManager;
 import main.java.model.Collection;
+import main.java.manager.UserDataManager;
+import main.java.model.User;
 
 public abstract class userProfilePanel implements ActionListener {
     private final String userID;
@@ -42,14 +45,55 @@ public abstract class userProfilePanel implements ActionListener {
         //creates the two panels
         JPanel panel1, panel2;
 
-        //initializes Account Settings panel with two buttons: change username and change password
+        //initializes Account Settings panel with two buttons: logout and change password
         panel1 = new JPanel();
         tabbedPane.addTab("Account Settings", panel1);
-        JButton userButton = new JButton("Change username");
-        JButton passButton = new JButton("Change password");
-        panel1.add(userButton);
-        panel1.add(passButton);
+        JButton logOutButton = new JButton("Logout");
 
+        //creates action listener for logout button
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean log = UserDataManager.getInstance().logout();
+
+                if (log) {
+                    JOptionPane.showMessageDialog(null, "Successfully logged out");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Logout failed");
+                }
+
+            }
+        });
+        JButton passButton = new JButton("Change password");
+
+        //creates action listeners for change password button
+        passButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String oldPassword = JOptionPane.showInputDialog("Enter your old password");
+                String newPassword = JOptionPane.showInputDialog("Enter your new password");
+
+                if (oldPassword != null && newPassword != null && !oldPassword.isEmpty() && !newPassword.isEmpty()) {
+
+                    boolean checkYes = UserDataManager.getInstance().changePassword(oldPassword, newPassword);
+
+                    if (checkYes) {
+                        JOptionPane.showMessageDialog(null, "Password successfully updated");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Password update failed");
+                    }
+                }
+                else {
+
+                }
+            }
+        });
+
+        //adds buttons to panel
+        panel1.add(logOutButton);
+        panel1.add(passButton);
 
         //initializes Collections panel
         panel2 = new JPanel();
