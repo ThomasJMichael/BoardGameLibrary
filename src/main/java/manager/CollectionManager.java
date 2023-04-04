@@ -154,6 +154,36 @@ public class CollectionManager implements Loadable, Savable {
 
         }
     }
+
+    public boolean removeGameFromCollection(String userId, String gameId, String collectionId) {
+        List<Collection> userCollection = collectionMap.get(userId);
+        if (userCollection == null) {
+            System.out.println("User not found.");
+            return false;
+        }
+
+        Collection foundCollection = null;
+        for (Collection collection : userCollection) {
+            if (collection.getId().equals(collectionId)) {
+                foundCollection = collection;
+                break;
+            }
+        }
+        if (foundCollection == null) {
+            System.out.println("Collection " + collectionId + " not found.");
+            return false;
+        }
+
+        if (foundCollection.getGames().contains(gameId)) {
+            foundCollection.removeGame(gameId);
+            return true;
+        } else {
+            System.out.println("Game " + gameId + " is not currently in collection " + collectionId + ".");
+            return false;
+        }
+    }
+
+
     @Override
     public void load() throws IOException {
         if (instance == null){

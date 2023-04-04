@@ -36,7 +36,7 @@ public class Controller {
         }
     }
     public boolean changePassword(String oldPassword, String newPassword){
-        return changePassword(oldPassword, newPassword);
+        return UserDataManager.getInstance().changePassword(oldPassword, newPassword);
     }
 
     public void addReview(String gameId, String text, Integer rating){
@@ -46,6 +46,9 @@ public class Controller {
 
     public boolean deleteReview(String reviewId){
         return ReviewManager.getInstance().deleteReview(reviewId);
+    }
+    public List<Review> getReviews(String gameId){
+        return ReviewManager.getInstance().getReviews(gameId);
     }
 
     public boolean deleteUser(){
@@ -66,6 +69,9 @@ public class Controller {
 
     public boolean addGameToCollection(String gameId, String collectionId){
         return CollectionManager.getInstance().addGameToCollection(UserDataManager.getInstance().getUsername(), gameId, collectionId);
+    }
+    public boolean removeGameFromCollection(String gameId, String collectionId){
+        return CollectionManager.getInstance().removeGameFromCollection(UserDataManager.getInstance().getUsername(), gameId, collectionId);
     }
     private static void initManagers() {
         CollectionManager.getInstance();
