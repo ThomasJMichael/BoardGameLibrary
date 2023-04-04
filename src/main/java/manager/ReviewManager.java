@@ -69,19 +69,20 @@ public class ReviewManager implements Loadable, Savable {
         return reviewList;
     }
 
-    public void addReview(String gameId, Review reviewToAdd){
+    public void addReview(Review reviewToAdd){
         if (instance == null){
             getInstance();
         }
-        if (!reviewsByGameId.containsKey(gameId)) {
+        if (!reviewsByGameId.containsKey(reviewToAdd.getGameId())) {
             ArrayList<Review> newReviewList = new ArrayList<>();
             newReviewList.add(reviewToAdd);
-            reviewsByGameId.put(gameId, newReviewList);
+            reviewsByGameId.put(reviewToAdd.getGameId(), newReviewList);
         } else {
-            reviewsByGameId.get(gameId).add(reviewToAdd);
+            reviewsByGameId.get(reviewToAdd.getGameId()).add(reviewToAdd);
         }
         save();
     }
+
     @Override
     public void load() throws IOException {
         if (instance == null){
@@ -93,7 +94,7 @@ public class ReviewManager implements Loadable, Savable {
 
 
     @Override
-    public  void save() {
+    public void save() {
         if (instance == null) {
             getInstance();
         }
@@ -116,6 +117,9 @@ public class ReviewManager implements Loadable, Savable {
 
                 for (Review review : gameReviews) {
                     Element reviewElement = doc.createElement("review");
+
+                    // Add the reviewId attribute to the review element
+                    reviewElement.setAttribute("reviewId", review.getReviewId());
 
                     Element usernameElement = doc.createElement("username");
                     usernameElement.appendChild(doc.createTextNode(review.getUsername()));
@@ -147,4 +151,5 @@ public class ReviewManager implements Loadable, Savable {
             System.out.println("Failed to save reviews.");
         }
     }
+
 }

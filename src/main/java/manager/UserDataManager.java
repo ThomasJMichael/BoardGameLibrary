@@ -16,7 +16,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class UserDataManager implements Loadable, Savable {
@@ -107,7 +106,7 @@ public class UserDataManager implements Loadable, Savable {
         }
         return null;
     }
-    public String getUserName(){
+    public String getUsername(){
         if (instance == null){
             getInstance();
         }
@@ -128,6 +127,15 @@ public class UserDataManager implements Loadable, Savable {
                     save();
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    public boolean userExists(String username){
+        for (User user : allUsers){
+            if (user.getUsername().equals(username)){
+                return true;
             }
         }
         return false;

@@ -1,7 +1,6 @@
 package test.java.manager;
 
 import main.java.manager.UserDataManager;
-import main.java.model.User;
 
 public class UserDataManagerTest {
     public static void main(String[] args) {
@@ -11,7 +10,7 @@ public class UserDataManagerTest {
         // Login with correct credentials
         if (manager.login("alice123", "password123")) {
             System.out.println("Login successful!");
-            System.out.println("User name: " + manager.getUserName());
+            System.out.println("User name: " + manager.getUsername());
             System.out.println("User's name: " + manager.getUsersName());
         } else {
             System.out.println("Login failed!");

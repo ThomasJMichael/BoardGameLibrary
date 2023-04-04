@@ -1,1 +1,59 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><reviews><game id="316624"><review><username>user3</username><text>Awesome game! Definitely recommend.</text><rating>5</rating></review><review><username>user4</username><text>Decent game, but not my favorite.</text><rating>3</rating></review><review><username>user5</username><text>Really enjoyed this game. Will play again!</text><rating>4</rating></review></game><game id="381247"><review><username>testuser</username><text>This is a test review</text><rating>5</rating></review><review><username>testuser</username><text>This is a test review</text><rating>5</rating></review><review><username>testuser</username><text>This is a test review</text><rating>5</rating></review><review><username>testuser</username><text>This is a test review</text><rating>5</rating></review><review><username>testuser</username><text>This is a test review</text><rating>5</rating></review></game><game id="381626"><review><username>user1</username><text>This is a great game!</text><rating>5</rating></review><review><username>user2</username><text>Not bad, but could be better.</text><rating>3</rating></review></game></reviews>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<reviews>
+    <game id="316624">
+        <review reviewId="1">
+            <username>user3</username>
+            <text>Awesome game! Definitely recommend.</text>
+            <rating>5</rating>
+        </review>
+        <review reviewId="2">
+            <username>user4</username>
+            <text>Decent game, but not my favorite.</text>
+            <rating>3</rating>
+        </review>
+        <review reviewId="3">
+            <username>user5</username>
+            <text>Really enjoyed this game. Will play again!</text>
+            <rating>4</rating>
+        </review>
+    </game>
+    <game id="381247">
+        <review reviewId="4">
+            <username>testuser</username>
+            <text>This is a test review</text>
+            <rating>5</rating>
+        </review>
+        <review reviewId="5">
+            <username>testuser</username>
+            <text>This is a test review</text>
+            <rating>5</rating>
+        </review>
+        <review reviewId="6">
+            <username>testuser</username>
+            <text>This is a test review</text>
+            <rating>5</rating>
+        </review>
+        <review reviewId="7">
+            <username>testuser</username>
+            <text>This is a test review</text>
+            <rating>5</rating>
+        </review>
+        <review reviewId="8">
+            <username>testuser</username>
+            <text>This is a test review</text>
+            <rating>5</rating>
+        </review>
+    </game>
+    <game id="381626">
+        <review reviewId="9">
+            <username>user1</username>
+            <text>This is a great game!</text>
+            <rating>5</rating>
+        </review>
+        <review reviewId="10">
+            <username>user2</username>
+            <text>Not bad, but could be better.</text>
+            <rating>3</rating>
+        </review>
+    </game>
+</reviews>

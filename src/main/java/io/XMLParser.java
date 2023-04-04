@@ -207,11 +207,12 @@ public class XMLParser {
                         Node reviewNode = reviewListNodes.item(j);
                         if (reviewNode.getNodeType() == Node.ELEMENT_NODE) {
                             Element reviewElement = (Element) reviewNode;
+                            String reviewId = reviewElement.getAttribute("reviewId");
                             String username = reviewElement.getElementsByTagName("username").item(0).getTextContent();
                             String text = reviewElement.getElementsByTagName("text").item(0).getTextContent();
                             int rating = Integer.parseInt(reviewElement.getElementsByTagName("rating").item(0).getTextContent());
 
-                            Review review = new Review(username, gameId, text, rating);
+                            Review review = new Review(reviewId, username, gameId, text, rating);
                             reviewList.add(review);
                         }
                     }
@@ -225,6 +226,7 @@ public class XMLParser {
             return null;
         }
     }
+
 
 
     /**

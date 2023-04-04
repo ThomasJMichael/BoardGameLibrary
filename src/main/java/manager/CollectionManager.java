@@ -5,13 +5,11 @@ import main.java.io.Savable;
 import main.java.io.XMLParser;
 import main.java.model.Collection;
 import main.java.model.Game;
-import main.java.model.GameDetails;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class CollectionManager implements Loadable, Savable {
     private static String COLLECTIONS_FILE_PATH;
