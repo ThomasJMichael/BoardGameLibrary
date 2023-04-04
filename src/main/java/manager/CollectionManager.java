@@ -46,6 +46,18 @@ public class CollectionManager implements Loadable, Savable {
             userCollection.add(newCollection);
         }
     }
+    public boolean createCollection(String id, String name, String description) {
+        if (collectionMap.get(id) == null) {
+            System.out.println("User not found.");
+            return false;
+        }
+        else {
+            List<Collection> userCollection = collectionMap.get(id);
+            Collection newCollection = new Collection(name, description);
+            userCollection.add(newCollection);
+            return userCollection.contains(newCollection);
+        }
+    }
 
     public void deleteCollection(String id, Collection collection) {
         if (collectionMap.get(id) == null) {
@@ -61,6 +73,28 @@ public class CollectionManager implements Loadable, Savable {
             userCollection.remove(index);
         }
     }
+    public boolean deleteCollection(String username, String collectionId) {
+        if (collectionMap.get(username) == null) {
+            System.out.println("User not found.");
+            return false;
+        } else {
+            List<Collection> userCollection = collectionMap.get(username);
+            Collection collectionToDelete = null;
+            for (Collection collection : userCollection) {
+                if (collection.getId().equals(collectionId)) {
+                    collectionToDelete = collection;
+                    break;
+                }
+            }
+            if (collectionToDelete == null) {
+                System.out.println("Collection to delete not found.");
+                return false;
+            } else {
+                return userCollection.remove(collectionToDelete);
+            }
+        }
+    }
+
 
     public List<Collection> getCollections(String id) {
         if (collectionMap.get(id) == null) {
@@ -73,24 +107,35 @@ public class CollectionManager implements Loadable, Savable {
         }
     }
 
-    public void addGameToCollection(String id, Game game, Collection collection) {
+    public boolean addGameToCollection(String id, String gameId, String collectionId) {
         if (collectionMap.get(id) == null) {
             System.out.println("User not found.");
-        }
-        else {
+            return false;
+        } else {
             List<Collection> userCollection = collectionMap.get(id); // find a user's specific set of collections
-            int collectionIndex = userCollection.indexOf(collection); // get the index of the collection their trying to add to
-            Collection foundCollection = userCollection.get(collectionIndex);
-            if (!foundCollection.getGames().contains(game.getId())) {
-                foundCollection.addGame(game.getId()); // add the game to the found collection
-            }
-            else {
-                System.out.println("Game " + game.getName() + " already in collection.");
+            Collection foundCollection = null;
+
+            // Find the collection with the given collectionId
+            for (Collection collection : userCollection) {
+                if (collection.getId().equals(collectionId)) {
+                    foundCollection = collection;
+                    break;
+                }
             }
 
+            if (foundCollection == null) {
+                System.out.println("Collection " + collectionId + " not found.");
+                return false;
+            } else if (!foundCollection.getGames().contains(gameId)) {
+                foundCollection.addGame(gameId); // add the game to the found collection
+                return foundCollection.getGames().contains(gameId);
+            } else {
+                System.out.println("Game " + gameId + " already in collection.");
+                return false;
+            }
         }
-
     }
+
 
     public void removeGameFromCollection(String id, Game game, Collection collection) {
         if (collectionMap.get(id) == null) {

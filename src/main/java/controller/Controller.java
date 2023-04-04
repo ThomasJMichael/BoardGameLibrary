@@ -1,7 +1,10 @@
 package main.java.controller;
 
 import main.java.manager.*;
+import main.java.model.Collection;
 import main.java.model.Review;
+
+import java.util.List;
 
 public class Controller {
     private static Controller instance = null;
@@ -41,8 +44,29 @@ public class Controller {
         ReviewManager.getInstance().addReview(newReview);
     }
 
+    public boolean deleteReview(String reviewId){
+        return ReviewManager.getInstance().deleteReview(reviewId);
+    }
 
+    public boolean deleteUser(){
+        return UserDataManager.getInstance().deleteUser(UserDataManager.getInstance().getUsername());
+    }
 
+    public List<Collection> getCollectionsByUser(String userId){
+        return CollectionManager.getInstance().getCollections(userId);
+    }
+
+    public boolean addCollection(String name, String description){
+        return CollectionManager.getInstance().createCollection(UserDataManager.getInstance().getUsername(), name, description);
+    }
+
+    public boolean deleteCollection(String collectionId){
+        return CollectionManager.getInstance().deleteCollection(UserDataManager.getInstance().getUsername(), collectionId);
+    }
+
+    public boolean addGameToCollection(String gameId, String collectionId){
+        return CollectionManager.getInstance().addGameToCollection(UserDataManager.getInstance().getUsername(), gameId, collectionId);
+    }
     private static void initManagers() {
         CollectionManager.getInstance();
         ConfigManager.getInstance();

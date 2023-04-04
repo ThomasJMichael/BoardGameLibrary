@@ -124,6 +124,7 @@ public class UserDataManager implements Loadable, Savable {
             for (User user : allUsers){
                 if (user.getUsername().equals(username)){
                     allUsers.remove(user);
+                    logout();
                     save();
                     return true;
                 }

@@ -83,6 +83,25 @@ public class ReviewManager implements Loadable, Savable {
         save();
     }
 
+    public boolean deleteReview(String reviewId)  {
+        Review reviewToRemove = null;
+        for (Review review : reviewList) {
+            if (review.getReviewId().equals(reviewId)) {
+                reviewToRemove = review;
+                break;
+            }
+        }
+        if (reviewToRemove != null) {
+            reviewList.remove(reviewToRemove);
+            save();
+            return true;
+        } else {
+            System.out.println("Review not found with ID: " + reviewId);
+            return false;
+        }
+    }
+
+
     @Override
     public void load() throws IOException {
         if (instance == null){
