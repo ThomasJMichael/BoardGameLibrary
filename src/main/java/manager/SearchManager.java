@@ -1,16 +1,14 @@
 package main.java.manager;
 
+import main.java.model.Game;
+import main.java.model.GameDetails;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import main.java.model.Game;
-import main.java.model.GameDetails;
-
     public class SearchManager {
-        private static String GAMES_FILE_PATH;
         private static Map<String, GameDetails> gamesMap;
         private static SearchManager instance = null;
         private List<String> genres;
@@ -37,11 +35,11 @@ import main.java.model.GameDetails;
          * @param query the game the user wants to search.
          * @return the games that match the query.
          */
-        public List<Game> searchGames(String query) {
-            List<Game> matchingGames = new ArrayList<>();
-            for (Game game : matchingGames) {
-                if (game.getName().toLowerCase().contains(query.toLowerCase())) {
-                    matchingGames.add((Game) gamesMap);
+        public List<GameDetails> searchGames(String query) {
+            List<GameDetails> matchingGames = new ArrayList<>();
+            for (String game : gamesMap.keySet()) {
+                if (game.toLowerCase().contains(query.toLowerCase())) {
+                    matchingGames.add(gamesMap.get(game));
                 }
             }
             return matchingGames;
