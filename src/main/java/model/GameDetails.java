@@ -9,7 +9,6 @@ import main.java.manager.ReviewManager;
 
 import java.util.List;
 
-//TODO Add test file when the GameDatabaseManager is implemented
 public class GameDetails {
     private final Game game;
     private List<Review> reviews;
@@ -25,12 +24,6 @@ public class GameDetails {
 
     public List<Review> getReviews() {
         return reviews;
-    }
-
-    public void addReview(String username, String text, Integer rating){
-        Review review = new Review(username, game.getId(), text, rating);
-        ReviewManager.getInstance().addReview(game.getId(), review);
-        reviews.add(review);
     }
 
     public double averageRating(){

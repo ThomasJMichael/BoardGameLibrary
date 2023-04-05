@@ -2,6 +2,7 @@ package main.java.controller;
 
 import main.java.manager.*;
 import main.java.model.Collection;
+import main.java.model.GameDetails;
 import main.java.model.Review;
 
 import java.util.List;
@@ -72,6 +73,9 @@ public class Controller {
     }
     public boolean removeGameFromCollection(String gameId, String collectionId){
         return CollectionManager.getInstance().removeGameFromCollection(UserDataManager.getInstance().getUsername(), gameId, collectionId);
+    }
+    public List<GameDetails> searchGamesByQuery(String query){
+        return searchGamesByQuery(query);
     }
     private static void initManagers() {
         CollectionManager.getInstance();

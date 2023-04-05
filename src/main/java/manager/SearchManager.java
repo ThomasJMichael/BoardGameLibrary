@@ -3,9 +3,8 @@ package main.java.manager;
 import main.java.model.Game;
 import main.java.model.GameDetails;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.function.Predicate;
 
     public class SearchManager {
@@ -25,7 +24,8 @@ import java.util.function.Predicate;
         public static SearchManager getInstance() {
             if (instance == null) {
                 instance = new SearchManager();
-                gamesMap = GameDatabaseManager.getInstance().getDetailsMap();
+                GameDatabaseManager.getInstance();
+                gamesMap = GameDatabaseManager.getDetailsMap();
             }
             return instance;
         }
@@ -37,13 +37,61 @@ import java.util.function.Predicate;
          */
         public List<GameDetails> searchGames(String query) {
             List<GameDetails> matchingGames = new ArrayList<>();
-            for (String game : gamesMap.keySet()) {
-                if (game.toLowerCase().contains(query.toLowerCase())) {
-                    matchingGames.add(gamesMap.get(game));
+            for (GameDetails game : gamesMap.values()) {
+                if (game.getGame().getName().toLowerCase().contains(query.toLowerCase())) {
+                    matchingGames.add(game);
                 }
             }
             return matchingGames;
         }
+
+        /**
+         * TODO Needs to be tested for functionality
+         * Searches the game database for games that contain any of the words in the query string.
+         * Returns a list of matching games, sorted by the number of matching words and the length of the game name.
+         * @param query the query string to search for
+         * @return a list of matching games, sorted by the number of matching words and the length of the game name
+         */
+        public List<GameDetails> fuzzySearchGames(String query) {
+
+            // Split the query into individual words
+            String[] queryWords = query.toLowerCase().split(" ");
+
+            // Create a map to store the number of matches for each game
+            Map<GameDetails, Integer> matchesMap = new HashMap<>();
+
+            for (GameDetails gameDetails : gamesMap.values()) {
+                int matches = 0;
+
+                // Check if the game name contains any of the query words
+                for (String queryWord : queryWords) {
+                    if (gameDetails.getGame().getName().toLowerCase().contains(queryWord)) {
+                        matches++;
+                    }
+                }
+
+                // Add the game and the number of matches to the map
+                matchesMap.put(gameDetails, matches);
+            }
+
+            // Sort the list of games based on the number of matches and the length of the game name
+            List<GameDetails> matchingGames = new ArrayList<>(matchesMap.keySet());
+            matchingGames.sort((game1, game2) -> {
+                int matches1 = matchesMap.get(game1);
+                int matches2 = matchesMap.get(game2);
+
+                // If the number of matches is the same, break ties by longest name
+                if (matches1 == matches2) {
+                    return Integer.compare(game2.getGame().getName().length(), game1.getGame().getName().length());
+                }
+
+                // Otherwise, sort by the number of matches
+                return Integer.compare(matches2, matches1);
+            });
+
+            return matchingGames;
+        }
+
 
         /**
          * Checks if
