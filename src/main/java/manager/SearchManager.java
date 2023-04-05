@@ -162,5 +162,27 @@ import java.util.function.Predicate;
             public List<Predicate<GameDetails>> getPredicates() {
                 return predicates;
             }
+
+            //Implementation for more filters
+            public Predicate<GameDetails> getRatingFilter(int minRating) {
+                return game -> game.averageRating() >= minRating;
+            }
+
+            public Predicate<GameDetails> getYearPublishedFilter(int minYear, int maxYear) {
+                return game -> game.getGame().getYearPublished() >= minYear && game.getGame().getYearPublished() <= maxYear;
+            }
+
+            public Predicate<GameDetails> getCategoryFilter(String category) {
+                return game -> game.getGame().getCategories().contains(category);
+            }
+
+            public Predicate<GameDetails> getMechanicsFilter(String mechanics) {
+                return game -> game.getGame().getMechanics().contains(mechanics);
+            }
+
+            public Predicate<GameDetails> getDesignersFilter(String designer) {
+                return game -> game.getGame().getDesigners().contains(designer);
+            }
+
         }
     }

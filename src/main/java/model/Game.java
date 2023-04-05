@@ -163,4 +163,5 @@ public class Game {
                 "\nThumbnail URL: " + getThumbnailUrl() +
                 "\nImage URL: " + getImageUrl();
     }
+
 }
