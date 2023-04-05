@@ -62,59 +62,52 @@ import java.util.function.Predicate;
 
             for (GameDetails gameDetails : gamesMap.values()) {
                 int matches = 0;
-
                 // Check if the game name contains any of the query words
                 for (String queryWord : queryWords) {
                     if (gameDetails.getGame().getName().toLowerCase().contains(queryWord)) {
                         matches++;
                     }
                 }
-
                 // Add the game and the number of matches to the map
                 matchesMap.put(gameDetails, matches);
             }
-
             // Sort the list of games based on the number of matches and the length of the game name
             List<GameDetails> matchingGames = new ArrayList<>(matchesMap.keySet());
             matchingGames.sort((game1, game2) -> {
                 int matches1 = matchesMap.get(game1);
                 int matches2 = matchesMap.get(game2);
-
                 // If the number of matches is the same, break ties by longest name
                 if (matches1 == matches2) {
                     return Integer.compare(game2.getGame().getName().length(), game1.getGame().getName().length());
                 }
-
                 // Otherwise, sort by the number of matches
                 return Integer.compare(matches2, matches1);
             });
-
             return matchingGames;
         }
-
 
         /**
          * Checks if
          * @param filters to filter the game search.
          * @return the results of the search with a filter.
          */
-        public List<Game> search(Predicate<Game>... filters) {
-            List<Game> results = new ArrayList<>();
+        public List<GameDetails> search(Predicate<Game>... filters) {
+            List<GameDetails> results = new ArrayList<>();
 
-            for (Game game : results) {
+            for (GameDetails gameDetail : gamesMap.values()) {
                 boolean matchesFilters = true;
                 for (Predicate<Game> filter : filters) {
-                    if (!filter.test(game)) {
+                    if (!filter.test(gameDetail.getGame())) {
                         matchesFilters = false;
                         break;
                     }
                 }
                 if (matchesFilters) {
-                    System.out.println("Match Found: " + game.getName());
-                    results.add(game);
+                    System.out.println("Match Found: " + gameDetail.getGame().getName());
+                    results.add(gameDetail);
                 }
                 else {
-                    System.out.println("Match not found: " + game.getName());
+                    System.out.println("Match not found: " + gameDetail.getGame().getName());
                 }
             }
 
