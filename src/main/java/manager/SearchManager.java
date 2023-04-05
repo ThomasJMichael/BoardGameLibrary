@@ -10,7 +10,6 @@ import java.util.function.Predicate;
     public class SearchManager {
         private static Map<String, GameDetails> gamesMap;
         private static SearchManager instance = null;
-        private List<String> genres;
 
         /**
          * Default constructor.
@@ -26,6 +25,8 @@ import java.util.function.Predicate;
                 instance = new SearchManager();
                 GameDatabaseManager.getInstance();
                 gamesMap = GameDatabaseManager.getDetailsMap();
+                FilterManager.getInstance();
+                return instance;
             }
             return instance;
         }
@@ -115,23 +116,6 @@ import java.util.function.Predicate;
         }
 
         /**
-         * New ArrayList for the filters.
-         */
-        public List<Predicate<Game>> filters = new ArrayList<>();
-
-        /**
-         * Adds the filter.
-         * @param filter the filter added to the search.
-         */
-        public void addFilter(Predicate<Game> filter) {
-            filters.add(filter);
-        }
-
-        public List<Predicate<Game>> getFilters() {
-            return filters;
-        }
-
-        /**
          * Checks if the games match the filters.
          * @param games the games being searched.
          * @param filters the filters applied to the search.
@@ -153,5 +137,30 @@ import java.util.function.Predicate;
                 }
             }
             return results;
+        }
+        public static class FilterManager{
+            private static FilterManager instance = null;
+            private static List<Predicate<GameDetails>> predicates;
+
+            private FilterManager(){}
+            public synchronized static FilterManager getInstance(){
+                if (instance == null){
+                    instance = new FilterManager();
+                    predicates = new ArrayList<>();
+                    return instance;
+                }
+                return instance;
+            }
+            public void addPredicate(Predicate<GameDetails> predicate) {
+                predicates.add(predicate);
+            }
+
+            public void removePredicate(Predicate<GameDetails> predicate) {
+                predicates.remove(predicate);
+            }
+
+            public List<Predicate<GameDetails>> getPredicates() {
+                return predicates;
+            }
         }
     }
