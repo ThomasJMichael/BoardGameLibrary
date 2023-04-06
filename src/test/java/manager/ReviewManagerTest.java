@@ -22,7 +22,7 @@ public class ReviewManagerTest {
 
         // Add a new review
         Review newReview = new Review("user6", "381626", "This is another test review", 4);
-        reviewManager.addReview(newReview.getGameId(), newReview);
+        reviewManager.addReview(newReview);
 
         // Print out all reviews again
         System.out.println("After");

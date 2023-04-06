@@ -57,9 +57,9 @@ public class CollectionManagerTest {
         GameDetails details2 = gameManager.getGameDetailsByID("381626");
         GameDetails details3 = gameManager.getGameDetailsByID("381247");
 
-        colManager.addGameToCollection("123456", game0, collection1);
-        colManager.addGameToCollection("123456", details2.getGame(), collection1);
-        colManager.addGameToCollection("123456", details3.getGame(), collection1);
+        colManager.addGameToCollection("123456", game0.getId(), collection1.getId());
+        colManager.addGameToCollection("123456", details2.getGame().getId(), collection1.getId());
+        colManager.addGameToCollection("123456", details3.getGame().getId(), collection1.getId());
         collection1 = collections.get(0);
         for (String s:collection1.getGames()) {
             System.out.println(s);
@@ -72,7 +72,7 @@ public class CollectionManagerTest {
         }
         System.out.println();
 
-        colManager.addGameToCollection("123456", game0, collection1);
+        colManager.addGameToCollection("123456", game0.getId(), collection1.getId());
 
         colManager.removeGameFromCollection("123456", details2.getGame(), collection1);
 

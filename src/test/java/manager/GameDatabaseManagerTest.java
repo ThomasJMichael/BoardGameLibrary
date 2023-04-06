@@ -4,6 +4,7 @@ package test.java.manager;
 import main.java.manager.GameDatabaseManager;
 import main.java.manager.ReviewManager;
 import main.java.model.GameDetails;
+import main.java.model.Review;
 
 public class GameDatabaseManagerTest {
     public static void main(String[] args) {
@@ -19,7 +20,8 @@ public class GameDatabaseManagerTest {
         System.out.println("Game Description: " + gameDetails.getGame().getDescription());
 
         // Add a review for the test game
-        gameDetails.addReview("testuser", "This is a test review", 5);
+        //gameDetails.addReview("testuser", "This is a test review", 5);
+        ReviewManager.getInstance().addReview(new Review("testuser", gameDetails.getGame().getId(), "text", 5));
 
         System.out.println(ReviewManager.getInstance().getReviews("381247"));
 

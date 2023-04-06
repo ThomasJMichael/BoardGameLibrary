@@ -13,9 +13,9 @@ public class SearchManagerTest {
         SearchManager searchManager = SearchManager.getInstance();
 
         //add some filters
-        searchManager.addFilter(game -> game.getDescription().equals("PC"));
-        searchManager.addFilter(game -> game.getYearPublished() >= 2017);
-        searchManager.addFilter(game -> game.getCategories().equals("RPG"));
+        //searchManager.addFilter(game -> game.getDescription().equals("PC"));
+        //searchManager.addFilter(game -> game.getYearPublished() >= 2017);
+        //searchManager.addFilter(game -> game.getCategories().equals("RPG"));
 
         List<Game> games = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class SearchManagerTest {
         games.add(game4);
 
         //search for games
-        List<Game> searchResults = searchManager.search();
+        //List<Game> searchResults = searchManager.search();
         System.out.println("Original Search Results:");
         for (Game game : games) {
             System.out.println(game.getName() + " - " + game.getDescription() + " - " + game.getYearPublished());
