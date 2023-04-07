@@ -9,3 +9,4 @@ public class registerPage {
     private JButton goToLogInButton;
 
 }
+

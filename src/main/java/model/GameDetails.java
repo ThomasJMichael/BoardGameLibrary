@@ -7,6 +7,11 @@ package main.java.model;
 
 import main.java.manager.ReviewManager;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class GameDetails {
@@ -32,5 +37,25 @@ public class GameDetails {
             total += review.getRating();
         }
         return total / reviews.size();
+    }
+
+    /**
+     * Gets the image for the game from the URL stored in the game object.
+     *
+     * @return the image for the game
+     */
+    public Image getImage() throws IOException {
+        URL url = new URL(game.getImageUrl());
+        return ImageIO.read(url);
+    }
+
+    /**
+     * Gets the thumbnail for the game from the URL stored in the game object.
+     *
+     * @return the thumbnail for the game
+     */
+    public Image getThumbnail() throws IOException {
+        URL url = new URL(game.getThumbnailUrl());
+        return ImageIO.read(url);
     }
 }
