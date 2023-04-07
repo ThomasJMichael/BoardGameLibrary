@@ -31,29 +31,16 @@ import java.util.function.Predicate;
             return instance;
         }
 
-        /**
-         *
-         * @param query the game the user wants to search.
-         * @return the games that match the query.
-         */
-        public List<GameDetails> searchGames(String query) {
-            List<GameDetails> matchingGames = new ArrayList<>();
-            for (GameDetails game : gamesMap.values()) {
-                if (game.getGame().getName().toLowerCase().contains(query.toLowerCase())) {
-                    matchingGames.add(game);
-                }
-            }
-            return matchingGames;
-        }
 
         /**
-         * TODO Needs to be tested for functionality
-         * Searches the game database for games that contain any of the words in the query string.
-         * Returns a list of matching games, sorted by the number of matching words and the length of the game name.
+         * Searches the game database for games that contain any of the words in the query string
+         * in both the game name, description, and designers. Returns a list of matching games, sorted by
+         * the number of matching words and the length of the game name.
+         *
          * @param query the query string to search for
          * @return a list of matching games, sorted by the number of matching words and the length of the game name
          */
-        public List<GameDetails> fuzzySearchGames(String query) {
+        public List<GameDetails> searchGames(String query) {
 
             // Split the query into individual words
             String[] queryWords = query.toLowerCase().split(" ");
@@ -63,14 +50,19 @@ import java.util.function.Predicate;
 
             for (GameDetails gameDetails : gamesMap.values()) {
                 int matches = 0;
-                // Check if the game name contains any of the query words
+                // Check if the game name, description, categories or designers contain any of the query words
                 for (String queryWord : queryWords) {
-                    if (gameDetails.getGame().getName().toLowerCase().contains(queryWord)) {
+                    if (gameDetails.getGame().getName().toLowerCase().contains(queryWord)
+                            || gameDetails.getGame().getDescription().toLowerCase().contains(queryWord)
+                            || gameDetails.getGame().getCategories().stream().anyMatch(category -> category.toLowerCase().contains(queryWord))
+                            || gameDetails.getGame().getDesigners().stream().anyMatch(designer -> designer.toLowerCase().contains(queryWord))) {
                         matches++;
                     }
                 }
-                // Add the game and the number of matches to the map
-                matchesMap.put(gameDetails, matches);
+                // Add the game and the number of matches to the map if there are any matches
+                if (matches > 0) {
+                    matchesMap.put(gameDetails, matches);
+                }
             }
             // Sort the list of games based on the number of matches and the length of the game name
             List<GameDetails> matchingGames = new ArrayList<>(matchesMap.keySet());
@@ -86,6 +78,7 @@ import java.util.function.Predicate;
             });
             return matchingGames;
         }
+
 
         /**
          * Checks if
@@ -121,19 +114,19 @@ import java.util.function.Predicate;
          * @param filters the filters applied to the search.
          * @return the results.
          */
-        public List<Game> filterGames(List<Game> games, List<Predicate<Game>> filters) {
-            List<Game> results = new ArrayList<>();
+        public List<GameDetails> filterGames(List<GameDetails> games, List<Predicate<GameDetails>> filters) {
+            List<GameDetails> results = new ArrayList<>();
 
-            for (Game game : games) {
+            for (GameDetails gameDetails : games) {
                 boolean matchesFilters = true;
-                for (Predicate<Game> filter : filters) {
-                    if (!filter.test(game)) {
+                for (Predicate<GameDetails> filter : filters) {
+                    if (!filter.test(gameDetails)) {
                         matchesFilters = false;
                         break;
                     }
                 }
                 if (matchesFilters) {
-                    results.add(game);
+                    results.add(gameDetails);
                 }
             }
             return results;
@@ -159,6 +152,8 @@ import java.util.function.Predicate;
                 predicates.remove(predicate);
             }
 
+            public void clearPredicates() { predicates.clear(); }
+
             public List<Predicate<GameDetails>> getPredicates() {
                 return predicates;
             }
@@ -176,12 +171,28 @@ import java.util.function.Predicate;
                 return game -> game.getGame().getCategories().contains(category);
             }
 
-            public Predicate<GameDetails> getMechanicsFilter(String mechanics) {
-                return game -> game.getGame().getMechanics().contains(mechanics);
+            public Predicate<GameDetails> getMechanicFilter(String mechanic) {
+                return game -> game.getGame().getMechanics().contains(mechanic);
             }
 
-            public Predicate<GameDetails> getDesignersFilter(String designer) {
+            public Predicate<GameDetails> getDesignerFilter(String designer) {
                 return game -> game.getGame().getDesigners().contains(designer);
+            }
+
+            public Predicate<GameDetails> getMinPlayersFilter(int minPlayers) {
+                return game -> game.getGame().getMinPlayers() >= minPlayers;
+            }
+
+            public Predicate<GameDetails> getMaxPlayersFilter(int maxPlayers) {
+                return game -> game.getGame().getMaxPlayers() <= maxPlayers;
+            }
+
+            public Predicate<GameDetails> getPlayingTimeFilter(int minPlayingTime, int maxPlayingTime) {
+                return game -> game.getGame().getPlayingTime() >= minPlayingTime && game.getGame().getPlayingTime() <= maxPlayingTime;
+            }
+
+            public Predicate<GameDetails> getMinAgeFilter(int minAge) {
+                return game -> game.getGame().getMinAge() >= minAge;
             }
 
         }

@@ -5,12 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
+import main.java.manager.GameDatabaseManager;
 import main.java.manager.SearchManager;
 import main.java.model.Game;
+import main.java.model.GameDetails;
 
 public class SearchManagerTest {
     public static void main(String[] args) {
         SearchManager searchManager = SearchManager.getInstance();
+
+        testFuzzySearch();
 
         //add some filters
         //searchManager.addFilter(game -> game.getDescription().equals("PC"));
@@ -67,13 +71,46 @@ public class SearchManagerTest {
         }
 
         //apply filters to the list of games
-        List<Predicate<Game>> filters = new ArrayList<>();
+        /*List<Predicate<Game>> filters = new ArrayList<>();
         filters.add(game -> game.getDescription().equals("PC"));
         filters.add(game -> game.getYearPublished() >= 2017);
         List<Game> filteredGames = searchManager.filterGames(games, filters);
         System.out.println("\nSearch Results with Filters:");
         for (Game game : filteredGames) {
             System.out.println(game.getName() + " - " + game.getCategories() + " - " + game.getYearPublished());
+        }*/
+
+    }
+    public static void testFuzzySearch() {
+        // Get the instance of SearchManager
+        SearchManager searchManager = SearchManager.getInstance();
+        GameDatabaseManager.getInstance();
+
+        // Search for games containing the word "fantasy"
+        List<GameDetails> searchResults = searchManager.searchGames("fantasy");
+
+        // Print out the results
+        System.out.println("Search Results:");
+        for (GameDetails gameDetails : searchResults) {
+            System.out.println(gameDetails.getGame().getName());
+        }
+
+        // Search for games containing the word "adventure"
+        searchResults = searchManager.searchGames("adventure");
+
+        // Print out the results
+        System.out.println("Search Results:");
+        for (GameDetails gameDetails : searchResults) {
+            System.out.println(gameDetails.getGame().getName());
+        }
+
+        // Search for games containing the word "strategy"
+        searchResults = searchManager.searchGames("strategy");
+
+        // Print out the results
+        System.out.println("Search Results:");
+        for (GameDetails gameDetails : searchResults) {
+            System.out.println(gameDetails.getGame().getName());
         }
     }
 }

@@ -47,7 +47,7 @@ public class XMLParser {
      @param xmlFile the xml file for the game database
      @return a list of Game objects parsed from the XML file
      @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested
-     @throws SAXException if any parse errors occur while parsing the XML file
+     @throws  SAXException if any parse errors occur while parsing the XML file
      @throws IOException if any I/O errors occur while reading the XML file
      */
     public static List<Game> parseGames(File xmlFile) {

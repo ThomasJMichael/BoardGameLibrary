@@ -7,4 +7,5 @@ public class registerPage {
     private JPasswordField passwordField1;
     private JButton submitButton;
     private JButton goToLogInButton;
+
 }

@@ -13,6 +13,7 @@ import main.java.model.GameDetails;
 import main.java.model.Review;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Controller {
 
@@ -189,6 +190,207 @@ public class Controller {
         return searchGamesByQuery(query);
     }
 
+    /**
+     * Searches for games by the given query and filters them by the current list of predicates.
+     *
+     * @param query The query to search for
+     * @return The list of games that match the query and the current list of predicates
+     */
+    public List<GameDetails> searchGamesWithFilters(String query){
+        List<GameDetails> searchResultsNoFilter = searchGamesByQuery(query);
+        return SearchManager.getInstance().filterGames(searchResultsNoFilter, SearchManager.FilterManager.getInstance().getPredicates());
+    }
+
+    /**
+     * Adds a predicate to the list of predicates to filter games by.
+     *
+     * @param predicate The predicate to add to the list of predicates
+     */
+    public void addPredicate(Predicate<GameDetails> predicate) {
+        SearchManager.FilterManager.getInstance().addPredicate(predicate);
+    }
+
+    /**
+     * Removes a predicate from the list of predicates to filter games by.
+     *
+     * @param predicate The predicate to remove from the list of predicates
+     */
+    public void removePredicate(Predicate<GameDetails> predicate) {
+        SearchManager.FilterManager.getInstance().removePredicate(predicate);
+    }
+
+    /**
+     * Clears the list of predicates to filter games by.
+     */
+    public void clearPredicates() {
+        SearchManager.FilterManager.getInstance().clearPredicates();
+    }
+
+    /**
+     * Adds a rating filter to the list of predicates to filter games by.
+     *
+     * @param min  The minimum rating to filter games by
+     */
+    public void addRatingFilter(int min){
+        addPredicate(SearchManager.FilterManager.getInstance().getRatingFilter(min));
+    }
+
+    /**
+     * Removes a rating filter from the list of predicates to filter games by.
+     *
+     * @param min  The minimum rating to filter games by
+     */
+    public void removeRatingFilter(int min){
+        removePredicate(SearchManager.FilterManager.getInstance().getRatingFilter(min));
+    }
+
+    /**
+     * Adds a year published filter to the list of predicates to filter games by.
+     *
+     * @param minYear  The minimum year to filter games by
+     * @param maxYear  The maximum year to filter games by
+     */
+    public void addYearPublishedFilter(int minYear, int maxYear){
+        addPredicate(SearchManager.FilterManager.getInstance().getYearPublishedFilter(minYear, maxYear));
+    }
+
+    /**
+     * Removes a year published filter from the list of predicates to filter games by.
+     *
+     * @param minYear  The minimum year to filter games by
+     * @param maxYear  The maximum year to filter games by
+     */
+    public void removeYearPublishedFilter(int minYear, int maxYear){
+        removePredicate(SearchManager.FilterManager.getInstance().getYearPublishedFilter(minYear, maxYear));
+    }
+
+    /**
+     * Adds category filter to the list of predicates to filter games by.
+     *
+     * @param category  The category to filter games by
+     */
+    public void addCategoryFilter(String category){
+        addPredicate(SearchManager.FilterManager.getInstance().getCategoryFilter(category));
+    }
+
+    /**
+     * Removes category filter from the list of predicates to filter games by.
+     *
+     * @param category  The category to filter games by
+     */
+    public void removeCategoryFilter(String category){
+        removePredicate(SearchManager.FilterManager.getInstance().getCategoryFilter(category));
+    }
+
+    /**
+     * Adds a mechanic filter to the list of predicates to filter games by.
+     *
+     * @param mechanic  The mechanic to filter games by
+     */
+    public void addMechanicFilter(String mechanic){
+        addPredicate(SearchManager.FilterManager.getInstance().getMechanicFilter(mechanic));
+    }
+
+    /**
+     * Removes a mechanic filter from the list of predicates to filter games by.
+     *
+     * @param mechanic  The mechanic to filter games by
+     */
+    public void removeMechanicFilter(String mechanic){
+        removePredicate(SearchManager.FilterManager.getInstance().getMechanicFilter(mechanic));
+    }
+
+    /**
+     * Adds a designer filter to the list of predicates to filter games by.
+     *
+     * @param designer The designer to filter games by
+     */
+    public void addDesignerFilter(String designer){
+        addPredicate(SearchManager.FilterManager.getInstance().getDesignerFilter(designer));
+    }
+
+    /**
+     * Removes a designer filter from the list of predicates to filter games by.
+     *
+     * @param designer The designer to filter games by
+     */
+    public void removeDesignerFilter(String designer){
+        removePredicate(SearchManager.FilterManager.getInstance().getDesignerFilter(designer));
+    }
+
+    /**
+     * Adds a min players filter to the list of predicates to filter games by.
+     *
+     * @param minPlayers The minimum number of players to filter games by
+     */
+    public void addMinPlayersFilter(int minPlayers){
+        addPredicate(SearchManager.FilterManager.getInstance().getMinPlayersFilter(minPlayers));
+    }
+
+    /**
+     * Removes a min players filter from the list of predicates to filter games by.
+     *
+     * @param minPlayers The minimum number of players to filter games by
+     */
+    public void removeMinPlayersFilter(int minPlayers){
+        removePredicate(SearchManager.FilterManager.getInstance().getMinPlayersFilter(minPlayers));
+    }
+
+    /**
+     * Adds a max players filter to the list of predicates to filter games by.
+     *
+     * @param maxPlayers The maximum number of players to filter games by
+     */
+    public void addMaxPlayersFilter(int maxPlayers){
+        addPredicate(SearchManager.FilterManager.getInstance().getMaxPlayersFilter(maxPlayers));
+    }
+
+    /**
+     * Removes a max players filter from the list of predicates to filter games by.
+     *
+     * @param maxPlayers The maximum number of players to filter games by
+     */
+    public void removeMaxPlayersFilter(int maxPlayers){
+        removePredicate(SearchManager.FilterManager.getInstance().getMaxPlayersFilter(maxPlayers));
+    }
+
+    /**
+     * Adds a min playtime and max playtime filter to the list of predicates to filter games by.
+     *
+     * @param minPlaytime minimum playtime
+     * @param maxPlaytime maximum playtime
+     */
+    public void addPlaytimeFilter(int minPlaytime, int maxPlaytime){
+        addPredicate(SearchManager.FilterManager.getInstance().getPlayingTimeFilter(minPlaytime, maxPlaytime));
+    }
+
+    /**
+     * Removes a min playtime and max playtime filter from the list of predicates to filter games by.
+     *
+     * @param minPlaytime minimum playtime
+     * @param maxPlaytime maximum playtime
+     */
+    public void removePlaytimeFilter(int minPlaytime, int maxPlaytime){
+        removePredicate(SearchManager.FilterManager.getInstance().getPlayingTimeFilter(minPlaytime, maxPlaytime));
+    }
+
+    /**
+     * Adds a min age filter to the list of predicates to filter games by.
+     *
+     * @param minAge The minimum age to filter games by
+     */
+    public void addMinAgeFilter(int minAge){
+        addPredicate(SearchManager.FilterManager.getInstance().getMinAgeFilter(minAge));
+    }
+
+    /**
+     * Removes a min age filter from the list of predicates to filter games by.
+     *
+     * @param minAge The minimum age to filter games by
+     */
+    public void removeMinAgeFilter(int minAge){
+        removePredicate(SearchManager.FilterManager.getInstance().getMinAgeFilter(minAge));
+    }
     /**
      *  Initializes the managers.
      */
