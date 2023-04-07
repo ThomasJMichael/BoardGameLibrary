@@ -1,4 +1,17 @@
-package main.java.manager;
+/**
+ * The SearchManager class is responsible for managing game searches and filters.
+ * The class uses the Singleton design pattern to ensure that only one instance exists at any given time.
+ * The class includes methods for searching games and filtering games based on different criteria.
+ * <p>
+ * The searchGames method searches for games that contain any of the words in the query string
+ * in both the game name, description, and designers. It returns a list of matching games, sorted by
+ * the number of matching words and the length of the game name.
+ * <p>
+ * The filterGames method filters a list of games based on a list of predicates, and returns the filtered list.
+ * <p>
+ * The FilterManager class is a nested class that provides methods for generating predicates based on different filters.
+ */
+ package main.java.manager;
 
 import main.java.model.Game;
 import main.java.model.GameDetails;
@@ -131,11 +144,24 @@ import java.util.function.Predicate;
             }
             return results;
         }
+        /**
+         * A nested class that provides methods for generating predicates based on different filters.
+         */
         public static class FilterManager{
             private static FilterManager instance = null;
             private static List<Predicate<GameDetails>> predicates;
 
+            /**
+             * Private constructor to prevent instantiation.
+             */
             private FilterManager(){}
+
+            /**
+             * Returns the instance of FilterManager.
+             * Singleton pattern.
+             *
+             * @return the instance of FilterManager
+             */
             public synchronized static FilterManager getInstance(){
                 if (instance == null){
                     instance = new FilterManager();
@@ -144,53 +170,130 @@ import java.util.function.Predicate;
                 }
                 return instance;
             }
+
+            /**
+             * Adds a predicate to the list of predicates.
+             *
+             * @param predicate the predicate to be added
+             */
             public void addPredicate(Predicate<GameDetails> predicate) {
                 predicates.add(predicate);
             }
 
+            /**
+             * Removes a predicate from the list of predicates.
+             *
+             * @param predicate the predicate to be removed
+             */
             public void removePredicate(Predicate<GameDetails> predicate) {
                 predicates.remove(predicate);
             }
 
+            /**
+             * Clears the list of predicates.
+             */
             public void clearPredicates() { predicates.clear(); }
 
+            /**
+             * Returns the list of predicates.
+             *
+             * @return the list of predicates
+             */
             public List<Predicate<GameDetails>> getPredicates() {
                 return predicates;
             }
 
-            //Implementation for more filters
+            /**
+             * Start of filters
+             */
+
+            /**
+             * Filters the games by the minimum rating.
+             *
+             * @param minRating the minimum rating
+             * @return          the predicate
+             */
             public Predicate<GameDetails> getRatingFilter(int minRating) {
                 return game -> game.averageRating() >= minRating;
             }
 
+            /**
+             * Filter the game by the year published.
+             * @param minYear the minimum year published
+             * @param maxYear the maximum year published
+             * @return        the predicate
+             */
             public Predicate<GameDetails> getYearPublishedFilter(int minYear, int maxYear) {
                 return game -> game.getGame().getYearPublished() >= minYear && game.getGame().getYearPublished() <= maxYear;
             }
 
+            /**
+             * Filters the game by category.
+             *
+             * @param category the category to filter by
+             * @return          the predicate
+             */
             public Predicate<GameDetails> getCategoryFilter(String category) {
                 return game -> game.getGame().getCategories().contains(category);
             }
 
+            /**
+             * Filters the game by mechanic.
+             *
+             * @param mechanic the mechanic to filter by
+             * @return          the predicate
+             */
             public Predicate<GameDetails> getMechanicFilter(String mechanic) {
                 return game -> game.getGame().getMechanics().contains(mechanic);
             }
 
+            /**
+             * Filters the game by designer.
+             *
+             * @param designer the designer to filter by
+             * @return          the predicate
+             */
             public Predicate<GameDetails> getDesignerFilter(String designer) {
                 return game -> game.getGame().getDesigners().contains(designer);
             }
 
+            /**
+             * Filters the game by minimum number of players.
+             *
+             * @param minPlayers the minimum number of players
+             * @return           the predicate
+             */
             public Predicate<GameDetails> getMinPlayersFilter(int minPlayers) {
                 return game -> game.getGame().getMinPlayers() >= minPlayers;
             }
 
+            /**
+             * Filters the game by maximum number of players.
+             *
+             * @param maxPlayers the maximum number of players
+             * @return           the predicate
+             */
             public Predicate<GameDetails> getMaxPlayersFilter(int maxPlayers) {
                 return game -> game.getGame().getMaxPlayers() <= maxPlayers;
             }
 
+            /**
+             * Filters the game by the playing time.
+             *
+             * @param minPlayingTime the minimum playing time
+             * @param maxPlayingTime the maximum playing time
+             * @return               the predicate
+             */
             public Predicate<GameDetails> getPlayingTimeFilter(int minPlayingTime, int maxPlayingTime) {
                 return game -> game.getGame().getPlayingTime() >= minPlayingTime && game.getGame().getPlayingTime() <= maxPlayingTime;
             }
 
+            /**
+             * Filters the game by the minimum age.
+             *
+             * @param minAge the minimum age
+             * @return       the predicate
+             */
             public Predicate<GameDetails> getMinAgeFilter(int minAge) {
                 return game -> game.getGame().getMinAge() >= minAge;
             }
