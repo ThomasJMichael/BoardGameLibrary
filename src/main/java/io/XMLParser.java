@@ -46,9 +46,6 @@ public class XMLParser {
 
      @param xmlFile the xml file for the game database
      @return a list of Game objects parsed from the XML file
-     @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested
-     @throws  SAXException if any parse errors occur while parsing the XML file
-     @throws IOException if any I/O errors occur while reading the XML file
      */
     public static List<Game> parseGames(File xmlFile) {
         try {
@@ -142,9 +139,6 @@ public class XMLParser {
 
      @param xmlFile the XML file containing user data
      @return a list of User objects parsed from the XML file
-     @throws  ParserConfigurationException if a DocumentBuilder cannot be created
-     @throws IOException if there is an I/O error while parsing the XML file
-     @throws SAXException if there is an error parsing the XML file
      */
     public static List<User> parseUsers(File xmlFile) {
         try {
@@ -182,9 +176,6 @@ public class XMLParser {
 
      @param xmlFile the XML file to be parsed.
      @return a List of Review objects parsed from the XML file. If there is any error during the parsing process, null is returned.
-     @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     @throws SAXException if any parse errors occur.
-     @throws IOException if any IO errors occur.
      */
     public static List<Review> parseReviews(File xmlFile) {
         try {
@@ -238,9 +229,6 @@ public class XMLParser {
 
      @param xmlFile the File object representing the XML file to be parsed
      @return a Map of Collection objects parsed from the XML file, or null if there was an error parsing the file
-     @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     @throws SAXException if any parse errors occur.
-     @throws IOException if any IO errors occur.
      */
     public static Map<String, List<Collection>> parseCollections(File xmlFile) {
         try {

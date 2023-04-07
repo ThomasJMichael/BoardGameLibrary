@@ -391,6 +391,24 @@ public class Controller {
     public void removeMinAgeFilter(int minAge){
         removePredicate(SearchManager.FilterManager.getInstance().getMinAgeFilter(minAge));
     }
+
+    /**
+     * Returns the property value for the given property using the ConfigManager.
+     * @param property  The property to get the value for.
+     * @return          The value of the property.
+     */
+    public String getProperty(String property){
+        return ConfigManager.getInstance().getProperty(property);
+    }
+
+    /**
+     * Sets the property value for the given property using the ConfigManager.
+     * @param property  The property to set the value for.
+     * @param value     The value to set the property to.
+     */
+    public void setProperty(String property, String value){
+        ConfigManager.getInstance().setProperty(property, value);
+    }
     /**
      *  Initializes the managers.
      */
