@@ -10,7 +10,6 @@ import main.java.manager.ReviewManager;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 

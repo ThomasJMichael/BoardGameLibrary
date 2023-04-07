@@ -12,8 +12,16 @@ public class ConfigManager implements Loadable, Savable {
     private static ConfigManager instance;
     private Properties properties;
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private  ConfigManager() {
     }
+
+    /**
+     * Singleton pattern.
+     * @return the instance of the ConfigManager.
+     */
     synchronized public static ConfigManager getInstance() {
         if (instance == null) {
             instance = new ConfigManager();
@@ -27,6 +35,12 @@ public class ConfigManager implements Loadable, Savable {
         }
         return instance;
     }
+
+    /**
+     * Gets a property from the properties file.
+     * @param key the key of the property.
+     * @return the value of the property.
+     */
     public String getProperty(String key){
         String result = properties.getProperty(key);
         if (result == null){
@@ -36,11 +50,20 @@ public class ConfigManager implements Loadable, Savable {
         return result;
     }
 
+    /**
+     * Sets a property in the properties file.
+     * @param key the key of the property.
+     * @param value the value of the property.
+     */
     public void setProperty(String key, String value){
         properties.setProperty(key, value);
         save();
     }
 
+    /**
+     * Loads the properties file.
+     * @throws IOException if the file cannot be found.
+     */
     @Override
     public void load() throws IOException {
         File propertiesFile = new File(PROPERTIES_PATH, PROPERTIES_FILE);
@@ -49,6 +72,9 @@ public class ConfigManager implements Loadable, Savable {
         }
     }
 
+    /**
+     * Saves the properties file.
+     */
     @Override
     public void save() {
         File propertiesFile = new File(PROPERTIES_PATH, PROPERTIES_FILE);
