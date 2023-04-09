@@ -33,6 +33,7 @@ public class ImageTestGUI extends JFrame {
             JLabel thumbnailLabel = new JLabel(thumbnailIcon);
             add(imageLabel);
             add(thumbnailLabel);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
