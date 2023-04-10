@@ -1,8 +1,9 @@
 package main.java.view;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class searchBar {
+public class searchBar extends JPanel {
     private JLabel searchLabel;
     private JCheckBox abstractStrategyCheckBox;
     private JCheckBox ancientCheckBox;
@@ -66,4 +67,140 @@ public class searchBar {
     private JCheckBox sportsCheckBox1;
     private JCheckBox worldWarIICheckBox1;
     private JCheckBox wargameCheckBox;
+    private JLabel filterLabel;
+
+    public searchBar() {
+        setLayout(new FlowLayout());
+        setPreferredSize(new Dimension(300,800));
+
+        filterLabel = new JLabel("Filter Games by Category: ");
+
+        abstractStrategyCheckBox = new JCheckBox("Abstract Strategy");
+        adventureCheckBox = new JCheckBox("Adventure");
+        ageOfReasonCheckBox1 = new JCheckBox("Age of Reason");
+        ancientCheckBox = new JCheckBox("Ancient");
+        animalsCheckBox = new JCheckBox("Animals");
+        arabianCheckBox = new JCheckBox("Arabian");
+        bluffingCheckBox1 = new JCheckBox("Bluffing");
+        cardGameCheckBox = new JCheckBox("Card Game");
+        childrenSGameCheckBox1 = new JCheckBox("Children's Game");
+        civilizationCheckBox = new JCheckBox("Civilization");
+        collectibleComponentsCheckBox1 = new JCheckBox("Collectible Components");
+        comicBookStripCheckBox = new JCheckBox("Comic Book Strip");
+        deductionCheckBox = new JCheckBox("Deduction");
+        diceCheckBox = new JCheckBox("Dice");
+        economicCheckBox = new JCheckBox("Economic");
+        educationalCheckBox = new JCheckBox("Educational");
+        electronicCheckBox = new JCheckBox("Electronic");
+        environmentalCheckBox1 = new JCheckBox("Environmental");
+        expansionForBaseGameCheckBox = new JCheckBox("Expansion for Base Game");
+        explorationCheckBox = new JCheckBox("Exploration");
+        fantasyCheckBox = new JCheckBox("Fantasy");
+        farmingCheckBox = new JCheckBox("Farming");
+        fightingCheckBox = new JCheckBox("Fighting");
+        horrorCheckBox = new JCheckBox("Horror");
+        humorCheckBox = new JCheckBox("Humor");
+        industryManufacturingCheckBox = new JCheckBox("Industry/Manufacturing");
+        mafiaCheckBox = new JCheckBox("Mafia");
+        mazeCheckBox = new JCheckBox("Maze");
+        medicalCheckBox = new JCheckBox("Medical");
+        medievalCheckBox = new JCheckBox("Medieval");
+        memoryCheckBox = new JCheckBox("Memory");
+        miniaturesCheckBox = new JCheckBox("Miniatures");
+        moviesTVRadioThemeCheckBox = new JCheckBox("Movies/TV/Radio Theme");
+        murderMysteryCheckBox1 = new JCheckBox("Murder/Mystery");
+        mythologyCheckBox = new JCheckBox("Mythology");
+        napoleonicCheckBox = new JCheckBox("Napoleonic");
+        nauticalCheckBox = new JCheckBox("Nautical");
+        negotiationCheckBox = new JCheckBox("Negotiation");
+        novelBasedCheckBox = new JCheckBox("Novel Based");
+        partyGameCheckBox = new JCheckBox("Party Game");
+        pikeAndShotCheckBox = new JCheckBox("Pike and Shot");
+        politicalCheckBox = new JCheckBox("Political");
+        postNapoleonicCheckBox = new JCheckBox("Post-Napoleonic");
+        prehistoricCheckBox = new JCheckBox("Prehistoric");
+        printAndPlayCheckBox = new JCheckBox("Print and Play");
+        puzzleCheckBox = new JCheckBox("Puzzle");
+        racingCheckBox = new JCheckBox("Racing");
+        renaissanceCheckBox = new JCheckBox("Renaissance");
+        scienceFictionCheckBox = new JCheckBox("Science Fiction");
+        spaceExplorationCheckBox = new JCheckBox("Space Exploration");
+        spiesSecretAgentsCheckBox1 = new JCheckBox("Spies/Secret Agents");
+        sportsCheckBox1 = new JCheckBox("Sports");
+        territoryBuildingCheckBox1 = new JCheckBox("Territory Building");
+        transportationCheckBox = new JCheckBox("Transportation");
+        travelCheckBox = new JCheckBox("Travel");
+        triviaCheckBox1 = new JCheckBox("Trivia");
+        videoGameThemeCheckBox = new JCheckBox("Video Game Theme");
+        wargameCheckBox = new JCheckBox("Wargame");
+        wordGameCheckBox = new JCheckBox("Word Game");
+        worldWarIICheckBox1 = new JCheckBox("World War II");
+
+
+
+
+
+        add(filterLabel);
+        add(abstractStrategyCheckBox);
+        add(adventureCheckBox);
+        add(ageOfReasonCheckBox1);
+        add(animalsCheckBox);
+        add(arabianCheckBox);
+        add(bluffingCheckBox1);
+        add(cardGameCheckBox);
+        add(childrenSGameCheckBox1);
+        add(civilizationCheckBox);
+        add(collectibleComponentsCheckBox1);
+        add(comicBookStripCheckBox);
+        add(deductionCheckBox);
+        add(diceCheckBox);
+        add(economicCheckBox);
+        add(educationalCheckBox);
+        add(electronicCheckBox);
+        add(environmentalCheckBox1);
+        add(expansionForBaseGameCheckBox);
+        add(explorationCheckBox);
+        add(fantasyCheckBox);
+        add(farmingCheckBox);
+        add(fightingCheckBox);
+        add(horrorCheckBox);
+        add(humorCheckBox);
+        add(industryManufacturingCheckBox);
+        add(mafiaCheckBox);
+        add(mazeCheckBox);
+        add(medicalCheckBox);
+        add(medievalCheckBox);
+        add(memoryCheckBox);
+        add(miniaturesCheckBox);
+        add(moviesTVRadioThemeCheckBox);
+        add(murderMysteryCheckBox1);
+        add(mythologyCheckBox);
+        add(napoleonicCheckBox);
+        add(nauticalCheckBox);
+        add(negotiationCheckBox);
+        add(novelBasedCheckBox);
+        add(partyGameCheckBox);
+        add(pikeAndShotCheckBox);
+        add(politicalCheckBox);
+        add(postNapoleonicCheckBox);
+        add(prehistoricCheckBox);
+        add(printAndPlayCheckBox);
+        add(puzzleCheckBox);
+        add(racingCheckBox);
+        add(renaissanceCheckBox);
+        add(scienceFictionCheckBox);
+        add(spaceExplorationCheckBox);
+        add(spiesSecretAgentsCheckBox1);
+        add(sportsCheckBox1);
+        add(territoryBuildingCheckBox1);
+        add(transportationCheckBox);
+        add(travelCheckBox);
+        add(triviaCheckBox1);
+        add(videoGameThemeCheckBox);
+        add(wargameCheckBox);
+        add(wordGameCheckBox);
+        add(worldWarIICheckBox1);
+
+    }
 }
+

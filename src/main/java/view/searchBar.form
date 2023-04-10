@@ -28,7 +28,7 @@
           <preferredSize width="250" height="20"/>
         </properties>
       </component>
-      <component id="83c19" class="javax.swing.JLabel">
+      <component id="83c19" class="javax.swing.JLabel" binding="filterLabel">
         <constraints/>
         <properties>
           <text value="or Filter by Category:"/>
