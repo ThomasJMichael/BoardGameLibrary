@@ -1,3 +1,9 @@
+/**
+ * GameCategory is an enumeration that represents the different categories of games. Each category has a name
+ * and is formatted as a string. This enum provides a list of predefined game categories that can be used by the
+ * Game class to classify games.
+ */
+
 package main.java.model;
 
 public enum GameCategory {
@@ -65,10 +71,19 @@ public enum GameCategory {
 
     private final String categoryName;
 
+    /**
+     * Constructor for GameCategory
+     *
+     * @param value The name of the category
+     */
     GameCategory(String value) {
         this.categoryName = value.toUpperCase();
     }
-
+    /**
+     * Returns the formatted name of the category
+     *
+     * @return The formatted name of the category
+     */
     @Override
     public String toString() {
         return categoryName;
