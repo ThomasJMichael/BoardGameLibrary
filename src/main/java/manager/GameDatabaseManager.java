@@ -1,9 +1,3 @@
-/**
- * GameDatabaseManager is a singleton class that manages a map of game details, loaded from an XML file using the
- * Loadable interface. It provides static methods to access the game details map, retrieve details for a specific game,
- * and load the game file. The game file path is read from the ConfigManager properties file.
- */
-
 package main.java.manager;
 
 import main.java.io.Loadable;
@@ -16,6 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * GameDatabaseManager is a singleton class that manages a map of game details, loaded from an XML file using the
+ * Loadable interface. It provides static methods to access the game details map, retrieve details for a specific game,
+ * and load the game file. The game file path is read from the ConfigManager properties file.
+ */
 public class GameDatabaseManager implements Loadable {
 
     private static String GAME_FILE_PATH;

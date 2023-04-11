@@ -1,11 +1,4 @@
-/**
- * The CollectionManager class is responsible for managing collections of games for users.
- * It implements the Loadable and Savable interfaces to load and save collections to an XML file.
- * The class is implemented as a singleton to ensure that only one instance of the collectionMap exists.
- * The collectionMap is a map that maps user IDs to lists of collections.
- * The class provides methods for creating, deleting, and retrieving collections for a user, as well as adding
- * and removing games from a collection.
- */
+
 
 package main.java.manager;
 
@@ -29,6 +22,14 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The CollectionManager class is responsible for managing collections of games for users.
+ * It implements the Loadable and Savable interfaces to load and save collections to an XML file.
+ * The class is implemented as a singleton to ensure that only one instance of the collectionMap exists.
+ * The collectionMap is a map that maps user IDs to lists of collections.
+ * The class provides methods for creating, deleting, and retrieving collections for a user, as well as adding
+ * and removing games from a collection.
+ */
 public class CollectionManager implements Loadable, Savable {
     private static String COLLECTIONS_FILE_PATH;
     private static CollectionManager instance = null;

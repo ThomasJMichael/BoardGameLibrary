@@ -1,9 +1,4 @@
-/**
- ReviewManager is a singleton class that manages a list of reviews and provides methods for retrieving and adding reviews.
- The review data is stored in an XML file, which is loaded and saved using the Loadable and Savable interfaces.
- ReviewManager uses the XMLParser class to parse the XML file and convert it to a list of Review objects.
- The ReviewManager class is thread-safe and ensures that only one instance is created by using a synchronized getInstance() method.
- */
+
 package main.java.manager;
 
 import main.java.io.Loadable;
@@ -28,6 +23,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ ReviewManager is a singleton class that manages a list of reviews and provides methods for retrieving and adding reviews.
+ The review data is stored in an XML file, which is loaded and saved using the Loadable and Savable interfaces.
+ ReviewManager uses the XMLParser class to parse the XML file and convert it to a list of Review objects.
+ The ReviewManager class is thread-safe and ensures that only one instance is created by using a synchronized getInstance() method.
+ */
 public class ReviewManager implements Loadable, Savable {
     private static String REVIEW_FILE_PATH;
     private static ReviewManager instance = null;

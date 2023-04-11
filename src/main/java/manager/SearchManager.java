@@ -1,17 +1,4 @@
-/**
- * The SearchManager class is responsible for managing game searches and filters.
- * The class uses the Singleton design pattern to ensure that only one instance exists at any given time.
- * The class includes methods for searching games and filtering games based on different criteria.
- * <p>
- * The searchGames method searches for games that contain any of the words in the query string
- * in both the game name, description, and designers. It returns a list of matching games, sorted by
- * the number of matching words and the length of the game name.
- * <p>
- * The filterGames method filters a list of games based on a list of predicates, and returns the filtered list.
- * <p>
- * The FilterManager class is a nested class that provides methods for generating predicates based on different filters.
- */
- package main.java.manager;
+package main.java.manager;
 
 import main.java.model.Game;
 import main.java.model.GameDetails;
@@ -20,6 +7,15 @@ import main.java.model.GameDetails;
 import java.util.*;
 import java.util.function.Predicate;
 
+/**
+ * The SearchManager class is responsible for managing game searches and filters.
+ * The class uses the Singleton design pattern to ensure that only one instance exists at any given time.
+ * The class includes methods for searching games and filtering games based on different criteria.
+ * <p>
+ * The searchGames method searches for games that contain any of the words in the query string
+ * in both the game name, description, and designers. It returns a list of matching games, sorted by
+ * the number of matching words and the length of the game name.
+ */
     public class SearchManager {
         private static Map<String, GameDetails> gamesMap;
         private static SearchManager instance = null;
