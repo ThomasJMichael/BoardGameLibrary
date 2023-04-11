@@ -36,6 +36,11 @@ public class ReviewManager implements Loadable, Savable {
 
     private ReviewManager(){}
 
+    /**
+     * Singleton pattern.
+     * If the instance is null, create a new instance and load the review file.
+     * @return the instance of the ReviewManager.
+     */
     synchronized public static ReviewManager getInstance(){
         if (instance == null){
             instance = new ReviewManager();
@@ -50,6 +55,11 @@ public class ReviewManager implements Loadable, Savable {
         return instance;
     }
 
+    /**
+     * Loads the review for the given game ID and returns a list of reviews.
+     * @param gameId    the ID of the game to get reviews for.
+     * @return          a list of reviews for the given game ID.
+     */
     public List<Review> getReviews(String gameId){
         if (instance == null){
             getInstance();
@@ -65,10 +75,20 @@ public class ReviewManager implements Loadable, Savable {
         return reviewsByGameId.get(gameId);
     }
 
+    /**
+     * Returns a list of all reviews.
+     *
+     * @return List of all reviews.
+     */
     public List<Review> getFullReviewList(){
         return reviewList;
     }
 
+    /**
+     * Adds a review to the review list.
+     *
+     * @param reviewToAdd   the review to add.
+     */
     public void addReview(Review reviewToAdd){
         if (instance == null){
             getInstance();
@@ -82,7 +102,12 @@ public class ReviewManager implements Loadable, Savable {
         }
         save();
     }
-
+    /**
+     * Deletes a review from the review list.
+     *
+     * @param reviewId  the string ID of the review to delete.
+     * @return          true if the review was deleted, false if the review was not found.
+     */
     public boolean deleteReview(String reviewId)  {
         Review reviewToRemove = null;
         for (Review review : reviewList) {
@@ -101,7 +126,11 @@ public class ReviewManager implements Loadable, Savable {
         }
     }
 
-
+    /**
+     * Loads the review file and parses it into a list of Review objects.
+     *
+     * @throws IOException  if the file cannot be found.
+     */
     @Override
     public void load() throws IOException {
         if (instance == null){
@@ -111,7 +140,9 @@ public class ReviewManager implements Loadable, Savable {
         reviewsByGameId = reviewList.stream().collect(Collectors.groupingBy(Review::getGameId));
     }
 
-
+    /**
+     * Saves the review list to the review file.
+     */
     @Override
     public void save() {
         if (instance == null) {
