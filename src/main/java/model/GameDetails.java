@@ -16,20 +16,38 @@ import java.util.List;
 public class GameDetails {
     private final Game game;
     private List<Review> reviews;
-
+    /**
+     * Creates a new GameDetails object.
+     *
+     * @param game the game object
+     */
     public GameDetails(Game game){
         this.game = game;
         this.reviews = ReviewManager.getInstance().getReviews(game.getId());
     }
-
+    /**
+     * Returns the game object.
+     *
+     * @return the game object
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * Returns the list of all the reviews for the game.
+     *
+     * @return the list of reviews
+     */
     public List<Review> getReviews() {
         return reviews;
     }
 
+    /**
+     * Returns the average rating for the game.
+     *
+     * @return the average rating for the game as a double
+     */
     public double averageRating(){
         double total = 0;
         for (Review review : reviews){
