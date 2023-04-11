@@ -14,9 +14,7 @@ public class homePageFrame extends JFrame {
     JButton profileButton;
     JButton settingsButton;
     JButton logoutButton;
-
     JPanel searchBar;
-
     JPanel gamePanel;
 
     // need to add
@@ -27,6 +25,7 @@ public class homePageFrame extends JFrame {
     public homePageFrame() {
         setName("Board Game Library");
         setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(1500,900));
         homeButton = new JButton("Home");
         profileButton = new JButton("Profile");
         settingsButton = new JButton("Settings");
