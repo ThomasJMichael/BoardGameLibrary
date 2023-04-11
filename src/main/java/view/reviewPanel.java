@@ -1,10 +1,12 @@
 package main.java.view;
 
 import main.java.manager.ReviewManager;
+import main.java.model.Review;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class reviewPanel {
+public class reviewPanel extends JPanel {
     private JTextField usernameTextField;
     private JTextField ratingTextField;
     private JTextArea descriptionTextArea;
@@ -12,25 +14,24 @@ public class reviewPanel {
 
     private JFrame frame;
 
-    public reviewPanel(String gameID) {
-        String username = ReviewManager.getInstance().getReviews(gameID).get(0).getUsername();
-        usernameTextField.setText(username);
+    public reviewPanel(Review R) {
+        String username = R.getUsername();
+        usernameTextField = new JTextField(username);
 
-        Integer rating = ReviewManager.getInstance().getReviews(gameID).get(0).getRating();
-        ratingTextField.setText(rating.toString());
+        Integer rating = R.getRating();
+        ratingTextField = new JTextField(rating.toString());
 
-        String description = ReviewManager.getInstance().getReviews(gameID).get(0).getText();
-        descriptionTextArea.setText(description);
-
-       // frame = new JFrame("Review");
-       // frame.setContentPane(reviewPanel);
-      //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       // frame.pack();
-      //  frame.setVisible(true);
+        String description = R.getText();
+        descriptionTextArea = new JTextArea(
+                "Username:\t" + username + "\n" +
+                "Rating:\t" + rating.toString() + "\n" +
+                "Description:\t" + description);
+        descriptionTextArea.setPreferredSize(new Dimension(350, 75));
+        add(descriptionTextArea);
 
     }
 
     public static void main(String[] args) {
-        reviewPanel panel = new reviewPanel("316624");
+        //reviewPanel panel = new reviewPanel("316624");
     }
 }

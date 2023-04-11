@@ -2,6 +2,7 @@ package main.java.view;
 
 import main.java.manager.GameDatabaseManager;
 import main.java.model.GameDetails;
+import main.java.model.Review;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,25 +11,25 @@ import java.io.IOException;
 public class gamePanel extends JPanel{
     private JLabel gameName;
     private JLabel gameImage;
+
+    private JLabel reviewLabel;
     private reviewPanel reviews;
     private JTextArea gameDescription;
-
     private JTextArea allDetails;
-
     private GameDetails gamedetails;
 
 
     public gamePanel(GameDetails game) {
         gamedetails = game;
         setLayout(new FlowLayout());
-        setPreferredSize(new Dimension(400,800));
+        setPreferredSize(new Dimension(400,1000));
 
         String name = game.getGame().getName();
         gameName = new JLabel(name);
 
         String details = game.getGame().getDescription();
         gameDescription = new JTextArea(details);
-        gameDescription.setPreferredSize(new Dimension(350,500));
+        gameDescription.setSize(new Dimension(350,100));
         gameDescription.setLineWrap(true);
         gameDescription.setWrapStyleWord(true);
 
@@ -46,9 +47,6 @@ public class gamePanel extends JPanel{
 
         String mechanics = game.getGame().getMechanics().toString();
 
-        if (!game.getReviews().isEmpty())
-            reviews = new reviewPanel(game.getGame().getId());
-
         createUIComponents();
 
         add(gameName);
@@ -56,6 +54,9 @@ public class gamePanel extends JPanel{
         add(gameDescription);
 
         allDetails = new JTextArea();
+        allDetails.setWrapStyleWord(true);
+        allDetails.setLineWrap(true);
+        allDetails.setSize(new Dimension(350, 200));
         allDetails.setText(
                 "Year Published: " + year + "\n" +
                 "Game Designers: " + designers + "\n" +
@@ -66,11 +67,23 @@ public class gamePanel extends JPanel{
                 "Mechanics: " + mechanics + "\n"
         );
         add(allDetails);
+        if (!game.getReviews().isEmpty()) {
+            reviewLabel = new JLabel("Reviews: ");
+            add(reviewLabel);
+            for (Review r:game.getReviews()) {
+                reviews = new reviewPanel(r);
+                add(reviews);
+            }
+        }
 
     }
 
+
+    // "316624"
+    // "374173"
+    // "381247"
     public static void main(String[] args) {
-        gamePanel newPanel = new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("374173"));
+        gamePanel newPanel = new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("316624"));
     }
 
 

@@ -3,6 +3,7 @@ package main.java.view;
 import main.java.controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,6 +31,7 @@ public registerPage() {
                 JOptionPane.showMessageDialog(null, "Registration Successful. Please log in.");
                 frame.setVisible(false);
                 loginPage login = new loginPage();
+                frame.dispose();
             }
             else
                 JOptionPane.showMessageDialog(null, "Registration Failed.");
@@ -38,8 +40,10 @@ public registerPage() {
     });
     frame = new JFrame("Register");
     frame.setContentPane(registerPanel);
+    frame.setPreferredSize(new Dimension(300,300));
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.pack();
+    frame.setLocationRelativeTo(null);
     frame.setVisible(true);
     goToLogInButton.addActionListener(new ActionListener() {
         @Override

@@ -3,6 +3,7 @@ package main.java.view;
 import main.java.controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -14,7 +15,6 @@ public class loginPage {
     private JPasswordField passwordField1;
     private JButton logInButton;
     private JButton registerButton;
-
     private JFrame frame;
 
     public loginPage() {
@@ -26,7 +26,7 @@ public class loginPage {
                 if (Controller.getInstance().login(username, password)) {
                     JOptionPane.showMessageDialog(null, "Login Successful.");
                     frame.setVisible(false);
-                    // now get it to actually open the main page
+                    JFrame homepage = new homePageFrame();
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Incorrect Username or Password.");
@@ -38,12 +38,15 @@ public class loginPage {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
                 registerPage register = new registerPage();
+                frame.dispose();
             }
         });
 
         frame = new JFrame("Login");
+        frame.setLocationRelativeTo(null);
         frame.setContentPane(loginPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(300,300));
         frame.pack();
         frame.setVisible(true);
     }
