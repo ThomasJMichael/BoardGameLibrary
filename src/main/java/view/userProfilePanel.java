@@ -9,7 +9,7 @@ import java.util.List;
 import main.java.manager.CollectionManager;
 import main.java.model.Collection;
 import main.java.manager.UserDataManager;
-import main.java.model.User;
+import main.java.controller.Controller;
 
 public abstract class userProfilePanel implements ActionListener {
     private final String userID;
@@ -49,18 +49,23 @@ public abstract class userProfilePanel implements ActionListener {
         panel1 = new JPanel();
         tabbedPane.addTab("Account Settings", panel1);
         JButton logOutButton = new JButton("Logout");
+        Controller.getInstance().login("alice123", "password123");
 
         //creates action listener for logout button
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean log = UserDataManager.getInstance().logout();
-
-                if (log) {
-                    JOptionPane.showMessageDialog(null, "Successfully logged out");
+                if (UserDataManager.getInstance().getCurrentUser() == null) {
+                    JOptionPane.showMessageDialog(null, "User not logged in");
                 }
                 else {
-                    JOptionPane.showMessageDialog(null, "Logout failed");
+                    boolean log = UserDataManager.getInstance().logout();
+
+                    if (log) {
+                        JOptionPane.showMessageDialog(null, "Successfully logged out");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Logout failed");
+                    }
                 }
 
             }
@@ -103,11 +108,11 @@ public abstract class userProfilePanel implements ActionListener {
         tabbedPane.setAlignmentY(0);
         frame.add(tabbedPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400,300);
+        frame.setSize(900,600);
 
         //set the title with a centered label
         JLabel titleLabel = new JLabel("Profile", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Mulish", Font.PLAIN, 20));
+        titleLabel.setFont(new Font("Mulish", Font.PLAIN, 50));
         frame.setTitle("");
         frame.add(titleLabel, BorderLayout.NORTH);
 
