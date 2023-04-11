@@ -1,6 +1,8 @@
 package main.java.view;
 
 import javax.swing.*;
+
+import main.java.manager.GameDatabaseManager;
 import main.java.view.searchBar;
 
 import java.awt.*;
@@ -14,6 +16,8 @@ public class homePageFrame extends JFrame {
     JButton logoutButton;
 
     JPanel searchBar;
+
+    JPanel gamePanel;
 
     // need to add
 
@@ -40,7 +44,9 @@ public class homePageFrame extends JFrame {
 
         add(searchBar, BorderLayout.LINE_START);
 
+        gamePanel = new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("374173"));
 
+        add(gamePanel, BorderLayout.LINE_END);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
