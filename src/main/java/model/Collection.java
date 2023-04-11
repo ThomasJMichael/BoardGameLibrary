@@ -1,12 +1,12 @@
-/**
-  *The Collection class represents a collection of board games.
-  *Each collection has a name, description, id, and a list of games.
-  *The games can be represented by their ids as strings or as actual Game objects.
- **/
 package main.java.model;
 
 import java.util.*;
 
+/**
+ * The Collection class represents a collection of board games.
+ * Each collection has a name, description, id, and a list of games.
+ * The games can be represented by their ids as strings or as actual Game objects.
+ */
 public class Collection {
     private String name;
     private String description;

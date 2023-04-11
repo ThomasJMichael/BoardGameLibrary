@@ -1,12 +1,11 @@
-/**
-  * Represents a board game with various attributes such as name, year published, min and max players, and game mechanics.
-  * Provides methods to access and modify these attributes.
- **/
-
 package main.java.model;
 
 import java.util.List;
 
+/**
+ * Represents a board game with various attributes such as name, year published, min and max players, and game mechanics.
+ * Provides methods to access and modify these attributes.
+ */
 public class Game {
     public static GameCategory Category;
     private String id;
@@ -122,6 +121,13 @@ public class Game {
      */
     public int getPlayingTime() {
         return playingTime;
+    }
+
+    /**
+     * Sets the playing time of the game.
+     */
+    public void setPlayingTime(int playingTime){
+        this.playingTime = playingTime;
     }
 
     /**

@@ -1,11 +1,4 @@
-/**
- * This file contains the UserDataManager class, which manages user data such as login credentials
- * and user profiles. This class implements the Loadable and Savable interfaces to allow for data
- * to be loaded from and saved to an XML file. It also implements the Singleton pattern to ensure
- * that there is only one instance of this class. This class contains methods to log users in and
- * out, register new users, change passwords, get user information, delete users, and check if a
- * user exists. It also contains methods to load and save user data to the XML file.
- */
+
 package main.java.manager;
 
 import main.java.io.Loadable;
@@ -26,6 +19,14 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.List;
 
+/**
+ * This file contains the UserDataManager class, which manages user data such as login credentials
+ * and user profiles. This class implements the Loadable and Savable interfaces to allow for data
+ * to be loaded from and saved to an XML file. It also implements the Singleton pattern to ensure
+ * that there is only one instance of this class. This class contains methods to log users in and
+ * out, register new users, change passwords, get user information, delete users, and check if a
+ * user exists. It also contains methods to load and save user data to the XML file.
+ */
 public class UserDataManager implements Loadable, Savable {
     private static String USER_FILE_PATH;
     private static UserDataManager instance = null;

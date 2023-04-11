@@ -1,13 +1,10 @@
-/**
-  * This class represents a user object and includes fields for the user's username, password, and name.
-  * This class is used in conjunction with the UserDataManager to manage user data in the system.
- **/
-
 package main.java.model;
 
 /**
- * The User class represents a user of the system.
- */
+ * This class represents a user object and includes fields for the user's username, password, and name.
+ * This class is used in conjunction with the UserDataManager to manage user data in the system.
+ **/
+
 public class User {
     private String id;
     private String username;

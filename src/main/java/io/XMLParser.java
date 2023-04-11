@@ -1,21 +1,3 @@
-/*
- * XMLParser.java
- *
- *
- * This class provides methods to parse XML data and convert it into Java objects for various board game related data,
- * including users, games, reviews, and collections.
- *
- * Supported data formats:
- * - Users: Custom format created for BGL
- * - Games: BGG XML Game format
- * - Reviews: Custom format created for BGL
- * - Collections: Custom format created for BGL
- *
- * To use this parser, simply call the appropriate static method for the data type you wish to parse, passing in the
- * XML data as an XML File. The method will return a Java object representing the parsed data.
- *
- * Note: This parser does not perform any validation of the XML data beyond basic syntax checking.
- */
 
 package main.java.io;
 
@@ -39,6 +21,24 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/*
+ * XMLParser.java
+ *
+ *
+ * This class provides methods to parse XML data and convert it into Java objects for various board game related data,
+ * including users, games, reviews, and collections.
+ *
+ * Supported data formats:
+ * - Users: Custom format created for BGL
+ * - Games: BGG XML Game format
+ * - Reviews: Custom format created for BGL
+ * - Collections: Custom format created for BGL
+ *
+ * To use this parser, simply call the appropriate static method for the data type you wish to parse, passing in the
+ * XML data as an XML File. The method will return a Java object representing the parsed data.
+ *
+ * Note: This parser does not perform any validation of the XML data beyond basic syntax checking.
+ */
 public class XMLParser {
 
     /**

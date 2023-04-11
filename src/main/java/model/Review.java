@@ -1,9 +1,3 @@
-/**
- * Class representing a review for a board game on BoardGameGeek.
- * Stores the username of the reviewer, the ID of the game being reviewed,
- * the review text, and the rating given to the game.
- */
-
 package main.java.model;
 
 import java.util.HashSet;

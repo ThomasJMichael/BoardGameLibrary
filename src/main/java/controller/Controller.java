@@ -1,10 +1,3 @@
-/**
- * The Controller class is responsible for managing the interaction between the view and the model of the application.
- * It initializes each of the managers, which are responsible for managing specific parts of the application.
- * The methods in the Controller class utilize methods from each of the managers to update the model accordingly.
- * It is a singleton class, so only one instance of it can exist at a time.
- */
-
 package main.java.controller;
 
 import main.java.manager.*;
@@ -15,6 +8,12 @@ import main.java.model.Review;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * The Controller class is responsible for managing the interaction between the view and the model of the application.
+ * It initializes each of the managers, which are responsible for managing specific parts of the application.
+ * The methods in the Controller class utilize methods from each of the managers to update the model accordingly.
+ * It is a singleton class, so only one instance of it can exist at a time.
+ */
 public class Controller {
 
     private static Controller instance = null;

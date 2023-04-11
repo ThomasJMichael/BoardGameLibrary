@@ -1,11 +1,4 @@
-/**
- * The ConfigManager class is responsible for managing the configuration of the application.
- * It implements the Loadable and Savable interfaces for reading and writing to a properties file.
- * The class uses the Singleton design pattern to ensure that only one instance exists at any given time.
- * The properties file is stored in the src/main/resources directory.
- * The class provides methods for getting and setting properties.
- * The properties are accessed using key-value pairs.
- */
+
 package main.java.manager;
 
 import main.java.io.Loadable;
@@ -14,6 +7,14 @@ import main.java.io.Savable;
 import java.io.*;
 import java.util.Properties;
 
+/**
+ * The ConfigManager class is responsible for managing the configuration of the application.
+ * It implements the Loadable and Savable interfaces for reading and writing to a properties file.
+ * The class uses the Singleton design pattern to ensure that only one instance exists at any given time.
+ * The properties file is stored in the src/main/resources directory.
+ * The class provides methods for getting and setting properties.
+ * The properties are accessed using key-value pairs.
+ */
 public class ConfigManager implements Loadable, Savable {
     private static final String PROPERTIES_FILE = "config.properties";
     private static final String PROPERTIES_PATH = "src/main/resources/";

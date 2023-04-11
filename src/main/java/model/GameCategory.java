@@ -1,11 +1,10 @@
+package main.java.model;
+
 /**
  * GameCategory is an enumeration that represents the different categories of games. Each category has a name
  * and is formatted as a string. This enum provides a list of predefined game categories that can be used by the
  * Game class to classify games.
  */
-
-package main.java.model;
-
 public enum GameCategory {
     WARGAME("Wargame"),
     MINIATURES("Miniatures"),
