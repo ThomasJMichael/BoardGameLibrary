@@ -1,3 +1,12 @@
+/**
+ * The CollectionManager class is responsible for managing collections of games for users.
+ * It implements the Loadable and Savable interfaces to load and save collections to an XML file.
+ * The class is implemented as a singleton to ensure that only one instance of the collectionMap exists.
+ * The collectionMap is a map that maps user IDs to lists of collections.
+ * The class provides methods for creating, deleting, and retrieving collections for a user, as well as adding
+ * and removing games from a collection.
+ */
+
 package main.java.manager;
 
 import main.java.io.Loadable;
@@ -25,8 +34,17 @@ public class CollectionManager implements Loadable, Savable {
     private static CollectionManager instance = null;
     private Map<String, List<Collection>> collectionMap;
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private CollectionManager() {}
 
+    /**
+     * Returns the instance of the CollectionManager or initializes it if it has not been initialized yet.
+     * Loads the collections file and stores the data in the collectionMap.
+     *
+     * @return the instance of the CollectionManager
+     */
     synchronized public static CollectionManager getInstance(){
         if (instance == null){
             instance = new CollectionManager();
@@ -41,6 +59,11 @@ public class CollectionManager implements Loadable, Savable {
         return instance;
     }
 
+    /**
+     * Creates a new collection for the user with the given id.
+     *
+     * @param id the id of the user
+     */
     public void createCollection(String id) {
         // if user id exists
         // add to their list of collections
@@ -55,6 +78,15 @@ public class CollectionManager implements Loadable, Savable {
             userCollection.add(newCollection);
         }
     }
+
+    /**
+     * Creates a new collection for the user with the given id.
+     *
+     * @param id            the id of the user
+     * @param name          the name of the collection
+     * @param description   the description of the collection
+     * @return              true if the collection was created successfully, false otherwise
+     */
     public boolean createCollection(String id, String name, String description) {
         if (collectionMap.get(id) == null) {
             System.out.println("User not found.");
@@ -67,7 +99,12 @@ public class CollectionManager implements Loadable, Savable {
             return userCollection.contains(newCollection);
         }
     }
-
+    /**
+     * Deletes the given collection from the user with the given id.
+     *
+     * @param id            the id of the user
+     * @param collection    the collection to delete
+     */
     public void deleteCollection(String id, Collection collection) {
         if (collectionMap.get(id) == null) {
             System.out.println("User not found.");
@@ -82,6 +119,14 @@ public class CollectionManager implements Loadable, Savable {
             userCollection.remove(index);
         }
     }
+
+    /**
+     * Deletes the collection with the given id from the user with the given id.
+     *
+     * @param username      the id of the user
+     * @param collectionId  the id of the collection to delete
+     * @return              true if the collection was deleted successfully, false otherwise
+     */
     public boolean deleteCollection(String username, String collectionId) {
         if (collectionMap.get(username) == null) {
             System.out.println("User not found.");
@@ -104,7 +149,11 @@ public class CollectionManager implements Loadable, Savable {
         }
     }
 
-
+    /**
+     * Returns the collections of the user with the given id as a list.
+     * @param id    the id of the user
+     * @return      the list of collections
+     */
     public List<Collection> getCollections(String id) {
         if (collectionMap.get(id) == null) {
             System.out.println("User not found.");
@@ -115,7 +164,13 @@ public class CollectionManager implements Loadable, Savable {
             return userCollection;
         }
     }
-
+    /**
+     * Adds a game to a specific collection for a user.
+     *
+     * @param id            the id of the user
+     * @param collectionId  the id of the collection
+     * @return              the collection
+     */
     public boolean addGameToCollection(String id, String gameId, String collectionId) {
         if (collectionMap.get(id) == null) {
             System.out.println("User not found.");
@@ -145,7 +200,12 @@ public class CollectionManager implements Loadable, Savable {
         }
     }
 
-
+    /**
+     * Removes a game from a specific collection for a user.
+     *
+     * @param id          the id of the user
+     * @param collection  the id of the collection
+     */
     public void removeGameFromCollection(String id, Game game, Collection collection) {
         if (collectionMap.get(id) == null) {
             System.out.println("User not found.");
@@ -192,7 +252,9 @@ public class CollectionManager implements Loadable, Savable {
         }
     }
 
-
+    /**
+     * Loads the collections from the XML file.
+     */
     @Override
     public void load() {
         if (instance == null){
@@ -205,6 +267,9 @@ public class CollectionManager implements Loadable, Savable {
         collectionMap = XMLParser.parseCollections(new File(COLLECTIONS_FILE_PATH));
     }
 
+    /**
+     * Saves the collections to the XML file.
+     */
     @Override
     public void save() {
         try {
