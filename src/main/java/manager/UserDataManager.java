@@ -120,6 +120,7 @@ public class UserDataManager implements Loadable, Savable {
         }
         User newUser = new User(username, password, name);
         allUsers.add(newUser);
+        CollectionManager.getInstance().createCollection(newUser.getId(),"Favorites", "A Collection of my favorite games.");
         save();
     }
 
