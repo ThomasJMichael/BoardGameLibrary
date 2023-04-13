@@ -19,6 +19,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +78,7 @@ public class CollectionManager implements Loadable, Savable {
             List<Collection> userCollection = collectionMap.get(id);
             Collection newCollection = new Collection("untitled");
             userCollection.add(newCollection);
+            save();
         }
     }
 
@@ -90,13 +92,17 @@ public class CollectionManager implements Loadable, Savable {
      */
     public boolean createCollection(String id, String name, String description) {
         if (collectionMap.get(id) == null) {
-            System.out.println("User not found.");
-            return false;
+           Collection newCollection = new Collection(name, description);
+           List<Collection> userCollections =  new ArrayList<>();
+           userCollections.add(newCollection);
+           collectionMap.put(id, userCollections);
+           return true;
         }
         else {
             List<Collection> userCollection = collectionMap.get(id);
             Collection newCollection = new Collection(name, description);
             userCollection.add(newCollection);
+            save();
             return userCollection.contains(newCollection);
         }
     }
@@ -118,6 +124,7 @@ public class CollectionManager implements Loadable, Savable {
                 return;
             }
             userCollection.remove(index);
+            save();
         }
     }
 
@@ -145,7 +152,9 @@ public class CollectionManager implements Loadable, Savable {
                 System.out.println("Collection to delete not found.");
                 return false;
             } else {
-                return userCollection.remove(collectionToDelete);
+                userCollection.remove(collectionToDelete);
+                save();
+                return true;
             }
         }
     }
