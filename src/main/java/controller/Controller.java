@@ -1,9 +1,7 @@
 package main.java.controller;
 
 import main.java.manager.*;
-import main.java.model.Collection;
-import main.java.model.GameDetails;
-import main.java.model.Review;
+import main.java.model.*;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -199,7 +197,29 @@ public class Controller {
         List<GameDetails> searchResultsNoFilter = searchGamesByQuery(query);
         return SearchManager.getInstance().filterGames(searchResultsNoFilter, SearchManager.FilterManager.getInstance().getPredicates());
     }
-
+    /**
+     * Returns a list of recommended games based on the user's favorites collection.
+     *
+     * @param numberOfRecommendations the number of recommended games to return
+     * @return a list of recommended games
+     */
+    public List<GameDetails> getRecommendedGames(int numberOfRecommendations){
+        User currentUser = UserDataManager.getInstance().getCurrentUser();
+        Collection specificCollection = CollectionManager.getInstance().getCollectionByName(currentUser.getId(), "Favorites");
+        if (specificCollection == null){
+            return null;
+        }
+        return SearchManager.getInstance().getRecomendedGames(currentUser.getId(), specificCollection.getId(), numberOfRecommendations);
+    }
+   /**
+    * Returns a list of randomly selected recommended games.
+    *
+    * @param numberOfGames the number of games to return
+    * @return a list of randomly selected recommended games
+    */
+    public List<GameDetails> getRandomGames(int numberOfGames){
+        return SearchManager.getInstance().getRandomRecommendedGames(numberOfGames);
+    }
     /**
      * Adds a predicate to the list of predicates to filter games by.
      *

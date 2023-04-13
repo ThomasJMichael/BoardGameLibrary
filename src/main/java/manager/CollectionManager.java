@@ -182,6 +182,22 @@ public class CollectionManager implements Loadable, Savable {
         return null;
     }
     /**
+     * Retrieves a collection with a specified name for a given user.
+     *
+     * @param userId the ID of the user
+     * @param collectionName the name of the collection to retrieve
+     * @return the collection with the specified name, or null if it does not exist
+     */
+    public Collection getCollectionByName(String userId, String collectionName){
+        List<Collection> allCollections = getCollections(userId);
+        for (Collection collection : allCollections){
+            if (collection.getName().equals(collectionName)){
+                return collection;
+            }
+        }
+        return null;
+    }
+    /**
      * Adds a game to a specific collection for a user.
      *
      * @param id            the id of the user
