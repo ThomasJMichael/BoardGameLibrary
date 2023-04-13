@@ -1,5 +1,9 @@
 package main.java.model;
 
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
 /**
  * This class represents a user object and includes fields for the user's username, password, and name.
  * This class is used in conjunction with the UserDataManager to manage user data in the system.
@@ -10,6 +14,7 @@ public class User {
     private String username;
     private String password;
     private String name;
+    private static Set<String> usedIds = new HashSet<>();
 
     /**
      * Constructs a User object with the given username, password, and name.
@@ -22,6 +27,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.name = name;
+        this.id = generateUserId();
     }
 
     /**
@@ -94,5 +100,23 @@ public class User {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * Generates a unique ID for a user.
+     * Checks the usedIds set to ensure that the ID is unique.
+     *
+     * @return the generated ID
+     */
+    public static String generateUserId(){
+        Random random = new Random(System.currentTimeMillis());
+
+        String id = String.valueOf(random.nextInt(900000) + 100000); // Generate a random 6-digit number
+        while (usedIds.contains(id)) {
+            id = String.valueOf(random.nextInt(900000) + 100000);
+        }
+        usedIds.add(id);
+        return id;
+
     }
 }

@@ -127,18 +127,18 @@ public class UserDataManager implements Loadable, Savable {
     /**
      * Changes the password of the current user.
      *
-     * @param oldpassword   the old password of the current user.
+     * @param oldPassword   the old password of the current user.
      * @param newPassword   the new password of the current user.
      * @return              true if the password was changed successfully, false otherwise.
      */
-    public boolean changePassword(String oldpassword, String newPassword){
+    public boolean changePassword(String oldPassword, String newPassword){
         if (instance == null){
             getInstance();
         }
         if (currentUser == null){
             return false;
         }
-        if (currentUser.getPassword().equals(oldpassword)){
+        if (currentUser.getPassword().equals(oldPassword)){
             currentUser.setPassword(newPassword);
             save();
             return true;
