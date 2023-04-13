@@ -151,19 +151,35 @@ public class CollectionManager implements Loadable, Savable {
     }
 
     /**
-     * Returns the collections of the user with the given id as a list.
-     * @param id    the id of the user
+     * Returns the collections of the user with the given userId as a list.
+     * @param userId    the userId of the user
      * @return      the list of collections
      */
-    public List<Collection> getCollections(String id) {
-        if (collectionMap.get(id) == null) {
+    public List<Collection> getCollections(String userId) {
+        if (collectionMap.get(userId) == null) {
             System.out.println("User not found.");
             return null;
         }
         else {
-            List<Collection> userCollection = collectionMap.get(id);
+            List<Collection> userCollection = collectionMap.get(userId);
             return userCollection;
         }
+    }
+
+    /**
+     * Returns a specific collection for the given user.
+     * @param userId        Id of the user
+     * @param collectionId  Id of the collection
+     * @return              The collection if found, null otherwise.
+     */
+    public Collection getSpecificCollection(String userId, String collectionId){
+        List<Collection> allCollections = getCollections(userId);
+        for (Collection collection : allCollections){
+            if (collection.getId().equals(collectionId)){
+                return collection;
+            }
+        }
+        return null;
     }
     /**
      * Adds a game to a specific collection for a user.

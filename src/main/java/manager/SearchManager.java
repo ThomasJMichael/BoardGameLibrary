@@ -1,5 +1,6 @@
 package main.java.manager;
 
+import main.java.model.Collection;
 import main.java.model.Game;
 import main.java.model.GameDetails;
 
@@ -90,7 +91,7 @@ import java.util.function.Predicate;
 
 
         /**
-         * Checks if
+         * Searches with filters applied.
          * @param filters to filter the game search.
          * @return the results of the search with a filter.
          */
@@ -140,6 +141,95 @@ import java.util.function.Predicate;
             }
             return results;
         }
+        /**
+        * Returns a list of recommended games based on the specified collection ID and number of recommendations.
+        * The method uses the game mechanics and categories in the collection to determine which games to recommend.
+        * If the user has no games in the collection it will just return random games.
+        * @param collectionId the ID of the collection to base recommendations on
+        * @param numberOfRecommendations the number of recommendations to return
+        * @return a list of recommended games based on the specified collection ID and number of recommendations or random games if the collection is empty.
+        * @throws IllegalArgumentException if the specified collection ID is invalid
+        */
+        public List<GameDetails> getRecomendedGames(String userId, String collectionId, int numberOfRecommendations) throws IllegalArgumentException{
+            Collection userCollection = CollectionManager.getInstance().getSpecificCollection(userId, collectionId);
+            if (userCollection == null){
+                System.out.println("Error: Collection not found.");
+                throw new IllegalArgumentException();
+            }
+            //If the user has no games in the collection it will just return random games
+            if (userCollection.getGames().isEmpty()){
+                return getRandomRecommendedGames(numberOfRecommendations);
+            }
+            List<String> mechanics = new ArrayList<>();
+            List<String> categories = new ArrayList<>();
+
+            for (String gameId : userCollection.getGames()){
+                mechanics.addAll(GameDatabaseManager.getGameDetailsByID(gameId).getGame().getMechanics());
+                categories.addAll(GameDatabaseManager.getGameDetailsByID(gameId).getGame().getMechanics());
+            }
+
+            Map<String, Integer> mechanicCount = new HashMap<>();
+            Map<String, Integer> categoryCount = new HashMap<>();
+            for (String mechanic : mechanics){
+                mechanicCount.put(mechanic, mechanicCount.getOrDefault(mechanic, 0) + 1);
+            }
+            for (String category : categories){
+                categoryCount.put(category, categoryCount.getOrDefault(category, 0) + 1);
+            }
+
+            List<GameDetails> allGames = new ArrayList<>(gamesMap.values());
+            allGames.sort((game1, game2) -> {
+                int game1MechanicCount = 0;
+                int game1CategoryCount = 0;
+                int game2MechanicCount = 0;
+                int game2CategoryCount = 0;
+
+                for (String mechanic : game1.getGame().getMechanics()){
+                    game1MechanicCount+= mechanicCount.getOrDefault(mechanic, 0);
+                }
+                for (String category : game1.getGame().getCategories()){
+                    game1CategoryCount += categoryCount.getOrDefault(category, 0);
+                }
+                for (String mechanic : game2.getGame().getMechanics()){
+                    game2MechanicCount += mechanicCount.getOrDefault(mechanic, 0);
+                }
+                for (String category : game2.getGame().getCategories()){
+                    game2CategoryCount += categoryCount.getOrDefault(category, 0);
+                }
+
+                int game1Score = game1MechanicCount + game1CategoryCount;
+                int game2Score = game2MechanicCount + game2CategoryCount;
+
+                return Integer.compare(game2Score, game1Score);
+            });
+            List<GameDetails> recommendedGames = new ArrayList<>();
+            recommendedGames = allGames.subList(0, Math.min(numberOfRecommendations, allGames.size()));
+            return recommendedGames;
+        }
+
+        /**
+        * Returns a list of randomly recommended games from the entire library.
+        * @param numberOfRecommendations The number of games to recommend.
+        * @return A list of randomly recommended games.
+        */
+        public List<GameDetails> getRandomRecommendedGames(int numberOfRecommendations) {
+            List<GameDetails> allGames = SearchManager.getInstance().searchGames("");
+            List<GameDetails> recommendedGames = new ArrayList<>();
+
+            if (allGames.isEmpty()) {
+                // If there are no games in the library, return an empty list.
+                return recommendedGames;
+            }
+
+            // Add numberOfRecommendations random games to the recommendedGames list.
+            Random random = new Random();
+            for (int i = 0; i < numberOfRecommendations; i++) {
+                GameDetails randomGame = allGames.get(random.nextInt(allGames.size()));
+                recommendedGames.add(randomGame);
+            }
+
+                return recommendedGames;
+            }
         /**
          * A nested class that provides methods for generating predicates based on different filters.
          */
