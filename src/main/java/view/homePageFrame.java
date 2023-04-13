@@ -64,9 +64,9 @@ public class homePageFrame extends JFrame {
 
         add(searchBar, BorderLayout.LINE_START);
 
-        gamePanel = new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("316624"));
+        gamePanel = new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("374173"));
 
-        gameScroll = new JScrollPane(gamePanel);
+        gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         gameScroll.setVisible(true);
 
@@ -80,7 +80,7 @@ public class homePageFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        homePageFrame frame = new homePageFrame();
+        new homePageFrame();
     }
 
 }

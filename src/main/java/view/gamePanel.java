@@ -82,9 +82,12 @@ public class gamePanel extends JPanel{
     // "316624"
     // "374173"
     // "381247"
+
+
     public static void main(String[] args) {
         gamePanel newPanel = new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("316624"));
     }
+
 
 
     private void createUIComponents() {

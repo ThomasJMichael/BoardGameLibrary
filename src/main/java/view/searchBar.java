@@ -1,14 +1,20 @@
 package main.java.view;
 
+import main.java.controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.zip.DeflaterInputStream;
+
+import static main.java.model.GameCategory.*;
 
 public class searchBar extends JPanel {
     private JLabel searchLabel;
     private JCheckBox abstractStrategyCheckBox;
     private JCheckBox ancientCheckBox;
     private JCheckBox bluffingCheckBox1;
-    private JCheckBox cityBuildingCheckBox;
     private JCheckBox comicBookStripCheckBox;
     private JCheckBox economicCheckBox;
     private JCheckBox environmentalCheckBox1;
@@ -18,6 +24,8 @@ public class searchBar extends JPanel {
     private JCheckBox adventureCheckBox;
     private JCheckBox animalsCheckBox;
     private JCheckBox cardGameCheckBox;
+
+    private JCheckBox cityBuildingCheckBox;
     private JCheckBox civilizationCheckBox;
     private JCheckBox deductionCheckBox;
     private JCheckBox educationalCheckBox;
@@ -65,7 +73,7 @@ public class searchBar extends JPanel {
     private JCheckBox prehistoricCheckBox;
     private JCheckBox wordGameCheckBox;
     private JCheckBox sportsCheckBox1;
-    private JCheckBox worldWarIICheckBox1;
+    private final JCheckBox worldWarIICheckBox1;
     private JCheckBox wargameCheckBox;
     private JLabel filterLabel;
 
@@ -76,65 +84,862 @@ public class searchBar extends JPanel {
         filterLabel = new JLabel("Filter Games by Category: ");
 
         abstractStrategyCheckBox = new JCheckBox("Abstract Strategy");
+        abstractStrategyCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(ABSTRACT_STRATEGY.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(ABSTRACT_STRATEGY.toString());
+                }
+            }
+        });
+
         adventureCheckBox = new JCheckBox("Adventure");
+        adventureCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(ADVENTURE.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(ADVENTURE.toString());
+                }
+            }
+        });
+
         ageOfReasonCheckBox1 = new JCheckBox("Age of Reason");
+        ageOfReasonCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(AGE_OF_REASON.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(AGE_OF_REASON.toString());
+                }
+            }
+        });
+
         ancientCheckBox = new JCheckBox("Ancient");
+        ancientCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(ANCIENT.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(ANCIENT.toString());
+                }
+            }
+        });
+
         animalsCheckBox = new JCheckBox("Animals");
+        animalsCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(ANIMALS.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(ANIMALS.toString());
+                }
+            }
+        });
+
         arabianCheckBox = new JCheckBox("Arabian");
+        arabianCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(ARABIAN.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(ARABIAN.toString());
+                }
+            }
+        });
+
+
         bluffingCheckBox1 = new JCheckBox("Bluffing");
+        bluffingCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(BLUFFING.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(BLUFFING.toString());
+                }
+            }
+        });
+
         cardGameCheckBox = new JCheckBox("Card Game");
+        cardGameCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(CARD_GAME.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(CARD_GAME.toString());
+                }
+            }
+        });
+
         childrenSGameCheckBox1 = new JCheckBox("Children's Game");
+        childrenSGameCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(CHILDRENS_GAME.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(CHILDRENS_GAME.toString());
+                }
+            }
+        });
+
+        cityBuildingCheckBox = new JCheckBox("City Building");
+        cityBuildingCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(CITY_BUILDING.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(CITY_BUILDING.toString());
+                }
+            }
+        });
+
         civilizationCheckBox = new JCheckBox("Civilization");
+        civilizationCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(CIVILIZATION.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(CIVILIZATION.toString());
+                }
+            }
+        });
+
         collectibleComponentsCheckBox1 = new JCheckBox("Collectible Components");
+        collectibleComponentsCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(COLLECTIBLE_COMPONENTS.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(COLLECTIBLE_COMPONENTS.toString());
+                }
+            }
+        });
+
         comicBookStripCheckBox = new JCheckBox("Comic Book Strip");
+        comicBookStripCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(COMIC_BOOK_STRIP.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(COMIC_BOOK_STRIP.toString());
+                }
+            }
+        });
+
         deductionCheckBox = new JCheckBox("Deduction");
+        deductionCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(DEDUCTION.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(DEDUCTION.toString());
+                }
+            }
+        });
+
         diceCheckBox = new JCheckBox("Dice");
+        diceCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(DICE.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(DICE.toString());
+                }
+            }
+        });
+
         economicCheckBox = new JCheckBox("Economic");
+        economicCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(ECONOMIC.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(ECONOMIC.toString());
+                }
+            }
+        });
+
         educationalCheckBox = new JCheckBox("Educational");
+        educationalCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(EDUCATIONAL.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(EDUCATIONAL.toString());
+                }
+            }
+        });
+
         electronicCheckBox = new JCheckBox("Electronic");
+        electronicCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(ELECTRONIC.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(ELECTRONIC.toString());
+                }
+            }
+        });
+
         environmentalCheckBox1 = new JCheckBox("Environmental");
+        environmentalCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(ENVIRONMENTAL.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(ENVIRONMENTAL.toString());
+                }
+            }
+        });
+
         expansionForBaseGameCheckBox = new JCheckBox("Expansion for Base Game");
+        expansionForBaseGameCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(EXPANSION_FOR_BASE_GAME.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(EXPANSION_FOR_BASE_GAME.toString());
+                }
+            }
+        });
+
         explorationCheckBox = new JCheckBox("Exploration");
+        explorationCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(EXPLORATION.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(EXPLORATION.toString());
+                }
+            }
+        });
+
         fantasyCheckBox = new JCheckBox("Fantasy");
+        fantasyCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(FANTASY.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(FANTASY.toString());
+                }
+            }
+        });
+
         farmingCheckBox = new JCheckBox("Farming");
+        farmingCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(FARMING.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(FARMING.toString());
+                }
+            }
+        });
+
         fightingCheckBox = new JCheckBox("Fighting");
+        fightingCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(FIGHTING.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(FIGHTING.toString());
+                }
+            }
+        });
+
         horrorCheckBox = new JCheckBox("Horror");
+        horrorCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(HORROR.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(HORROR.toString());
+                }
+            }
+        });
+
         humorCheckBox = new JCheckBox("Humor");
+        humorCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(HUMOR.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(HUMOR.toString());
+                }
+            }
+        });
+
         industryManufacturingCheckBox = new JCheckBox("Industry/Manufacturing");
+        industryManufacturingCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(INDUSTRY_MANUFACTURING.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(INDUSTRY_MANUFACTURING.toString());
+                }
+            }
+        });
+
         mafiaCheckBox = new JCheckBox("Mafia");
+        mafiaCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MAFIA.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MAFIA.toString());
+                }
+            }
+        });
+
         mazeCheckBox = new JCheckBox("Maze");
+        mazeCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MAZE.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MAZE.toString());
+                }
+            }
+        });
+
         medicalCheckBox = new JCheckBox("Medical");
+
+        medicalCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MEDICAL.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MEDICAL.toString());
+                }
+            }
+        });
+
+
+
         medievalCheckBox = new JCheckBox("Medieval");
+        medievalCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MEDIEVAL.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MEDIEVAL.toString());
+                }
+            }
+        });
+
         memoryCheckBox = new JCheckBox("Memory");
+        memoryCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MEMORY.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MEMORY.toString());
+                }
+            }
+        });
+
         miniaturesCheckBox = new JCheckBox("Miniatures");
+        miniaturesCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MINIATURES.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MINIATURES.toString());
+                }
+            }
+        });
+
         moviesTVRadioThemeCheckBox = new JCheckBox("Movies/TV/Radio Theme");
+        moviesTVRadioThemeCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MOVIES_TV_RADIO_THEME.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MOVIES_TV_RADIO_THEME.toString());
+                }
+            }
+        });
+
         murderMysteryCheckBox1 = new JCheckBox("Murder/Mystery");
+        murderMysteryCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MURDER_MYSTERY.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MURDER_MYSTERY.toString());
+                }
+            }
+        });
+
         mythologyCheckBox = new JCheckBox("Mythology");
+        mythologyCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(MYTHOLOGY.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(MYTHOLOGY.toString());
+                }
+            }
+        });
+
         napoleonicCheckBox = new JCheckBox("Napoleonic");
+        napoleonicCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(NAPOLEONIC.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(NAPOLEONIC.toString());
+                }
+            }
+        });
+
         nauticalCheckBox = new JCheckBox("Nautical");
+        nauticalCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(NAUTICAL.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(NAUTICAL.toString());
+                }
+            }
+        });
+
         negotiationCheckBox = new JCheckBox("Negotiation");
+        negotiationCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(NEGOTIATION.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(NEGOTIATION.toString());
+                }
+            }
+        });
+
         novelBasedCheckBox = new JCheckBox("Novel Based");
+        novelBasedCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(NOVEL_BASED.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(NOVEL_BASED.toString());
+                }
+            }
+        });
+
         partyGameCheckBox = new JCheckBox("Party Game");
+        partyGameCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(PARTY_GAME.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(PARTY_GAME.toString());
+                }
+            }
+        });
+
         pikeAndShotCheckBox = new JCheckBox("Pike and Shot");
+        pikeAndShotCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(PIKE_AND_SHOT.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(PIKE_AND_SHOT.toString());
+                }
+            }
+        });
+
         politicalCheckBox = new JCheckBox("Political");
+        politicalCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(POLITICAL.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(POLITICAL.toString());
+                }
+            }
+        });
+
         postNapoleonicCheckBox = new JCheckBox("Post-Napoleonic");
+        postNapoleonicCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(POST_NAPOLEONIC.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(POST_NAPOLEONIC.toString());
+                }
+            }
+        });
+
         prehistoricCheckBox = new JCheckBox("Prehistoric");
+        prehistoricCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(PREHISTORIC.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(PREHISTORIC.toString());
+                }
+            }
+        });
+
         printAndPlayCheckBox = new JCheckBox("Print and Play");
+        printAndPlayCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(PRINT_AND_PLAY.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(PRINT_AND_PLAY.toString());
+                }
+            }
+        });
+
         puzzleCheckBox = new JCheckBox("Puzzle");
+        puzzleCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(PUZZLE.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(PUZZLE.toString());
+                }
+            }
+        });
+
         racingCheckBox = new JCheckBox("Racing");
+        racingCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(RACING.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(RACING.toString());
+                }
+            }
+        });
+
         renaissanceCheckBox = new JCheckBox("Renaissance");
+        renaissanceCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(RENAISSANCE.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(RENAISSANCE.toString());
+                }
+            }
+        });
+
         scienceFictionCheckBox = new JCheckBox("Science Fiction");
+        scienceFictionCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(SCIENCE_FICTION.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(SCIENCE_FICTION.toString());
+                }
+            }
+        });
+
         spaceExplorationCheckBox = new JCheckBox("Space Exploration");
+        spaceExplorationCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(SPACE_EXPLORATION.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(SPACE_EXPLORATION.toString());
+                }
+            }
+        });
+
         spiesSecretAgentsCheckBox1 = new JCheckBox("Spies/Secret Agents");
+        spiesSecretAgentsCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(SPIES_SECRET_AGENTS.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(SPIES_SECRET_AGENTS.toString());
+                }
+            }
+        });
+
         sportsCheckBox1 = new JCheckBox("Sports");
+        sportsCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(SPORTS.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(SPORTS.toString());
+                }
+            }
+        });
+
         territoryBuildingCheckBox1 = new JCheckBox("Territory Building");
+        territoryBuildingCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(TERRITORY_BUILDING.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(TERRITORY_BUILDING.toString());
+                }
+            }
+        });
+
         transportationCheckBox = new JCheckBox("Transportation");
+        transportationCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(TRANSPORTATION.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(TRANSPORTATION.toString());
+                }
+            }
+        });
+
         travelCheckBox = new JCheckBox("Travel");
+        travelCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(TRAVEL.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(TRAVEL.toString());
+                }
+            }
+        });
+
         triviaCheckBox1 = new JCheckBox("Trivia");
+        triviaCheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(TRIVIA.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(TRIVIA.toString());
+                }
+            }
+        });
+
         videoGameThemeCheckBox = new JCheckBox("Video Game Theme");
+        videoGameThemeCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(VIDEO_GAME_THEME.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(VIDEO_GAME_THEME.toString());
+                }
+            }
+        });
+
         wargameCheckBox = new JCheckBox("Wargame");
+        wargameCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(WARGAME.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(WARGAME.toString());
+                }
+            }
+        });
+
         wordGameCheckBox = new JCheckBox("Word Game");
+        wordGameCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(WORD_GAME.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(WORD_GAME.toString());
+                }
+            }
+        });
+
         worldWarIICheckBox1 = new JCheckBox("World War II");
+        worldWarIICheckBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AbstractButton abstractButton = (AbstractButton) e.getSource();
+                if (abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().addCategoryFilter(WORLD_WAR_II.toString());
+                }
+                if (!abstractButton.getModel().isSelected()) {
+                    Controller.getInstance().removeCategoryFilter(WORLD_WAR_II.toString());
+                }
+            }
+        });
 
 
 
@@ -149,6 +954,7 @@ public class searchBar extends JPanel {
         add(bluffingCheckBox1);
         add(cardGameCheckBox);
         add(childrenSGameCheckBox1);
+        add(cityBuildingCheckBox);
         add(civilizationCheckBox);
         add(collectibleComponentsCheckBox1);
         add(comicBookStripCheckBox);
