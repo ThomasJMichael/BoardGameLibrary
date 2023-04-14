@@ -12,4 +12,10 @@
         <name>Bob</name>
         <email>bob.johnson@example.com</email>
     </user>
+    <user id="3">
+        <username>asia0000</username>
+        <password>password0000</password>
+        <name>Asia</name>
+        <email>something@uah.edu</email>
+    </user>
 </users>

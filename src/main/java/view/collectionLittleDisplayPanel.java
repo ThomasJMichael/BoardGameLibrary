@@ -18,8 +18,8 @@ public class collectionLittleDisplayPanel extends JPanel{
 
     private JFrame frame;
 
-    public collectionLittleDisplayPanel(GameDetails game) {
-        gamedetails = game;
+    public collectionLittleDisplayPanel(String gameID) {
+        gamedetails = GameDatabaseManager.getGameDetailsByID(gameID);
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(150, 200));
         createUIComponents();
@@ -48,7 +48,7 @@ public class collectionLittleDisplayPanel extends JPanel{
     public static void main(String args[]) {
         JFrame frame = new JFrame("game");
         frame.setLayout(new FlowLayout());
-        collectionLittleDisplayPanel panel = new collectionLittleDisplayPanel(GameDatabaseManager.getInstance().getGameDetailsByID("374173"));
+        collectionLittleDisplayPanel panel = new collectionLittleDisplayPanel("374173");
         frame.add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
