@@ -11,12 +11,13 @@ public class collectionLittleDisplayPanel extends JPanel{
 
     private JLabel gameThumbnail;
     private JLabel gameTitle;
-    private JPanel littleGamePanel;
     private JCheckBox checkGame;
 
+    private JButton viewButton;
+
+    private JPanel selectionPanel;
     private GameDetails gamedetails;
 
-    private JFrame frame;
 
     public collectionLittleDisplayPanel(String gameID) {
         gamedetails = GameDatabaseManager.getGameDetailsByID(gameID);
@@ -24,7 +25,7 @@ public class collectionLittleDisplayPanel extends JPanel{
         setPreferredSize(new Dimension(150, 200));
         createUIComponents();
 
-        add(checkGame, BorderLayout.PAGE_START);
+        add(selectionPanel, BorderLayout.PAGE_START);
         add(gameThumbnail, BorderLayout.CENTER);
         add(gameTitle, BorderLayout.PAGE_END);
 
@@ -34,6 +35,11 @@ public class collectionLittleDisplayPanel extends JPanel{
         String name = gamedetails.getGame().getName();
         gameTitle = new JLabel(name);
         checkGame = new JCheckBox();
+        viewButton = new JButton("Details");
+
+        selectionPanel = new JPanel(new FlowLayout());
+        selectionPanel.add(checkGame);
+        selectionPanel.add(viewButton);
 
         try {
             Image thumbnailURL = gamedetails.getThumbnail();
