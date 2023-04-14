@@ -3,7 +3,9 @@ package main.java.view;
 import javax.swing.*;
 
 import main.java.controller.Controller;
+import main.java.manager.CollectionManager;
 import main.java.manager.GameDatabaseManager;
+import main.java.model.GameDetails;
 import main.java.view.searchBar;
 
 import java.awt.*;
@@ -28,9 +30,22 @@ public class homePageFrame extends JFrame {
     // game view: LINE_END
 
     public homePageFrame() {
-        setName("Board Game Library");
+        setTitle("Board Game Library");
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1500,900));
+
+        showRandomGame();
+        createPanelComponents();
+
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+    }
+
+    private void createPanelComponents() {
 
         homeButton = new JButton("Home");
 
@@ -58,25 +73,31 @@ public class homePageFrame extends JFrame {
         navigationButtonsPanel.add(settingsButton);
         navigationButtonsPanel.add(logoutButton);
 
-        add(navigationButtonsPanel, BorderLayout.PAGE_START);
 
         searchBar = new searchBar();
 
-        add(searchBar, BorderLayout.LINE_START);
-
-        gamePanel = new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("374173"));
-
+        //changeGame(Controller.getInstance().getRandomGames(1).get(0).getGame().getId());
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         gameScroll.setVisible(true);
 
+
+        add(navigationButtonsPanel, BorderLayout.PAGE_START);
+        add(searchBar, BorderLayout.LINE_START);
         add(gameScroll, BorderLayout.LINE_END);
+    }
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
+    private void changeGame(String gameID) {
+        System.out.println("Button was pushed.");
+        gamePanel = new gamePanel(GameDatabaseManager.getGameDetailsByID(gameID));
+        remove(gameScroll);
+        gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        add(gameScroll, BorderLayout.LINE_END);
+        revalidate();
+    }
 
+    private void showRandomGame() {
+        gamePanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0));
     }
 
     public static void main(String[] args) {

@@ -38,28 +38,64 @@ public class gamePanel extends JPanel{
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(400, 1500));
 
-        String name = game.getGame().getName();
+        createUIComponents(); // generate and size game image
+
+        add(gameName);
+        add(gameImage);
+        add(addToFavoritesButton);
+        add(addToCollectionLabel);
+        add(collectionDropdown);
+        add(confirmButton);
+        add(gameDescription);
+        add(allDetails);
+
+        if (!game.getReviews().isEmpty()) {
+            reviewLabel = new JLabel("Reviews: ");
+            add(reviewLabel);
+            for (Review r:game.getReviews()) {
+                reviews = new reviewPanel(r);
+                add(reviews);
+            }
+        }
+
+    }
+
+
+    // "316624"
+    // "374173"
+    // "381247"
+
+
+    public static void main(String[] args) {
+        gamePanel newPanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0));
+    }
+
+
+
+    private void createUIComponents() {
+
+        String name = gamedetails.getGame().getName();
         gameName = new JLabel(name);
 
-        String details = game.getGame().getDescription();
+        String details = gamedetails.getGame().getDescription();
         gameDescription = new JTextArea(details);
         gameDescription.setSize(new Dimension(375,100));
         gameDescription.setLineWrap(true);
         gameDescription.setWrapStyleWord(true);
 
-        String year = String.valueOf(game.getGame().getYearPublished());
+        String year = String.valueOf(gamedetails.getGame().getYearPublished());
 
-        String minPlayers = String.valueOf(game.getGame().getMinPlayers());
+        String minPlayers = String.valueOf(gamedetails.getGame().getMinPlayers());
 
-        String maxPlayers = String.valueOf(game.getGame().getMaxPlayers());
+        String maxPlayers = String.valueOf(gamedetails.getGame().getMaxPlayers());
 
-        String designers = game.getGame().getDesigners().toString();
+        String designers = gamedetails.getGame().getDesigners().toString();
 
-        String minAge = String.valueOf(game.getGame().getMinAge());
+        String minAge = String.valueOf(gamedetails.getGame().getMinAge());
 
-        String playingTime = String.valueOf(game.getGame().getPlayingTime());
+        String playingTime = String.valueOf(gamedetails.getGame().getPlayingTime());
 
-        String mechanics = game.getGame().getMechanics().toString();
+        String mechanics = gamedetails.getGame().getMechanics().toString();
 
         addToFavoritesButton = new JButton("Add to Favorites");
         // probably need the favorites to be the very first collection on everyone's list
@@ -106,7 +142,7 @@ public class gamePanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 int collectionIndex = collectionDropdown.getSelectedIndex();
                 Collection selectedCollection = collections.get(collectionIndex);
-                if (Controller.getInstance().addGameToCollection(game.getGame().getId(), selectedCollection.getId())) {
+                if (Controller.getInstance().addGameToCollection(gamedetails.getGame().getId(), selectedCollection.getId())) {
                     JOptionPane.showMessageDialog(null, "Added " + name + " to " + collectionDropdown.getSelectedItem() + ".");
                 }
                 else {
@@ -115,7 +151,6 @@ public class gamePanel extends JPanel{
             }
         });
 
-        createImageComponents(); // generate and size game image
 
         allDetails = new JTextArea();
         allDetails.setWrapStyleWord(true);
@@ -127,43 +162,9 @@ public class gamePanel extends JPanel{
                         "Min Players: " + minPlayers + "\n" +
                         "Max Players: " + maxPlayers + "\n" +
                         "Min Age: " + minAge + "\n" +
-                        "Playing Time: " + playingTime + "\n" +
+                        "Playing Time: " + playingTime + " minutes\n" +
                         "Mechanics: " + mechanics + "\n"
         );
-
-        add(gameName);
-        add(gameImage);
-        add(addToFavoritesButton);
-        add(addToCollectionLabel);
-        add(collectionDropdown);
-        add(confirmButton);
-        add(gameDescription);
-        add(allDetails);
-
-        if (!game.getReviews().isEmpty()) {
-            reviewLabel = new JLabel("Reviews: ");
-            add(reviewLabel);
-            for (Review r:game.getReviews()) {
-                reviews = new reviewPanel(r);
-                add(reviews);
-            }
-        }
-
-    }
-
-
-    // "316624"
-    // "374173"
-    // "381247"
-
-
-    public static void main(String[] args) {
-        gamePanel newPanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0));
-    }
-
-
-
-    private void createImageComponents() {
         try {
             Image imageURL = gamedetails.getImage();
             ImageIcon imageIcon = new ImageIcon(imageURL);
