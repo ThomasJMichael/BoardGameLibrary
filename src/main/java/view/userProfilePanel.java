@@ -11,7 +11,7 @@ import main.java.model.Collection;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
 
-public abstract class userProfilePanel implements ActionListener {
+public class userProfilePanel extends JPanel implements ActionListener{
     private final String userID;
     CollectionManager collectionManager = CollectionManager.getInstance();
     /**
@@ -28,15 +28,28 @@ public abstract class userProfilePanel implements ActionListener {
      * @param userID user's ID
      */
     public userProfilePanel(String userID) {
-        this.userID = userID;
-        this.collectionManager = CollectionManager.getInstance();
-        List<Collection> collections = collectionManager.getCollections(userID);
-        this.tabbedPane = new JTabbedPane();
+        this.userID = "123456";
+        List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
 
+        //iterate through the list
         for (Collection collection : collections) {
             JButton collButton = new JButton(collection.getName());
-            JPanel panel = new JPanel();
-            tabbedPane.addTab(collection.getName(), panel);
+            add(collButton);
+            collButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JFrame collectionFrame = new JFrame(collection.getName());
+                    collectionFrame.setLayout(new FlowLayout());
+                    List<String> games = collection.getGames();
+                    for (String game : games) {
+                        JPanel collectionLittleDisplayPanel = new collectionLittleDisplayPanel(game);
+                        collectionFrame.add(collectionLittleDisplayPanel);
+                    }
+                    collectionFrame.setVisible(true);
+                    collectionFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                    collectionFrame.pack();
+                }
+            });
         }
 
     }
@@ -81,7 +94,7 @@ public abstract class userProfilePanel implements ActionListener {
 
                 if (oldPassword != null && newPassword != null && !oldPassword.isEmpty() && !newPassword.isEmpty()) {
 
-                    boolean checkYes = UserDataManager.getInstance().changePassword(oldPassword, newPassword);
+                    boolean checkYes = Controller.getInstance().changePassword(oldPassword, newPassword);
 
                     if (checkYes) {
                         JOptionPane.showMessageDialog(null, "Password successfully updated");
@@ -101,7 +114,7 @@ public abstract class userProfilePanel implements ActionListener {
         panel1.add(passButton);
 
         //initializes Collections panel
-        panel2 = new JPanel();
+        panel2 = new userProfilePanel("123456");
         tabbedPane.addTab("Collections", panel2);
 
         //formats frame
@@ -118,5 +131,9 @@ public abstract class userProfilePanel implements ActionListener {
 
         //sets frame to visible
         frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
     }
 }
