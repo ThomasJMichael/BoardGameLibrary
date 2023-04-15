@@ -20,6 +20,11 @@ public class mainPage extends JPanel implements ActionListener {
 
     private homePageFrame homePage;
 
+    private JTextField searchBar;
+
+    private List<GameDetails> displayedGames;
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -43,11 +48,25 @@ public class mainPage extends JPanel implements ActionListener {
         homePage = frame;
         setPreferredSize(new Dimension(800, 2500));
         setLayout(new FlowLayout());
-        List<GameDetails> randomGames = Controller.getInstance().getRandomGames(50);
-        for (GameDetails game : randomGames) {
+
+        searchBar = new JTextField("Enter Search Term...");
+        searchBar.setPreferredSize(new Dimension(700, 20));
+        searchBar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // search
+            }
+        });
+
+        add(searchBar);
+
+        displayedGames = Controller.getInstance().getRandomGames(50);
+        for (GameDetails game : displayedGames) {
             JPanel gameDisplay = new collectionLittleDisplayPanel(game.getGame().getId(), homePage);
             add(gameDisplay);
         }
+
+
 
     }
     public static void main(String[] args) {

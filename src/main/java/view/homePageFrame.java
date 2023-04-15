@@ -93,7 +93,6 @@ public class homePageFrame extends JFrame {
 
 
     public void changeGameView(String gameID) {
-        System.out.println("Button was pushed.");
         gamePanel = new gamePanel(GameDatabaseManager.getGameDetailsByID(gameID));
         remove(gameScroll);
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
