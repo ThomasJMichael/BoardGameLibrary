@@ -20,9 +20,8 @@ public class homePageFrame extends JFrame {
     private JButton settingsButton;
     private JButton logoutButton;
     private JPanel searchBar;
-    private JPanel gamePanel;
-
-    private JScrollPane gameScroll;
+    private static JPanel gamePanel;
+    private static JScrollPane gameScroll;
 
     // need to add
 
@@ -36,7 +35,6 @@ public class homePageFrame extends JFrame {
 
         showRandomGame();
         createPanelComponents();
-
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
@@ -74,9 +72,7 @@ public class homePageFrame extends JFrame {
         navigationButtonsPanel.add(logoutButton);
 
 
-        searchBar = new searchBar();
-
-        //changeGame(Controller.getInstance().getRandomGames(1).get(0).getGame().getId());
+        searchBar = new searchBar(this);
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         gameScroll.setVisible(true);
@@ -87,7 +83,8 @@ public class homePageFrame extends JFrame {
         add(gameScroll, BorderLayout.LINE_END);
     }
 
-    private void changeGame(String gameID) {
+
+    public void changeGameView(String gameID) {
         System.out.println("Button was pushed.");
         gamePanel = new gamePanel(GameDatabaseManager.getGameDetailsByID(gameID));
         remove(gameScroll);

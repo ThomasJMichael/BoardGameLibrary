@@ -18,4 +18,21 @@
             <game>342942</game>
         </collection>
     </user>
+    <user id="3">
+        <collection name = "Favorites" id ="4">
+            <description>My favorite games</description>
+        </collection>
+        <collection name="Loved" id="5">
+            <description>A list of games I really love</description>
+            <game>281946</game>
+            <game>20100</game>
+            <game>329845</game>
+        </collection>
+        <collection name="Hated" id="6">
+            <description>Games I hate with a passion</description>
+            <game>188834</game>
+            <game>2453</game>
+            <game>320</game>
+        </collection>
+    </user>
 </collections>

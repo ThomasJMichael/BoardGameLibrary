@@ -111,12 +111,12 @@ public class gamePanel extends JPanel{
         String[] collectionNames;
         // want to get the current user's collections
         if  (UserDataManager.getInstance().getCurrentUser() == null) {
-            collections = Controller.getInstance().getCollectionsByUser("123456");
+            collections = Controller.getInstance().getCollectionsByUser("3");
             collectionNames = new String[collections.size()];
             for (int i = 0; i < collections.size(); i++) {
                 collectionNames[i] = collections.get(i).getName();
             }
-            System.out.println("User not working");
+            System.out.println("User not logged in");
         }
         else {
             collections = Controller.getInstance().getCollectionsByUser(UserDataManager.getInstance().getCurrentUser().getId());
