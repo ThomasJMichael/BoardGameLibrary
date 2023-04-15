@@ -23,11 +23,14 @@ public class userProfilePanel extends JPanel implements ActionListener{
      */
     private static JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
+    private homePageFrame homePage;
+
     /**
      * Imports collections to create one button for each collection.
      * @param userID user's ID
      */
-    public userProfilePanel(String userID) {
+    public userProfilePanel(String userID, homePageFrame frame) {
+        homePage = frame;
         this.userID = "123456";
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
 
@@ -42,11 +45,12 @@ public class userProfilePanel extends JPanel implements ActionListener{
                     collectionFrame.setLayout(new FlowLayout());
                     List<String> games = collection.getGames();
                     for (String game : games) {
-                        JPanel collectionLittleDisplayPanel = new collectionLittleDisplayPanel(game);
+                        JPanel collectionLittleDisplayPanel = new collectionLittleDisplayPanel(game, frame);
                         collectionFrame.add(collectionLittleDisplayPanel);
                     }
                     collectionFrame.setVisible(true);
-                    collectionFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                    collectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    collectionFrame.setLocationRelativeTo(null);
                     collectionFrame.pack();
                 }
             });
@@ -114,7 +118,7 @@ public class userProfilePanel extends JPanel implements ActionListener{
         panel1.add(passButton);
 
         //initializes Collections panel
-        panel2 = new userProfilePanel("123456");
+        panel2 = new userProfilePanel("123456", new homePageFrame());
         tabbedPane.addTab("Collections", panel2);
 
         //formats frame
@@ -128,7 +132,7 @@ public class userProfilePanel extends JPanel implements ActionListener{
         titleLabel.setFont(new Font("Mulish", Font.PLAIN, 50));
         frame.setTitle("");
         frame.add(titleLabel, BorderLayout.NORTH);
-
+        frame.setLocationRelativeTo(null);
         //sets frame to visible
         frame.setVisible(true);
     }

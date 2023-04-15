@@ -13,29 +13,43 @@ import main.java.model.GameDetails;
 import main.java.view.userProfilePanel;
 
 
-public class mainPage extends JFrame implements ActionListener {
+public class mainPage extends JPanel implements ActionListener {
 
     private static JFrame frame = new JFrame();
     private static JPanel panel = new JPanel(new BorderLayout());
+
+    private homePageFrame homePage;
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
 
+    /*
     public abstract class userProfile extends userProfilePanel {
 
         /**
          * Imports collections to create one button for each collection.
          *
          * @param userID user's ID
-         */
+         *
         public userProfile(String userID) {
             super(userID);
         }
     }
+    */
 
-    mainPage() {}
+    public mainPage(homePageFrame frame) {
+        homePage = frame;
+        setPreferredSize(new Dimension(800, 2500));
+        setLayout(new FlowLayout());
+        List<GameDetails> randomGames = Controller.getInstance().getRandomGames(50);
+        for (GameDetails game : randomGames) {
+            JPanel gameDisplay = new collectionLittleDisplayPanel(game.getGame().getId(), homePage);
+            add(gameDisplay);
+        }
+
+    }
     public static void main(String[] args) {
         //main page title
         JLabel title = new JLabel("Board Game Library");
@@ -85,7 +99,7 @@ public class mainPage extends JFrame implements ActionListener {
         panel.add(searchP, BorderLayout.CENTER);
         panel.add(randomPanel);
 
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 600);
         frame.add(panel);
         frame.setVisible(true);

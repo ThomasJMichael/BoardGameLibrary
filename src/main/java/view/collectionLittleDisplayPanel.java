@@ -5,6 +5,8 @@ import main.java.model.GameDetails;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class collectionLittleDisplayPanel extends JPanel{
@@ -13,13 +15,16 @@ public class collectionLittleDisplayPanel extends JPanel{
     private JLabel gameTitle;
     private JCheckBox checkGame;
 
-    private JButton viewButton;
+    private JButton detailsButton;
 
     private JPanel selectionPanel;
     private GameDetails gamedetails;
 
+    private homePageFrame homePage;
 
-    public collectionLittleDisplayPanel(String gameID) {
+
+    public collectionLittleDisplayPanel(String gameID, homePageFrame frame) {
+        homePage = frame;
         gamedetails = GameDatabaseManager.getGameDetailsByID(gameID);
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(150, 200));
@@ -35,11 +40,20 @@ public class collectionLittleDisplayPanel extends JPanel{
         String name = gamedetails.getGame().getName();
         gameTitle = new JLabel(name);
         checkGame = new JCheckBox();
-        viewButton = new JButton("Details");
+
+        detailsButton = new JButton("Details");
+        detailsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.changeGameView(gamedetails.getGame().getId());
+            }
+        });
+
 
         selectionPanel = new JPanel(new FlowLayout());
         selectionPanel.add(checkGame);
-        selectionPanel.add(viewButton);
+
+        selectionPanel.add(detailsButton);
 
         try {
             Image thumbnailURL = gamedetails.getThumbnail();
@@ -51,6 +65,7 @@ public class collectionLittleDisplayPanel extends JPanel{
         }
     }
 
+    /*
     public static void main(String args[]) {
         JFrame frame = new JFrame("game");
         frame.setLayout(new FlowLayout());
@@ -60,4 +75,6 @@ public class collectionLittleDisplayPanel extends JPanel{
         frame.pack();
         frame.setVisible(true);
     }
+
+     */
 }

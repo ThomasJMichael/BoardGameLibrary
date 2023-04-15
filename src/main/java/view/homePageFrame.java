@@ -20,8 +20,12 @@ public class homePageFrame extends JFrame {
     private JButton settingsButton;
     private JButton logoutButton;
     private JPanel searchBar;
-    private static JPanel gamePanel;
-    private static JScrollPane gameScroll;
+    private JPanel gamePanel;
+    private JScrollPane gameScroll;
+
+    private JPanel mainPage;
+
+    private JScrollPane mainScroll;
 
     // need to add
 
@@ -76,11 +80,15 @@ public class homePageFrame extends JFrame {
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         gameScroll.setVisible(true);
+        mainPage = new mainPage(this);
+        mainScroll = new JScrollPane(mainPage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        mainScroll.setVisible(true);
 
 
         add(navigationButtonsPanel, BorderLayout.PAGE_START);
         add(searchBar, BorderLayout.LINE_START);
         add(gameScroll, BorderLayout.LINE_END);
+        add(mainScroll,BorderLayout.CENTER);
     }
 
 

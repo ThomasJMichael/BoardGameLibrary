@@ -164,7 +164,7 @@ public class Controller {
      * @return              true if the game is added to the collection, false otherwise
      */
     public boolean addGameToCollection(String gameId, String collectionId){
-        return CollectionManager.getInstance().addGameToCollection(UserDataManager.getInstance().getUsername(), gameId, collectionId);
+        return CollectionManager.getInstance().addGameToCollection(UserDataManager.getInstance().getCurrentUser().getId(), gameId, collectionId);
     }
 
     /**
