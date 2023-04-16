@@ -234,7 +234,7 @@ public class Controller {
         if (specificCollection == null){
             return null;
         }
-        return SearchManager.getInstance().getRecomendedGames(currentUser.getId(), specificCollection.getId(), numberOfRecommendations);
+        return SearchManager.getInstance().getRecommendedGames(currentUser.getId(), specificCollection.getId(), numberOfRecommendations);
     }
    /**
     * Returns a list of randomly selected recommended games.

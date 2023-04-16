@@ -7,6 +7,7 @@ import main.java.model.GameDetails;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * The SearchManager class is responsible for managing game searches and filters.
@@ -50,7 +51,7 @@ public class SearchManager {
      * @param query the query string to search for
      * @return a list of matching games, sorted by the number of matching words and the length of the game name
      */
-    public List<GameDetails> searchGames(String query) {
+    public List<GameDetails> oldSearchGames(String query) {
 
         // Split the query into individual words
         String[] queryWords = query.toLowerCase().split(" ");
@@ -89,7 +90,127 @@ public class SearchManager {
         return matchingGames;
     }
 
+    public List<GameDetails> searchGames(String query) {
+        if (query == null || query.isEmpty()) {
+            // Return an empty list if the query is null or empty
+            return new ArrayList<>();
+        }
 
+        // Perform fuzzy search and get a list of matching games
+        List<GameDetails> fuzzyResults = fuzzySearch(query);
+
+        // Perform smart search on the list of matching games
+        List<GameDetails> smartResults = smartSearch(query, fuzzyResults);
+
+        // Sort the list based on relevance
+        smartResults.sort((game1, game2) -> Integer.compare(calculateRelevance(game1, query), calculateRelevance(game2, query)));
+
+        // Reverse the order to get the most relevant games first
+        Collections.reverse(smartResults);
+
+        return smartResults;
+    }
+
+
+    private List<GameDetails> fuzzySearch(String query) {
+        if (gamesMap == null || gamesMap.isEmpty()) {
+            // Handle the case where gamesMap is null or empty
+            throw new IllegalStateException("gamesMap is null or empty");
+        }
+        List<GameDetails> results = new ArrayList<>();
+        for (GameDetails game : gamesMap.values()) {
+            if (fuzzyMatch(game.getGame().getName(), query, 2) ||
+                    fuzzyMatch(game.getGame().getDescription(), query, 2) ||
+                    fuzzyMatch(String.join(" ", game.getGame().getDesigners()), query, 2) ||
+                    fuzzyMatch(String.join(" ", game.getGame().getCategories()), query, 2)){
+                results.add(game);
+            }
+        }
+        return results;
+    }
+
+
+    private List<GameDetails> smartSearch(String query, List<GameDetails> games) {
+        if (query == null || query.isEmpty() || games == null || games.isEmpty()) {
+            // Handle the case where query is null or empty or games is null or empty
+            throw new IllegalStateException("query is null or empty or games is null or empty");
+        }
+        List<GameDetails> results = new ArrayList<>();
+        for (GameDetails game : games) {
+            int relevance = calculateRelevance(game, query);
+            if (relevance > 0) {
+                results.add(game);
+            }
+        }
+        return results;
+    }
+
+    private boolean fuzzyMatch(String str1, String str2, int maxDistance) {
+        if (str1 == null || str2 == null) {
+            // Handle the case where str1 or str2 is null
+            throw new IllegalStateException("String 1 or 2 is null in fuzzyMatch");
+        }
+        if (maxDistance < 0) {
+            // Handle the case where maxDistance is negative
+            throw new IllegalStateException("The max distance for fuzzyMatch cannot be negative.");
+        }
+        // Return true if the strings match within a certain distance threshold
+        int[][] distances = new int[str1.length() + 1][str2.length() + 1];
+
+        for (int i = 0; i <= str1.length(); i++) {
+            distances[i][0] = i;
+        }
+
+        for (int j = 0; j <= str2.length(); j++) {
+            distances[0][j] = j;
+        }
+
+        for (int i = 1; i <= str1.length(); i++) {
+            for (int j = 1; j <= str2.length(); j++) {
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    distances[i][j] = distances[i - 1][j - 1];
+                } else {
+                    int deletion = distances[i - 1][j] + 1;
+                    int insertion = distances[i][j - 1] + 1;
+                    int substitution = distances[i - 1][j - 1] + 1;
+
+                    distances[i][j] = Math.min(deletion, Math.min(insertion, substitution));
+                }
+            }
+        }
+
+        return distances[str1.length()][str2.length()] <= maxDistance;
+    }
+
+
+    private int calculateRelevance(GameDetails game, String query) {
+        int relevance = 0;
+        // Calculate relevance based on different factors such as the number of occurrences of the query string in the game name, description, categories, and designers
+        String gameName = game.getGame().getName().toLowerCase();
+        String gameDescription = game.getGame().getDescription().toLowerCase();
+        List<String> gameDesigners = game.getGame().getDesigners().stream()
+                .map(String::toLowerCase).toList();
+        List<String> gameCategories = game.getGame().getCategories().stream()
+                .map(String::toLowerCase).toList();
+
+        relevance += countMatches(gameName, query.toLowerCase()) * 10;
+        relevance += countMatches(gameDescription, query.toLowerCase()) * 5;
+        relevance += gameDesigners.stream().mapToInt(designer -> countMatches(designer, query.toLowerCase()) * 2).sum();
+        relevance += gameCategories.stream().mapToInt(category ->countMatches(category, query.toLowerCase()) * 2).sum();
+
+        return relevance;
+    }
+
+    private int countMatches(String str, String sub) {
+        if (sub.isEmpty()) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0; (i = str.indexOf(sub, i)) != -1; i += sub.length()) {
+            count++;
+        }
+        return count;
+    }
     /**
      * Searches with filters applied.
      *
@@ -153,7 +274,7 @@ public class SearchManager {
      * @return a list of recommended games based on the specified collection ID and number of recommendations or random games if the collection is empty.
      * @throws IllegalArgumentException if the specified collection ID is invalid
      */
-    public List<GameDetails> getRecomendedGames(String userId, String collectionId, int numberOfRecommendations) throws IllegalArgumentException {
+    public List<GameDetails> getRecommendedGames(String userId, String collectionId, int numberOfRecommendations) throws IllegalArgumentException {
         Collection userCollection = CollectionManager.getInstance().getSpecificCollection(userId, collectionId);
         if (userCollection == null) {
             System.out.println("Error: Collection not found.");

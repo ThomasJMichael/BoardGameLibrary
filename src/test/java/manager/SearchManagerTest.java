@@ -113,4 +113,5 @@ public class SearchManagerTest {
             System.out.println(gameDetails.getGame().getName());
         }
     }
+
 }
