@@ -168,6 +168,31 @@ public class Controller {
     }
 
     /**
+     * Adds a game to a specific collection for the current user.
+     *
+     * @param gameId        the ID of the game to add
+     * @param collectionId  the ID of the specific collection to add the game to
+     * @return              true if the game was added successfully, false otherwise
+     */
+    public boolean addGameToSpecificCollection(String gameId, String collectionId){
+        User user = UserDataManager.getInstance().getCurrentUser();
+        Collection userFavorites = CollectionManager.getInstance().getSpecificCollection(user.getId(), collectionId);
+        return addGameToCollection(gameId, userFavorites.getId());
+    }
+
+
+    /**
+     * Adds a game to the "Favorites" collection for the current user.
+     *
+     * @param gameId    the ID of the game to add
+     * @return          true if the game was added successfully, false otherwise
+     */
+    public boolean addGameToFavorites(String gameId){
+        User user = UserDataManager.getInstance().getCurrentUser();
+        Collection userFavorites = CollectionManager.getInstance().getSpecificCollection(user.getId(), "Favorites");
+        return addGameToCollection(gameId, userFavorites.getId());
+    }
+    /**
      * Removes a game from the collection with the given collectionId.
      * @param gameId        The id of the game to remove from the collection
      * @param collectionId  The id of the collection to remove the game from
