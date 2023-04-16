@@ -93,7 +93,7 @@ public class homePageFrame extends JFrame {
 
 
     public void changeGameView(String gameID) {
-        gamePanel = new gamePanel(GameDatabaseManager.getGameDetailsByID(gameID));
+        gamePanel = new gamePanel(GameDatabaseManager.getGameDetailsByID(gameID), this);
         remove(gameScroll);
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(gameScroll, BorderLayout.LINE_END);
@@ -101,8 +101,9 @@ public class homePageFrame extends JFrame {
     }
 
     private void showRandomGame() {
-        gamePanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0));
+        gamePanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0), this);
     }
+
 
     public static void main(String[] args) {
         new homePageFrame();

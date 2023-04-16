@@ -11,9 +11,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class gamePanel extends JPanel{
+public class gamePanel extends JPanel {
     private JLabel gameName;
     private JLabel gameImage;
 
@@ -31,9 +32,15 @@ public class gamePanel extends JPanel{
     private JTextArea allDetails;
     private GameDetails gamedetails;
 
+    private JPanel addReviewPanel;
+
+    private JButton writeAReviewButton;
+
+    private homePageFrame homePage;
 
 
-    public gamePanel(GameDetails game) {
+    public gamePanel(GameDetails game, homePageFrame frame) {
+        homePage = frame;
         gamedetails = game;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(400, 1500));
@@ -50,13 +57,13 @@ public class gamePanel extends JPanel{
         add(allDetails);
 
         if (!game.getReviews().isEmpty()) {
-            reviewLabel = new JLabel("Reviews: ");
             add(reviewLabel);
-            for (Review r:game.getReviews()) {
+            for (Review r : game.getReviews()) {
                 reviews = new reviewPanel(r);
                 add(reviews);
             }
         }
+        add(writeAReviewButton);
 
     }
 
@@ -67,9 +74,8 @@ public class gamePanel extends JPanel{
 
 
     public static void main(String[] args) {
-        gamePanel newPanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0));
+        //gamePanel newPanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0));
     }
-
 
 
     private void createUIComponents() {
@@ -79,9 +85,10 @@ public class gamePanel extends JPanel{
 
         String details = gamedetails.getGame().getDescription();
         gameDescription = new JTextArea(details);
-        gameDescription.setSize(new Dimension(375,100));
+        gameDescription.setSize(new Dimension(375, 100));
         gameDescription.setLineWrap(true);
         gameDescription.setWrapStyleWord(true);
+        gameDescription.setEditable(false);
 
         String year = String.valueOf(gamedetails.getGame().getYearPublished());
 
@@ -110,23 +117,21 @@ public class gamePanel extends JPanel{
         List<Collection> collections;
         String[] collectionNames;
         // want to get the current user's collections
-        if  (UserDataManager.getInstance().getCurrentUser() == null) {
+        if (UserDataManager.getInstance().getCurrentUser() == null) {
             collections = Controller.getInstance().getCollectionsByUser("3");
             collectionNames = new String[collections.size()];
             for (int i = 0; i < collections.size(); i++) {
                 collectionNames[i] = collections.get(i).getName();
             }
             System.out.println("User not logged in");
-        }
-        else {
+        } else {
             collections = Controller.getInstance().getCollectionsByUser(UserDataManager.getInstance().getCurrentUser().getId());
 
             if (collections == null) {
                 System.out.println("User has no collections.");
                 collectionNames = new String[1];
                 collectionNames[0] = "No Collections";
-            }
-            else {
+            } else {
                 collectionNames = new String[collections.size()];
                 for (int i = 0; i < collections.size(); i++) {
                     collectionNames[i] = collections.get(i).getName();
@@ -144,8 +149,7 @@ public class gamePanel extends JPanel{
                 Collection selectedCollection = collections.get(collectionIndex);
                 if (Controller.getInstance().addGameToCollection(gamedetails.getGame().getId(), selectedCollection.getId())) {
                     JOptionPane.showMessageDialog(null, "Added " + name + " to " + collectionDropdown.getSelectedItem() + ".");
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Collection " + collectionDropdown.getSelectedItem() + " already contains " + name + ".");
                 }
             }
@@ -165,18 +169,81 @@ public class gamePanel extends JPanel{
                         "Playing Time: " + playingTime + " minutes\n" +
                         "Mechanics: " + mechanics + "\n"
         );
+        allDetails.setEditable(false);
+
         try {
             Image imageURL = gamedetails.getImage();
             ImageIcon imageIcon = new ImageIcon(imageURL);
             Image image = imageIcon.getImage();
-            Image newimg = image.getScaledInstance(375, 450,  java.awt.Image.SCALE_SMOOTH);
+            Image newimg = image.getScaledInstance(375, 450, java.awt.Image.SCALE_SMOOTH);
             imageIcon = new ImageIcon(newimg);
 
             gameImage = new JLabel(imageIcon);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        reviewLabel = new JLabel("Reviews: ");
+
+        writeAReviewButton = new JButton("Write a Review");
+        writeAReviewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createReview();
+            }
+        });
+
+
+    }
+
+    private void createReview() {
+        JFrame reviewCreator = new JFrame("Write Review for " + gamedetails.getGame().getName());
+        reviewCreator.setLayout(new BorderLayout());
+
+        JPanel getRating = new JPanel(new FlowLayout());
+        JLabel reviewNumberLabel = new JLabel("Rating (out of five):");
+
+        Integer[] ratingsNums = {1,2,3,4,5};
+        JComboBox<Integer> ratingOptions = new JComboBox<>(ratingsNums);
+        getRating.add(reviewNumberLabel);
+        getRating.add(ratingOptions);
+
+        JPanel getDescription = new JPanel(new FlowLayout());
+        JLabel getDescriptionLabel = new JLabel("Enter Description:");
+        JTextArea enterDescriptionTextArea = new JTextArea();
+        enterDescriptionTextArea.setPreferredSize(new Dimension(350,75));
+
+        getDescription.add(getDescriptionLabel);
+        getDescription.add(enterDescriptionTextArea);
+
+        JButton submitReview = new JButton("Submit");
+        submitReview.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int rating = ratingOptions.getSelectedIndex();
+                String description = enterDescriptionTextArea.getText();
+                Controller.getInstance().addReview(gamedetails.getGame().getId(), description, rating);
+                reviewCreator.dispose();
+                // supposed to refresh the game panel to add the new review
+                // but gamedetails.getreviews still returning an empty list after adding the review
+                /*
+                remove(writeAReviewButton);
+                int index = gamedetails.getReviews().size();
+                JPanel newReviewPanel = new reviewPanel(gamedetails.getReviews().get(index));
+                add(newReviewPanel);
+                add(writeAReviewButton);
+
+                 */
+            }
+        });
+
+        reviewCreator.add(getRating, BorderLayout.PAGE_START);
+        reviewCreator.add(getDescription, BorderLayout.CENTER);
+        reviewCreator.add(submitReview, BorderLayout.PAGE_END);
+        reviewCreator.setLocationRelativeTo(null);
+        reviewCreator.pack();
+        reviewCreator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        reviewCreator.setVisible(true);
+
     }
 }
-
-

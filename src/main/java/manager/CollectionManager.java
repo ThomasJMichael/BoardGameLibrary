@@ -96,6 +96,7 @@ public class CollectionManager implements Loadable, Savable {
            List<Collection> userCollections =  new ArrayList<>();
            userCollections.add(newCollection);
            collectionMap.put(id, userCollections);
+           save();
            return true;
         }
         else {
