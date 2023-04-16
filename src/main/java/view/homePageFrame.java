@@ -5,7 +5,9 @@ import javax.swing.*;
 import main.java.controller.Controller;
 import main.java.manager.CollectionManager;
 import main.java.manager.GameDatabaseManager;
+import main.java.manager.UserDataManager;
 import main.java.model.GameDetails;
+import main.java.model.User;
 import main.java.view.searchBar;
 
 import java.awt.*;
@@ -66,6 +68,14 @@ public class homePageFrame extends JFrame {
                     dispose();
                 }
 
+            }
+        });
+        profileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userID = UserDataManager.getInstance().getCurrentUser().getId();
+                userProfilePanel userProfile = new userProfilePanel(userID, homePageFrame.this);
+                homePageFrame.this.getContentPane().add(userProfile);
             }
         });
 
