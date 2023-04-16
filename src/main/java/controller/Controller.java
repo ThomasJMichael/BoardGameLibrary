@@ -185,7 +185,7 @@ public class Controller {
      * Adds a game to the "Favorites" collection for the current user.
      *
      * @param gameId    the ID of the game to add
-     * @return          true if the game was added successfully, false otherwise
+     * @return           true if the game was added successfully, false otherwise
      */
     public boolean addGameToFavorites(String gameId){
         User user = UserDataManager.getInstance().getCurrentUser();
@@ -209,7 +209,7 @@ public class Controller {
      * @return          The list of games that match the query
      */
     public List<GameDetails> searchGamesByQuery(String query){
-        return searchGamesByQuery(query);
+        return SearchManager.getInstance().searchGames(query);
     }
 
     /**
