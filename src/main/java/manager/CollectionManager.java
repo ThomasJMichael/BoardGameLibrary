@@ -340,13 +340,14 @@ public class CollectionManager implements Loadable, Savable {
                     Element descriptionElement = doc.createElement("description");
                     descriptionElement.appendChild(doc.createTextNode(collection.getDescription()));
                     collectionElement.appendChild(descriptionElement);
-
-                    for (String gameId : collection.getGames()) {
-                        Element gameElement = doc.createElement("game");
-                        gameElement.appendChild(doc.createTextNode(gameId));
-                        collectionElement.appendChild(gameElement);
+                    List<String> gameIds = collection.getGames();
+                    if (gameIds != null && !gameIds.isEmpty()) {
+                        for (String gameId : gameIds) {
+                            Element gameElement = doc.createElement("game");
+                            gameElement.appendChild(doc.createTextNode(gameId));
+                            collectionElement.appendChild(gameElement);
+                        }
                     }
-
                     userElement.appendChild(collectionElement);
                 }
 
