@@ -4,10 +4,8 @@ import main.java.model.Collection;
 import main.java.model.Game;
 import main.java.model.GameDetails;
 
-
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * The SearchManager class is responsible for managing game searches and filters.
@@ -326,7 +324,7 @@ public class SearchManager {
 
             return Integer.compare(game2Score, game1Score);
         });
-        List<GameDetails> recommendedGames = new ArrayList<>();
+        List<GameDetails> recommendedGames;
         recommendedGames = allGames.subList(0, Math.min(numberOfRecommendations, allGames.size()));
         return recommendedGames;
     }
@@ -338,8 +336,9 @@ public class SearchManager {
      * @return A list of randomly recommended games.
      */
     public List<GameDetails> getRandomRecommendedGames(int numberOfRecommendations) {
-        List<GameDetails> allGames = SearchManager.getInstance().searchGames("");
         List<GameDetails> recommendedGames = new ArrayList<>();
+        List<GameDetails> allGames = new ArrayList<>(gamesMap.values());
+
 
         if (allGames.isEmpty()) {
             // If there are no games in the library, return an empty list.
