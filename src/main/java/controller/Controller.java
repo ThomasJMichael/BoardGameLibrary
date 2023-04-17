@@ -193,6 +193,18 @@ public class Controller {
         return addGameToCollection(gameId, userFavorites.getId());
     }
     /**
+     * Removes a game from the "Favorites" collection for the current user.
+     *
+     * @param gameId     the ID of the game to remove.
+     * @return           true if the game was removed successfully, false otherwise
+     */
+    public boolean removeGameFromFavorites(String gameId){
+        User user = UserDataManager.getInstance().getCurrentUser();
+        Collection userFavorites = CollectionManager.getInstance().getCollectionByName(user.getId(), "Favorites");
+        return removeGameFromCollection(gameId, userFavorites.getId());
+    }
+
+    /**
      * Removes a game from the collection with the given collectionId.
      * @param gameId        The id of the game to remove from the collection
      * @param collectionId  The id of the collection to remove the game from
