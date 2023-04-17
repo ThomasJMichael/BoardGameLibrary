@@ -189,7 +189,7 @@ public class Controller {
      */
     public boolean addGameToFavorites(String gameId){
         User user = UserDataManager.getInstance().getCurrentUser();
-        Collection userFavorites = CollectionManager.getInstance().getSpecificCollection(user.getId(), "Favorites");
+        Collection userFavorites = CollectionManager.getInstance().getCollectionByName(user.getId(), "Favorites");
         return addGameToCollection(gameId, userFavorites.getId());
     }
     /**

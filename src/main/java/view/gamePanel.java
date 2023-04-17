@@ -109,7 +109,12 @@ public class gamePanel extends JPanel {
         addToFavoritesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Controller.getInstance().addGameToCollection(game.getGame().getId(), )
+                if (Controller.getInstance().addGameToFavorites(gamedetails.getGame().getId())) {
+                    JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + "added to favorites.");
+                }
+                else {
+                    System.out.println("Error adding to favorites.");
+                }
             }
         });
 
