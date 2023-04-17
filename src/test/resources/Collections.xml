@@ -5,6 +5,14 @@
             <description>A Collection of my favorite games.</description>
         </collection>
     </user>
+    <user id="109810">
+        <collection id="109810" name="Favorites">
+            <description>A Collection of my favorite games.</description>
+            <game>43443</game>
+            <game>312786</game>
+            <game>437</game>
+        </collection>
+    </user>
     <user id="2">
         <collection id="3" name="Completed">
             <description>A list of games I have completed</description>
@@ -39,6 +47,11 @@
             <description>A list of games I want to buy</description>
             <game>295770</game>
             <game>350184</game>
+        </collection>
+    </user>
+    <user id="554036">
+        <collection id="363346" name="Favorites">
+            <description>A Collection of my favorite games.</description>
         </collection>
     </user>
 </collections>
