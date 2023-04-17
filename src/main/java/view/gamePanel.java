@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.controller.Controller;
+import main.java.manager.CollectionManager;
 import main.java.manager.UserDataManager;
 import main.java.model.Collection;
 import main.java.model.GameDetails;
@@ -111,9 +112,15 @@ public class gamePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (Controller.getInstance().addGameToFavorites(gamedetails.getGame().getId())) {
                     JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + " added to favorites.");
+                    addToFavoritesButton.setText("Favorited");
                 }
                 else {
-                    JOptionPane.showMessageDialog(null, "Failed to add " + gamedetails.getGame().getName() + " to favorites.");
+                    if (Controller.getInstance().removeGameFromFavorites(gamedetails.getGame().getId())) {
+                        JOptionPane.showMessageDialog(null, "Removed " + gamedetails.getGame().getName() + " from favorites.");
+                        addToFavoritesButton.setText("Add to Favorites");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to remove game from favorites.");
+                    }
                 }
             }
         });
