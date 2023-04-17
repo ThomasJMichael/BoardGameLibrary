@@ -12,18 +12,22 @@ import static main.java.model.GameCategory.*;
 public class filterActionListener implements ActionListener {
     private GameCategory category;
 
+    private JCheckBox filterCheckbox;
 
-    public filterActionListener(GameCategory category) {
+
+    public filterActionListener(GameCategory category, JCheckBox checkbox) {
         this.category = category;
+        filterCheckbox = checkbox;
     }
 
     public void actionPerformed(ActionEvent e) {
-        AbstractButton abstractButton = (AbstractButton) e.getSource();
-        if (abstractButton.getModel().isSelected()) {
-            Controller.getInstance().addCategoryFilter(category.toString());
+        if (filterCheckbox.isSelected()) {
+            Controller.getInstance().addCategoryFilter(category.name());
+            System.out.println(category.name() + " selected.");
         }
-        if (!abstractButton.getModel().isSelected()) {
-            Controller.getInstance().removeCategoryFilter(category.toString());
+        else {
+            Controller.getInstance().removeCategoryFilter(category.name());
+            System.out.println(category.name() + " unselected.");
         }
     }
 

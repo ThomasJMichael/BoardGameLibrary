@@ -28,6 +28,8 @@ public class mainPage extends JPanel implements ActionListener {
 
     private String searchTerm;
 
+    private JButton filterGamesButton;
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -60,12 +62,15 @@ public class mainPage extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchTerm = searchBar.getText();
-                displayedGames = Controller.getInstance().searchGamesByQuery(searchTerm);
+                displayedGames = Controller.getInstance().searchGamesWithFilters(searchTerm);
                 refreshGames();
             }
         });
 
+
+
         add(searchBar);
+        //add(filterGamesButton);
 
         displayedGames = Controller.getInstance().getRandomGames(50);
         for (GameDetails game : displayedGames) {

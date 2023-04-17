@@ -105,6 +105,8 @@ public class gamePanel extends JPanel {
 
         String mechanics = gamedetails.getGame().getMechanics().toString();
 
+        String categories = gamedetails.getGame().getCategories().toString();
+
         addToFavoritesButton = new JButton("Add to Favorites");
         // probably need the favorites to be the very first collection on everyone's list
         addToFavoritesButton.addActionListener(new ActionListener() {
@@ -187,7 +189,8 @@ public class gamePanel extends JPanel {
                         "Max Players: " + maxPlayers + "\n" +
                         "Min Age: " + minAge + "\n" +
                         "Playing Time: " + playingTime + " minutes\n" +
-                        "Mechanics: " + mechanics + "\n"
+                        "Mechanics: " + mechanics + "\n" +
+                        "Categories: " + categories + "\n"
         );
         allDetails.setEditable(false);
 
