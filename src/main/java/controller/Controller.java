@@ -211,7 +211,7 @@ public class Controller {
      * @return              true if the game is removed from the collection, false otherwise
      */
     public boolean removeGameFromCollection(String gameId, String collectionId){
-        return CollectionManager.getInstance().removeGameFromCollection(UserDataManager.getInstance().getUsername(), gameId, collectionId);
+        return CollectionManager.getInstance().removeGameFromCollection(UserDataManager.getInstance().getCurrentUser().getId(), gameId, collectionId);
     }
 
     /**
