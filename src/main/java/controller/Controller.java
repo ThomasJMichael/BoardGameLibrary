@@ -476,4 +476,15 @@ public class Controller {
         SearchManager.getInstance();
         UserDataManager.getInstance();
     }
+
+    public Collection getFavoriteGames() {
+        List<Collection> allCollections = getCollectionsByUser(UserDataManager.getInstance().getCurrentUser().getId());
+        for (Collection collection : allCollections){
+            if (collection.getName().equals("Favorites")){
+                return collection;
+            }
+        }
+        System.out.println("No favorites collection found.");
+        return null;
+    }
 }

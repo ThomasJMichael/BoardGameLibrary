@@ -110,22 +110,40 @@ public class SearchManager {
     }
 
 
+
+
     private List<GameDetails> fuzzySearch(String query) {
         if (gamesMap == null || gamesMap.isEmpty()) {
             // Handle the case where gamesMap is null or empty
             throw new IllegalStateException("gamesMap is null or empty");
         }
         List<GameDetails> results = new ArrayList<>();
+        String[] queryWords = query.toLowerCase().split("[\\s'_-]+");
         for (GameDetails game : gamesMap.values()) {
-            if (fuzzyMatch(game.getGame().getName(), query, 2) ||
-                    fuzzyMatch(game.getGame().getDescription(), query, 2) ||
-                    fuzzyMatch(String.join(" ", game.getGame().getDesigners()), query, 2) ||
-                    fuzzyMatch(String.join(" ", game.getGame().getCategories()), query, 2)){
+            String gameName = game.getGame().getName().toLowerCase();
+            String[] gameWords = gameName.split("[\\s'_-]+");
+            boolean isMatch = true;
+            for (String queryWord : queryWords) {
+                boolean foundMatch = false;
+                for (String gameWord : gameWords) {
+                    if (fuzzyMatch(gameWord, queryWord, 3)) {
+                        foundMatch = true;
+                        break;
+                    }
+                }
+                if (!foundMatch) {
+                    isMatch = false;
+                    break;
+                }
+            }
+            if (isMatch) {
                 results.add(game);
             }
         }
         return results;
     }
+
+
 
 
     private List<GameDetails> smartSearch(String query, List<GameDetails> games) {

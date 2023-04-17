@@ -109,12 +109,19 @@ public class gamePanel extends JPanel {
         // probably need the favorites to be the very first collection on everyone's list
         addToFavoritesButton.addActionListener(new ActionListener() {
             @Override
+
             public void actionPerformed(ActionEvent e) {
-                if (Controller.getInstance().addGameToFavorites(gamedetails.getGame().getId())) {
-                    JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + " added to favorites.");
-                    addToFavoritesButton.setText("Favorited");
-                }
-                else {
+                boolean isFavorited = false;
+                if (!isFavorited) {
+                    // Add the game to favorites
+                    if (Controller.getInstance().addGameToFavorites(gamedetails.getGame().getId())) {
+                        JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + " added to favorites.");
+                        addToFavoritesButton.setText("Favorited");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to add game to favorites.");
+                    }
+                } else {
+                    // Remove the game from favorites
                     if (Controller.getInstance().removeGameFromFavorites(gamedetails.getGame().getId())) {
                         JOptionPane.showMessageDialog(null, "Removed " + gamedetails.getGame().getName() + " from favorites.");
                         addToFavoritesButton.setText("Add to Favorites");
@@ -123,6 +130,7 @@ public class gamePanel extends JPanel {
                     }
                 }
             }
+
         });
 
         addToCollectionLabel = new JLabel("Add to Collection: ");
