@@ -157,8 +157,9 @@ public class XMLParser {
                     String username = element.getElementsByTagName("username").item(0).getTextContent();
                     String password = element.getElementsByTagName("password").item(0).getTextContent();
                     String name = element.getElementsByTagName("name").item(0).getTextContent();
+                    String id = element.getAttribute("id");
 
-                    User user = new User(username, password, name);
+                    User user = new User(username, password, name, id);
                     userList.add(user);
                 }
             }
