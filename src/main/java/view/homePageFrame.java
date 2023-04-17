@@ -78,8 +78,8 @@ public class homePageFrame extends JFrame {
 
         searchBar = new searchBar(this);
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
         gameScroll.setVisible(true);
+
         mainPage = new mainPage(this);
         mainScroll = new JScrollPane(mainPage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         mainScroll.setVisible(true);
@@ -102,6 +102,7 @@ public class homePageFrame extends JFrame {
 
     private void showRandomGame() {
         gamePanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0), this);
+        //new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("374173"), this);
     }
 
 
