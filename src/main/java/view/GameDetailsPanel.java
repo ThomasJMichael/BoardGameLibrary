@@ -1,7 +1,6 @@
 package main.java.view;
 
 import main.java.controller.Controller;
-import main.java.manager.CollectionManager;
 import main.java.manager.UserDataManager;
 import main.java.model.Collection;
 import main.java.model.GameDetails;
@@ -12,10 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class gamePanel extends JPanel {
+public class GameDetailsPanel extends JPanel {
     private JLabel gameName;
     private JLabel gameImage;
 
@@ -28,7 +26,7 @@ public class gamePanel extends JPanel {
     private JButton confirmButton;
 
     private JLabel reviewLabel;
-    private reviewPanel reviews;
+    private ReviewPanel reviews;
     private JTextArea gameDescription;
     private JTextArea allDetails;
     private GameDetails gamedetails;
@@ -37,10 +35,10 @@ public class gamePanel extends JPanel {
 
     private JButton writeAReviewButton;
 
-    private homePageFrame homePage;
+    private HomePageFrame homePage;
 
 
-    public gamePanel(GameDetails game, homePageFrame frame) {
+    public GameDetailsPanel(GameDetails game, HomePageFrame frame) {
         homePage = frame;
         gamedetails = game;
         setLayout(new FlowLayout());
@@ -60,7 +58,7 @@ public class gamePanel extends JPanel {
         if (!game.getReviews().isEmpty()) {
             add(reviewLabel);
             for (Review r : game.getReviews()) {
-                reviews = new reviewPanel(r);
+                reviews = new ReviewPanel(r);
                 add(reviews);
             }
         }

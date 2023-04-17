@@ -4,21 +4,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.naming.ldap.Control;
 import javax.swing.*;
 
 import main.java.controller.Controller;
-import main.java.model.Game;
 import main.java.model.GameDetails;
-import main.java.view.userProfilePanel;
 
 
-public class mainPage extends JPanel implements ActionListener {
+public class MainGamesPanel extends JPanel implements ActionListener {
 
     private static JFrame frame = new JFrame();
     private static JPanel panel = new JPanel(new BorderLayout());
 
-    private homePageFrame homePage;
+    private HomePageFrame homePage;
 
     private JTextField searchBar;
 
@@ -49,7 +46,7 @@ public class mainPage extends JPanel implements ActionListener {
     }
     */
 
-    public mainPage(homePageFrame frame) {
+    public MainGamesPanel(HomePageFrame frame) {
         homePage = frame;
         setPreferredSize(new Dimension(800, 2500));
         setLayout(new FlowLayout());
@@ -74,7 +71,7 @@ public class mainPage extends JPanel implements ActionListener {
 
         displayedGames = Controller.getInstance().getRandomGames(50);
         for (GameDetails game : displayedGames) {
-            JPanel gameDisplay = new collectionLittleDisplayPanel(game.getGame().getId(), homePage);
+            JPanel gameDisplay = new GameDisplayPanel(game.getGame().getId(), homePage);
             gameDisplayPanel.add(gameDisplay);
         }
 
@@ -84,7 +81,7 @@ public class mainPage extends JPanel implements ActionListener {
         gameDisplayPanel.setVisible(false);
         gameDisplayPanel.removeAll();
         for (GameDetails game : displayedGames) {
-            JPanel gameDisplay = new collectionLittleDisplayPanel(game.getGame().getId(), homePage);
+            JPanel gameDisplay = new GameDisplayPanel(game.getGame().getId(), homePage);
             gameDisplayPanel.add(gameDisplay);
         }
         revalidate();

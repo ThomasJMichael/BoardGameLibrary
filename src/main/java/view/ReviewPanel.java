@@ -1,12 +1,11 @@
 package main.java.view;
 
-import main.java.manager.ReviewManager;
 import main.java.model.Review;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class reviewPanel extends JPanel {
+public class ReviewPanel extends JPanel {
     private JTextField usernameTextField;
     private JTextField ratingTextField;
     private JTextArea descriptionTextArea;
@@ -14,7 +13,7 @@ public class reviewPanel extends JPanel {
 
     private JFrame frame;
 
-    public reviewPanel(Review R) {
+    public ReviewPanel(Review R) {
         String username = R.getUsername();
         usernameTextField = new JTextField(username);
 

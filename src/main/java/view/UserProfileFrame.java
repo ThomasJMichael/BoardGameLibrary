@@ -11,7 +11,7 @@ import main.java.model.Collection;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
 
-public class userProfilePanel extends JPanel implements ActionListener{
+public class UserProfileFrame extends JPanel implements ActionListener{
     private final String userID;
     CollectionManager collectionManager = CollectionManager.getInstance();
     /**
@@ -23,13 +23,13 @@ public class userProfilePanel extends JPanel implements ActionListener{
      */
     private static JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
-    private homePageFrame homePage;
+    private HomePageFrame homePage;
 
     /**
      * Imports collections to create one button for each collection.
      * @param userID user's ID
      */
-    public userProfilePanel(String userID, homePageFrame frame) {
+    public UserProfileFrame(String userID, HomePageFrame frame) {
         homePage = frame;
         this.userID = "123456";
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
@@ -45,7 +45,7 @@ public class userProfilePanel extends JPanel implements ActionListener{
                     collectionFrame.setLayout(new FlowLayout());
                     List<String> games = collection.getGames();
                     for (String game : games) {
-                        JPanel collectionLittleDisplayPanel = new collectionLittleDisplayPanel(game, frame);
+                        JPanel collectionLittleDisplayPanel = new GameDisplayPanel(game, frame);
                         collectionFrame.add(collectionLittleDisplayPanel);
                     }
                     collectionFrame.setVisible(true);
@@ -118,7 +118,7 @@ public class userProfilePanel extends JPanel implements ActionListener{
         panel1.add(passButton);
 
         //initializes Collections panel
-        panel2 = new userProfilePanel("123456", new homePageFrame());
+        panel2 = new UserProfileFrame("123456", new HomePageFrame());
         tabbedPane.addTab("Collections", panel2);
 
         //formats frame

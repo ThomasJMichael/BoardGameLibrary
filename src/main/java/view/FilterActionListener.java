@@ -7,15 +7,14 @@ import main.java.model.GameCategory;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static main.java.model.GameCategory.*;
 
-public class filterActionListener implements ActionListener {
+public class FilterActionListener implements ActionListener {
     private GameCategory category;
 
     private JCheckBox filterCheckbox;
 
 
-    public filterActionListener(GameCategory category, JCheckBox checkbox) {
+    public FilterActionListener(GameCategory category, JCheckBox checkbox) {
         this.category = category;
         filterCheckbox = checkbox;
     }

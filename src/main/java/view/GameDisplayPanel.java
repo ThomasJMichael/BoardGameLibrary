@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class collectionLittleDisplayPanel extends JPanel{
+public class GameDisplayPanel extends JPanel{
 
     private JLabel gameThumbnail;
     private JLabel gameTitle;
@@ -20,10 +20,10 @@ public class collectionLittleDisplayPanel extends JPanel{
     private JPanel selectionPanel;
     private GameDetails gamedetails;
 
-    private homePageFrame homePage;
+    private HomePageFrame homePage;
 
 
-    public collectionLittleDisplayPanel(String gameID, homePageFrame frame) {
+    public GameDisplayPanel(String gameID, HomePageFrame frame) {
         homePage = frame;
         gamedetails = GameDatabaseManager.getGameDetailsByID(gameID);
         setLayout(new BorderLayout());

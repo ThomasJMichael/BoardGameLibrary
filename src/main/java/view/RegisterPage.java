@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class registerPage {
+public class RegisterPage {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton submitButton;
@@ -20,7 +20,7 @@ public class registerPage {
 
 
 
-public registerPage() {
+public RegisterPage() {
     submitButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -30,7 +30,7 @@ public registerPage() {
             if (Controller.getInstance().register(username, password, name)) {
                 JOptionPane.showMessageDialog(null, "Registration Successful. Please log in.");
                 frame.setVisible(false);
-                loginPage login = new loginPage();
+                LoginPage login = new LoginPage();
                 frame.dispose();
             }
             else
@@ -49,7 +49,7 @@ public registerPage() {
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.setVisible(false);
-            loginPage login = new loginPage();
+            LoginPage login = new LoginPage();
         }
     });
 }

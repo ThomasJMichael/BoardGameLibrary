@@ -1,19 +1,15 @@
 package main.java.view;
 
-import main.java.controller.Controller;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.zip.DeflaterInputStream;
 
 import static main.java.model.GameCategory.*;
 
-public class searchBar extends JPanel {
+public class FiltersPanel extends JPanel {
     private JButton submitButton;
 
-    private homePageFrame frame;
+    private HomePageFrame frame;
 
     private JCheckBox abstractStrategyCheckBox;
     private JCheckBox ancientCheckBox;
@@ -80,7 +76,7 @@ public class searchBar extends JPanel {
     private JCheckBox wargameCheckBox;
     private JLabel filterLabel;
 
-    public searchBar(homePageFrame homeFrame) {
+    public FiltersPanel(HomePageFrame homeFrame) {
         frame = homeFrame;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(300,800));
@@ -88,248 +84,248 @@ public class searchBar extends JPanel {
         filterLabel = new JLabel("Add a filter to your search:");
 
         abstractStrategyCheckBox = new JCheckBox("Abstract Strategy");
-        ActionListener actionlistener = new filterActionListener(ABSTRACT_STRATEGY, abstractStrategyCheckBox);
+        ActionListener actionlistener = new FilterActionListener(ABSTRACT_STRATEGY, abstractStrategyCheckBox);
         abstractStrategyCheckBox.addActionListener(actionlistener);
 
         adventureCheckBox = new JCheckBox("Adventure");
-        actionlistener = new filterActionListener(ADVENTURE, adventureCheckBox);
+        actionlistener = new FilterActionListener(ADVENTURE, adventureCheckBox);
         abstractStrategyCheckBox.addActionListener(actionlistener);
 
         ageOfReasonCheckBox1 = new JCheckBox("Age of Reason");
-        actionlistener = new filterActionListener(AGE_OF_REASON, ageOfReasonCheckBox1);
+        actionlistener = new FilterActionListener(AGE_OF_REASON, ageOfReasonCheckBox1);
         ageOfReasonCheckBox1.addActionListener(actionlistener);
 
         ancientCheckBox = new JCheckBox("Ancient");
-        actionlistener = new filterActionListener(ANCIENT, ancientCheckBox);
+        actionlistener = new FilterActionListener(ANCIENT, ancientCheckBox);
         ancientCheckBox.addActionListener(actionlistener);
 
         animalsCheckBox = new JCheckBox("Animals");
-        actionlistener = new filterActionListener(ANIMALS, animalsCheckBox);
+        actionlistener = new FilterActionListener(ANIMALS, animalsCheckBox);
         animalsCheckBox.addActionListener(actionlistener);
 
         arabianCheckBox = new JCheckBox("Arabian");
-        actionlistener = new filterActionListener(ARABIAN, arabianCheckBox);
+        actionlistener = new FilterActionListener(ARABIAN, arabianCheckBox);
         arabianCheckBox.addActionListener(actionlistener);
 
 
         bluffingCheckBox1 = new JCheckBox("Bluffing");
-        actionlistener = new filterActionListener(BLUFFING, bluffingCheckBox1);
+        actionlistener = new FilterActionListener(BLUFFING, bluffingCheckBox1);
         bluffingCheckBox1.addActionListener(actionlistener);
 
         cardGameCheckBox = new JCheckBox("Card Game");
-        actionlistener = new filterActionListener(CARD_GAME, cardGameCheckBox);
+        actionlistener = new FilterActionListener(CARD_GAME, cardGameCheckBox);
         cardGameCheckBox.addActionListener(actionlistener);
 
         childrenSGameCheckBox1 = new JCheckBox("Children's Game");
-        actionlistener = new filterActionListener(CHILDRENS_GAME, childrenSGameCheckBox1);
+        actionlistener = new FilterActionListener(CHILDRENS_GAME, childrenSGameCheckBox1);
         childrenSGameCheckBox1.addActionListener(actionlistener);
 
         cityBuildingCheckBox = new JCheckBox("City Building");
-        actionlistener = new filterActionListener(CITY_BUILDING, cityBuildingCheckBox);
+        actionlistener = new FilterActionListener(CITY_BUILDING, cityBuildingCheckBox);
         cityBuildingCheckBox.addActionListener(actionlistener);
 
         civilizationCheckBox = new JCheckBox("Civilization");
-        actionlistener = new filterActionListener(CIVILIZATION, civilizationCheckBox);
+        actionlistener = new FilterActionListener(CIVILIZATION, civilizationCheckBox);
         civilizationCheckBox.addActionListener(actionlistener);
 
         collectibleComponentsCheckBox1 = new JCheckBox("Collectible Components");
-        actionlistener = new filterActionListener(COLLECTIBLE_COMPONENTS, collectibleComponentsCheckBox1);
+        actionlistener = new FilterActionListener(COLLECTIBLE_COMPONENTS, collectibleComponentsCheckBox1);
         collectibleComponentsCheckBox1.addActionListener(actionlistener);
 
         comicBookStripCheckBox = new JCheckBox("Comic Book Strip");
-        actionlistener = new filterActionListener(COMIC_BOOK_STRIP, comicBookStripCheckBox);
+        actionlistener = new FilterActionListener(COMIC_BOOK_STRIP, comicBookStripCheckBox);
         comicBookStripCheckBox.addActionListener(actionlistener);
 
         deductionCheckBox = new JCheckBox("Deduction");
-        actionlistener = new filterActionListener(DEDUCTION, deductionCheckBox);
+        actionlistener = new FilterActionListener(DEDUCTION, deductionCheckBox);
         deductionCheckBox.addActionListener(actionlistener);
 
         diceCheckBox = new JCheckBox("Dice");
-        actionlistener = new filterActionListener(DICE, diceCheckBox);
+        actionlistener = new FilterActionListener(DICE, diceCheckBox);
         diceCheckBox.addActionListener(actionlistener);
 
         economicCheckBox = new JCheckBox("Economic");
-        actionlistener = new filterActionListener(ECONOMIC, economicCheckBox);
+        actionlistener = new FilterActionListener(ECONOMIC, economicCheckBox);
         economicCheckBox.addActionListener(actionlistener);
 
         educationalCheckBox = new JCheckBox("Educational");
-        actionlistener = new filterActionListener(EDUCATIONAL, educationalCheckBox);
+        actionlistener = new FilterActionListener(EDUCATIONAL, educationalCheckBox);
         educationalCheckBox.addActionListener(actionlistener);
 
         electronicCheckBox = new JCheckBox("Electronic");
-        actionlistener = new filterActionListener(ELECTRONIC, electronicCheckBox);
+        actionlistener = new FilterActionListener(ELECTRONIC, electronicCheckBox);
         electronicCheckBox.addActionListener(actionlistener);
 
         environmentalCheckBox1 = new JCheckBox("Environmental");
-        actionlistener = new filterActionListener(ENVIRONMENTAL, environmentalCheckBox1);
+        actionlistener = new FilterActionListener(ENVIRONMENTAL, environmentalCheckBox1);
         environmentalCheckBox1.addActionListener(actionlistener);
 
         expansionForBaseGameCheckBox = new JCheckBox("Expansion for Base Game");
-        actionlistener = new filterActionListener(EXPANSION_FOR_BASE_GAME, expansionForBaseGameCheckBox);
+        actionlistener = new FilterActionListener(EXPANSION_FOR_BASE_GAME, expansionForBaseGameCheckBox);
         expansionForBaseGameCheckBox.addActionListener(actionlistener);
 
         explorationCheckBox = new JCheckBox("Exploration");
-        actionlistener = new filterActionListener(EXPLORATION, explorationCheckBox);
+        actionlistener = new FilterActionListener(EXPLORATION, explorationCheckBox);
         explorationCheckBox.addActionListener(actionlistener);
 
         fantasyCheckBox = new JCheckBox("Fantasy");
-        actionlistener = new filterActionListener(FANTASY, fantasyCheckBox);
+        actionlistener = new FilterActionListener(FANTASY, fantasyCheckBox);
         fantasyCheckBox.addActionListener(actionlistener);
 
         farmingCheckBox = new JCheckBox("Farming");
-        actionlistener = new filterActionListener(FARMING, farmingCheckBox);
+        actionlistener = new FilterActionListener(FARMING, farmingCheckBox);
         fantasyCheckBox.addActionListener(actionlistener);
 
         fightingCheckBox = new JCheckBox("Fighting");
-        actionlistener = new filterActionListener(FIGHTING, fightingCheckBox);
+        actionlistener = new FilterActionListener(FIGHTING, fightingCheckBox);
         fightingCheckBox.addActionListener(actionlistener);
 
         horrorCheckBox = new JCheckBox("Horror");
-        actionlistener = new filterActionListener(HORROR, horrorCheckBox);
+        actionlistener = new FilterActionListener(HORROR, horrorCheckBox);
         horrorCheckBox.addActionListener(actionlistener);
 
         humorCheckBox = new JCheckBox("Humor");
-        actionlistener = new filterActionListener(HUMOR, humorCheckBox);
+        actionlistener = new FilterActionListener(HUMOR, humorCheckBox);
         humorCheckBox.addActionListener(actionlistener);
 
         industryManufacturingCheckBox = new JCheckBox("Industry/Manufacturing");
-        actionlistener = new filterActionListener(INDUSTRY_MANUFACTURING, industryManufacturingCheckBox);
+        actionlistener = new FilterActionListener(INDUSTRY_MANUFACTURING, industryManufacturingCheckBox);
         industryManufacturingCheckBox.addActionListener(actionlistener);
 
         mafiaCheckBox = new JCheckBox("Mafia");
-        actionlistener = new filterActionListener(MAFIA, mafiaCheckBox);
+        actionlistener = new FilterActionListener(MAFIA, mafiaCheckBox);
         mafiaCheckBox.addActionListener(actionlistener);
 
         mazeCheckBox = new JCheckBox("Maze");
-        actionlistener = new filterActionListener(MAZE, mazeCheckBox);
+        actionlistener = new FilterActionListener(MAZE, mazeCheckBox);
         mazeCheckBox.addActionListener(actionlistener);
 
         medicalCheckBox = new JCheckBox("Medical");
-        actionlistener = new filterActionListener(MEDICAL, medicalCheckBox);
+        actionlistener = new FilterActionListener(MEDICAL, medicalCheckBox);
         medicalCheckBox.addActionListener(actionlistener);
 
         medievalCheckBox = new JCheckBox("Medieval");
-        actionlistener = new filterActionListener(MEDIEVAL, medievalCheckBox);
+        actionlistener = new FilterActionListener(MEDIEVAL, medievalCheckBox);
         medievalCheckBox.addActionListener(actionlistener);
 
         memoryCheckBox = new JCheckBox("Memory");
-        actionlistener = new filterActionListener(MEMORY, memoryCheckBox);
+        actionlistener = new FilterActionListener(MEMORY, memoryCheckBox);
         memoryCheckBox.addActionListener(actionlistener);
 
         miniaturesCheckBox = new JCheckBox("Miniatures");
-        actionlistener = new filterActionListener(MINIATURES, miniaturesCheckBox);
+        actionlistener = new FilterActionListener(MINIATURES, miniaturesCheckBox);
         miniaturesCheckBox.addActionListener(actionlistener);
 
         moviesTVRadioThemeCheckBox = new JCheckBox("Movies/TV/Radio Theme");
-        actionlistener = new filterActionListener(MOVIES_TV_RADIO_THEME, moviesTVRadioThemeCheckBox);
+        actionlistener = new FilterActionListener(MOVIES_TV_RADIO_THEME, moviesTVRadioThemeCheckBox);
         moviesTVRadioThemeCheckBox.addActionListener(actionlistener);
 
         murderMysteryCheckBox1 = new JCheckBox("Murder/Mystery");
-        actionlistener = new filterActionListener(MURDER_MYSTERY, murderMysteryCheckBox1);
+        actionlistener = new FilterActionListener(MURDER_MYSTERY, murderMysteryCheckBox1);
         murderMysteryCheckBox1.addActionListener(actionlistener);
 
         mythologyCheckBox = new JCheckBox("Mythology");
-        actionlistener = new filterActionListener(MYTHOLOGY, mythologyCheckBox);
+        actionlistener = new FilterActionListener(MYTHOLOGY, mythologyCheckBox);
         mythologyCheckBox.addActionListener(actionlistener);
 
         napoleonicCheckBox = new JCheckBox("Napoleonic");
-        actionlistener = new filterActionListener(NAPOLEONIC, napoleonicCheckBox);
+        actionlistener = new FilterActionListener(NAPOLEONIC, napoleonicCheckBox);
         napoleonicCheckBox.addActionListener(actionlistener);
 
         nauticalCheckBox = new JCheckBox("Nautical");
-        actionlistener = new filterActionListener(NAUTICAL, nauticalCheckBox);
+        actionlistener = new FilterActionListener(NAUTICAL, nauticalCheckBox);
         nauticalCheckBox.addActionListener(actionlistener);
 
         negotiationCheckBox = new JCheckBox("Negotiation");
-        actionlistener = new filterActionListener(NEGOTIATION, negotiationCheckBox);
+        actionlistener = new FilterActionListener(NEGOTIATION, negotiationCheckBox);
         negotiationCheckBox.addActionListener(actionlistener);
 
         novelBasedCheckBox = new JCheckBox("Novel Based");
-        actionlistener = new filterActionListener(NOVEL_BASED, novelBasedCheckBox);
+        actionlistener = new FilterActionListener(NOVEL_BASED, novelBasedCheckBox);
         novelBasedCheckBox.addActionListener(actionlistener);
 
         partyGameCheckBox = new JCheckBox("Party Game");
-        actionlistener = new filterActionListener(PARTY_GAME, partyGameCheckBox);
+        actionlistener = new FilterActionListener(PARTY_GAME, partyGameCheckBox);
         partyGameCheckBox.addActionListener(actionlistener);
 
         pikeAndShotCheckBox = new JCheckBox("Pike and Shot");
-        actionlistener = new filterActionListener(PIKE_AND_SHOT, pikeAndShotCheckBox);
+        actionlistener = new FilterActionListener(PIKE_AND_SHOT, pikeAndShotCheckBox);
         pikeAndShotCheckBox.addActionListener(actionlistener);
 
         politicalCheckBox = new JCheckBox("Political");
-        actionlistener = new filterActionListener(POLITICAL, politicalCheckBox);
+        actionlistener = new FilterActionListener(POLITICAL, politicalCheckBox);
         politicalCheckBox.addActionListener(actionlistener);
 
         postNapoleonicCheckBox = new JCheckBox("Post-Napoleonic");
-        actionlistener = new filterActionListener(POST_NAPOLEONIC, postNapoleonicCheckBox);
+        actionlistener = new FilterActionListener(POST_NAPOLEONIC, postNapoleonicCheckBox);
         postNapoleonicCheckBox.addActionListener(actionlistener);
 
         prehistoricCheckBox = new JCheckBox("Prehistoric");
-        actionlistener = new filterActionListener(PREHISTORIC, prehistoricCheckBox);
+        actionlistener = new FilterActionListener(PREHISTORIC, prehistoricCheckBox);
         prehistoricCheckBox.addActionListener(actionlistener);
 
         printAndPlayCheckBox = new JCheckBox("Print and Play");
-        actionlistener = new filterActionListener(PRINT_AND_PLAY, printAndPlayCheckBox);
+        actionlistener = new FilterActionListener(PRINT_AND_PLAY, printAndPlayCheckBox);
         printAndPlayCheckBox.addActionListener(actionlistener);
 
         puzzleCheckBox = new JCheckBox("Puzzle");
-        actionlistener = new filterActionListener(PUZZLE, puzzleCheckBox);
+        actionlistener = new FilterActionListener(PUZZLE, puzzleCheckBox);
         puzzleCheckBox.addActionListener(actionlistener);
 
         racingCheckBox = new JCheckBox("Racing");
-        actionlistener = new filterActionListener(RACING, racingCheckBox);
+        actionlistener = new FilterActionListener(RACING, racingCheckBox);
         racingCheckBox.addActionListener(actionlistener);
 
         renaissanceCheckBox = new JCheckBox("Renaissance");
-        actionlistener = new filterActionListener(RENAISSANCE, renaissanceCheckBox);
+        actionlistener = new FilterActionListener(RENAISSANCE, renaissanceCheckBox);
         renaissanceCheckBox.addActionListener(actionlistener);
 
         scienceFictionCheckBox = new JCheckBox("Science Fiction");
-        actionlistener = new filterActionListener(SCIENCE_FICTION, scienceFictionCheckBox);
+        actionlistener = new FilterActionListener(SCIENCE_FICTION, scienceFictionCheckBox);
         scienceFictionCheckBox.addActionListener(actionlistener);
 
         spaceExplorationCheckBox = new JCheckBox("Space Exploration");
-        actionlistener = new filterActionListener(SPACE_EXPLORATION, spaceExplorationCheckBox);
+        actionlistener = new FilterActionListener(SPACE_EXPLORATION, spaceExplorationCheckBox);
         spaceExplorationCheckBox.addActionListener(actionlistener);
 
         spiesSecretAgentsCheckBox1 = new JCheckBox("Spies/Secret Agents");
-        actionlistener = new filterActionListener(SPIES_SECRET_AGENTS, spiesSecretAgentsCheckBox1);
+        actionlistener = new FilterActionListener(SPIES_SECRET_AGENTS, spiesSecretAgentsCheckBox1);
         spiesSecretAgentsCheckBox1.addActionListener(actionlistener);
 
         sportsCheckBox1 = new JCheckBox("Sports");
-        actionlistener = new filterActionListener(SPORTS, sportsCheckBox1);
+        actionlistener = new FilterActionListener(SPORTS, sportsCheckBox1);
         sportsCheckBox1.addActionListener(actionlistener);
 
         territoryBuildingCheckBox1 = new JCheckBox("Territory Building");
-        actionlistener = new filterActionListener(TERRITORY_BUILDING, territoryBuildingCheckBox1);
+        actionlistener = new FilterActionListener(TERRITORY_BUILDING, territoryBuildingCheckBox1);
         territoryBuildingCheckBox1.addActionListener(actionlistener);
 
         transportationCheckBox = new JCheckBox("Transportation");
-        actionlistener = new filterActionListener(TRANSPORTATION, transportationCheckBox);
+        actionlistener = new FilterActionListener(TRANSPORTATION, transportationCheckBox);
         transportationCheckBox.addActionListener(actionlistener);
 
         travelCheckBox = new JCheckBox("Travel");
-        actionlistener = new filterActionListener(TRAVEL, travelCheckBox);
+        actionlistener = new FilterActionListener(TRAVEL, travelCheckBox);
         travelCheckBox.addActionListener(actionlistener);
 
         triviaCheckBox1 = new JCheckBox("Trivia");
-        actionlistener = new filterActionListener(TRIVIA, triviaCheckBox1);
+        actionlistener = new FilterActionListener(TRIVIA, triviaCheckBox1);
         triviaCheckBox1.addActionListener(actionlistener);
 
         videoGameThemeCheckBox = new JCheckBox("Video Game Theme");
-        actionlistener = new filterActionListener(VIDEO_GAME_THEME, videoGameThemeCheckBox);
+        actionlistener = new FilterActionListener(VIDEO_GAME_THEME, videoGameThemeCheckBox);
         videoGameThemeCheckBox.addActionListener(actionlistener);
 
         wargameCheckBox = new JCheckBox("Wargame");
-        actionlistener = new filterActionListener(WARGAME, wargameCheckBox);
+        actionlistener = new FilterActionListener(WARGAME, wargameCheckBox);
         wargameCheckBox.addActionListener(actionlistener);
 
         wordGameCheckBox = new JCheckBox("Word Game");
-        actionlistener = new filterActionListener(WORD_GAME, wordGameCheckBox);
+        actionlistener = new FilterActionListener(WORD_GAME, wordGameCheckBox);
         wordGameCheckBox.addActionListener(actionlistener);
 
         worldWarIICheckBox1 = new JCheckBox("World War II");
-        actionlistener = new filterActionListener(WORLD_WAR_II, worldWarIICheckBox1);
+        actionlistener = new FilterActionListener(WORLD_WAR_II, worldWarIICheckBox1);
         worldWarIICheckBox1.addActionListener(actionlistener);
 
         add(filterLabel);
