@@ -259,15 +259,15 @@ public class SearchManager {
      * Checks if the games match the filters.
      *
      * @param games   the games being searched.
-     * @param filters the filters applied to the search.
      * @return the results.
      */
-    public List<GameDetails> filterGames(List<GameDetails> games, List<Predicate<GameDetails>> filters) {
+    public List<GameDetails> filterGames(List<GameDetails> games) {
         List<GameDetails> results = new ArrayList<>();
+        List<Predicate<GameDetails>> activeFilters = new ArrayList<>(FilterManager.getInstance().getPredicates());
 
         for (GameDetails gameDetails : games) {
             boolean matchesFilters = true;
-            for (Predicate<GameDetails> filter : filters) {
+            for (Predicate<GameDetails> filter : activeFilters) {
                 if (!filter.test(gameDetails)) {
                     matchesFilters = false;
                     break;
@@ -279,6 +279,7 @@ public class SearchManager {
         }
         return results;
     }
+
 
     /**
      * Returns a list of recommended games based on the specified collection ID and number of recommendations.

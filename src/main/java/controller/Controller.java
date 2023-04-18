@@ -232,7 +232,7 @@ public class Controller {
      */
     public List<GameDetails> searchGamesWithFilters(String query){
         List<GameDetails> searchResultsNoFilter = searchGamesByQuery(query);
-        return SearchManager.getInstance().filterGames(searchResultsNoFilter, SearchManager.FilterManager.getInstance().getPredicates());
+        return SearchManager.getInstance().filterGames(searchResultsNoFilter);
     }
     /**
      * Returns a list of recommended games based on the user's favorites collection.
