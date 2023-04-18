@@ -6,6 +6,12 @@ import java.awt.event.ActionListener;
 
 import static main.java.model.GameCategory.*;
 
+/**
+ * FiltersPanel displays the possible game categories for the user to filter their
+ * search by, which are found in the GameCategory model. Uses the FilterActionListener class
+ * to monitor adding/removing filters related to checking and unchecking category boxes.
+ */
+
 public class FiltersPanel extends JPanel {
     private JButton submitButton;
 

@@ -1,13 +1,17 @@
 package main.java.view;
 
 import javax.swing.*;
-
 import main.java.controller.Controller;
 import main.java.manager.GameDatabaseManager;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+/**
+ * HomePageFrame holds the FiltersPanel, MainGamesPanel, and GameDetailsPanel and serves as
+ * the main page for the Board Game Library. There are also navigational buttons for opening
+ * the user's profile and logging out of the library
+ */
 
 public class HomePageFrame extends JFrame {
 

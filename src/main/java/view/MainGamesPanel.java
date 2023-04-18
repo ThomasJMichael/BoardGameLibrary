@@ -9,6 +9,11 @@ import javax.swing.*;
 import main.java.controller.Controller;
 import main.java.model.GameDetails;
 
+/**
+ * MainGamesPanel displays a list of recommended games upon user log-in or it displays the
+ * results of a search through a search bar
+ */
+
 
 public class MainGamesPanel extends JPanel implements ActionListener {
 
@@ -19,13 +24,16 @@ public class MainGamesPanel extends JPanel implements ActionListener {
 
     private JTextField searchBar;
 
+    private JButton refreshRecommendedButton;
+
+    private JButton findRandomGamesButton;
+
     private List<GameDetails> displayedGames;
 
     private JPanel gameDisplayPanel;
 
     private String searchTerm;
 
-    private JButton filterGamesButton;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -54,20 +62,42 @@ public class MainGamesPanel extends JPanel implements ActionListener {
         gameDisplayPanel = new JPanel(new FlowLayout());
         gameDisplayPanel.setPreferredSize(new Dimension(800, 2000));
         searchBar = new JTextField("Enter Search Term...");
-        searchBar.setPreferredSize(new Dimension(700, 20));
+        searchBar.setPreferredSize(new Dimension(650, 20));
         searchBar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchTerm = searchBar.getText();
-                displayedGames = Controller.getInstance().searchGamesWithFilters(searchTerm);
+                if (searchTerm.equals(""))
+                    displayedGames = Controller.getInstance().getRandomGames(50);
+                else
+                    displayedGames = Controller.getInstance().searchGamesWithFilters(searchTerm);
                 refreshGames();
             }
         });
 
+        refreshRecommendedButton = new JButton("Find Recommended Games");
+        refreshRecommendedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayedGames = Controller.getInstance().getRecommendedGames(50);
+                searchBar.setText("");
+                refreshGames();
+            }
+        });
 
+        findRandomGamesButton = new JButton("Find Random Games");
+        findRandomGamesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayedGames = Controller.getInstance().getRandomGames(50);
+                searchBar.setText("");
+                refreshGames();
+            }
+        });
 
         add(searchBar);
-        //add(filterGamesButton);
+        add(refreshRecommendedButton);
+        add(findRandomGamesButton);
 
         displayedGames = Controller.getInstance().getRandomGames(50);
         for (GameDetails game : displayedGames) {

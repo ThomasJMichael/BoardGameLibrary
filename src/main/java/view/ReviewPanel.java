@@ -5,13 +5,16 @@ import main.java.model.Review;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * ReviewPanel displays the information for a game review including
+ * the reviewer's username, the game's rating out of 5, and the description
+ * for the review.
+ */
+
 public class ReviewPanel extends JPanel {
     private JTextField usernameTextField;
     private JTextField ratingTextField;
     private JTextArea descriptionTextArea;
-    private JPanel reviewPanel;
-
-    private JFrame frame;
 
     public ReviewPanel(Review R) {
         String username = R.getUsername();
@@ -30,7 +33,4 @@ public class ReviewPanel extends JPanel {
 
     }
 
-    public static void main(String[] args) {
-        //reviewPanel panel = new reviewPanel("316624");
-    }
 }

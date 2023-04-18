@@ -13,6 +13,12 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * GameDetailsPanel displays information about a game and allows
+ * a user to add the game to one of their collections or write a
+ * review for the game
+ */
+
 public class GameDetailsPanel extends JPanel {
     private JLabel gameName;
     private JLabel gameImage;
