@@ -3,6 +3,8 @@ package main.java.view;
 import javax.swing.*;
 import main.java.controller.Controller;
 import main.java.manager.GameDatabaseManager;
+import main.java.manager.UserDataManager;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,9 +18,7 @@ import java.awt.event.ActionListener;
 public class HomePageFrame extends JFrame {
 
     private JPanel navigationButtonsPanel;
-    private JButton homeButton;
     private JButton profileButton;
-    private JButton settingsButton;
     private JButton logoutButton;
     private JPanel searchBar;
     private JPanel gamePanel;
@@ -50,11 +50,7 @@ public class HomePageFrame extends JFrame {
 
     private void createPanelComponents() {
 
-        homeButton = new JButton("Home");
-
         profileButton = new JButton("Profile");
-
-        settingsButton = new JButton("Settings");
 
         logoutButton = new JButton("Logout");
         logoutButton.addActionListener(new ActionListener() {
@@ -69,11 +65,17 @@ public class HomePageFrame extends JFrame {
 
             }
         });
+        profileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userID = UserDataManager.getInstance().getCurrentUser().getId();
+                UserProfileFrame userProfile = new UserProfileFrame(userID, HomePageFrame.this);
+                HomePageFrame.this.getContentPane().add(userProfile);
+            }
+        });
 
         navigationButtonsPanel = new JPanel(new FlowLayout());
-        navigationButtonsPanel.add(homeButton);
         navigationButtonsPanel.add(profileButton);
-        navigationButtonsPanel.add(settingsButton);
         navigationButtonsPanel.add(logoutButton);
 
 
