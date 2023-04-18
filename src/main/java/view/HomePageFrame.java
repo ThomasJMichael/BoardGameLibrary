@@ -3,18 +3,13 @@ package main.java.view;
 import javax.swing.*;
 
 import main.java.controller.Controller;
-import main.java.manager.CollectionManager;
 import main.java.manager.GameDatabaseManager;
-import main.java.manager.UserDataManager;
-import main.java.model.GameDetails;
-import main.java.model.User;
-import main.java.view.searchBar;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class homePageFrame extends JFrame {
+public class HomePageFrame extends JFrame {
 
     private JPanel navigationButtonsPanel;
     private JButton homeButton;
@@ -34,7 +29,7 @@ public class homePageFrame extends JFrame {
     // main panel: CENTER
     // game view: LINE_END
 
-    public homePageFrame() {
+    public HomePageFrame() {
         setTitle("Board Game Library");
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1500,900));
@@ -64,18 +59,10 @@ public class homePageFrame extends JFrame {
                 if (JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?") == JOptionPane.YES_OPTION) {
                     Controller.getInstance().logout();
                     setVisible(false);
-                    loginPage login = new loginPage();
+                    LoginPage login = new LoginPage();
                     dispose();
                 }
 
-            }
-        });
-        profileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String userID = UserDataManager.getInstance().getCurrentUser().getId();
-                userProfilePanel userProfile = new userProfilePanel(userID, homePageFrame.this);
-                homePageFrame.this.getContentPane().add(userProfile);
             }
         });
 
@@ -86,11 +73,11 @@ public class homePageFrame extends JFrame {
         navigationButtonsPanel.add(logoutButton);
 
 
-        searchBar = new searchBar(this);
+        searchBar = new FiltersPanel(this);
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
         gameScroll.setVisible(true);
-        mainPage = new mainPage(this);
+
+        mainPage = new MainGamesPanel(this);
         mainScroll = new JScrollPane(mainPage, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         mainScroll.setVisible(true);
 
@@ -103,7 +90,7 @@ public class homePageFrame extends JFrame {
 
 
     public void changeGameView(String gameID) {
-        gamePanel = new gamePanel(GameDatabaseManager.getGameDetailsByID(gameID), this);
+        gamePanel = new GameDetailsPanel(GameDatabaseManager.getGameDetailsByID(gameID), this);
         remove(gameScroll);
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(gameScroll, BorderLayout.LINE_END);
@@ -111,12 +98,13 @@ public class homePageFrame extends JFrame {
     }
 
     private void showRandomGame() {
-        gamePanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0), this);
+        gamePanel = new GameDetailsPanel(Controller.getInstance().getRandomGames(1).get(0), this);
+        //new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("374173"), this);
     }
 
 
     public static void main(String[] args) {
-        new homePageFrame();
+        new HomePageFrame();
     }
 
 }

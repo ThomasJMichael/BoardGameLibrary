@@ -6,9 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
-public class loginPage {
+public class LoginPage {
     private JPanel loginPanel;
     private JLabel welcomeLabel;
     private JTextField usernameField;
@@ -17,7 +16,7 @@ public class loginPage {
     private JButton registerButton;
     private JFrame frame;
 
-    public loginPage() {
+    public LoginPage() {
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -26,7 +25,7 @@ public class loginPage {
                 if (Controller.getInstance().login(username, password)) {
                     JOptionPane.showMessageDialog(null, "Login Successful.");
                     frame.setVisible(false);
-                    JFrame homepage = new homePageFrame();
+                    JFrame homepage = new HomePageFrame();
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Incorrect Username or Password.");
@@ -37,7 +36,7 @@ public class loginPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                registerPage register = new registerPage();
+                RegisterPage register = new RegisterPage();
                 frame.dispose();
             }
         });
@@ -52,6 +51,6 @@ public class loginPage {
     }
 
     public static void main(String[] args) {
-        loginPage page = new loginPage();
+        LoginPage page = new LoginPage();
     }
 }

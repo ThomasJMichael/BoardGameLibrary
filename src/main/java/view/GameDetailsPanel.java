@@ -11,10 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class gamePanel extends JPanel {
+public class GameDetailsPanel extends JPanel {
     private JLabel gameName;
     private JLabel gameImage;
 
@@ -27,7 +26,7 @@ public class gamePanel extends JPanel {
     private JButton confirmButton;
 
     private JLabel reviewLabel;
-    private reviewPanel reviews;
+    private ReviewPanel reviews;
     private JTextArea gameDescription;
     private JTextArea allDetails;
     private GameDetails gamedetails;
@@ -36,10 +35,10 @@ public class gamePanel extends JPanel {
 
     private JButton writeAReviewButton;
 
-    private homePageFrame homePage;
+    private HomePageFrame homePage;
 
 
-    public gamePanel(GameDetails game, homePageFrame frame) {
+    public GameDetailsPanel(GameDetails game, HomePageFrame frame) {
         homePage = frame;
         gamedetails = game;
         setLayout(new FlowLayout());
@@ -59,7 +58,7 @@ public class gamePanel extends JPanel {
         if (!game.getReviews().isEmpty()) {
             add(reviewLabel);
             for (Review r : game.getReviews()) {
-                reviews = new reviewPanel(r);
+                reviews = new ReviewPanel(r);
                 add(reviews);
             }
         }
@@ -104,13 +103,34 @@ public class gamePanel extends JPanel {
 
         String mechanics = gamedetails.getGame().getMechanics().toString();
 
+        String categories = gamedetails.getGame().getCategories().toString();
+
         addToFavoritesButton = new JButton("Add to Favorites");
         // probably need the favorites to be the very first collection on everyone's list
         addToFavoritesButton.addActionListener(new ActionListener() {
             @Override
+
             public void actionPerformed(ActionEvent e) {
-                //Controller.getInstance().addGameToCollection(game.getGame().getId(), )
+                boolean isFavorited = false;
+                if (!isFavorited) {
+                    // Add the game to favorites
+                    if (Controller.getInstance().addGameToFavorites(gamedetails.getGame().getId())) {
+                        JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + " added to favorites.");
+                        addToFavoritesButton.setText("Favorited");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to add game to favorites.");
+                    }
+                } else {
+                    // Remove the game from favorites
+                    if (Controller.getInstance().removeGameFromFavorites(gamedetails.getGame().getId())) {
+                        JOptionPane.showMessageDialog(null, "Removed " + gamedetails.getGame().getName() + " from favorites.");
+                        addToFavoritesButton.setText("Add to Favorites");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to remove game from favorites.");
+                    }
+                }
             }
+
         });
 
         addToCollectionLabel = new JLabel("Add to Collection: ");
@@ -167,7 +187,8 @@ public class gamePanel extends JPanel {
                         "Max Players: " + maxPlayers + "\n" +
                         "Min Age: " + minAge + "\n" +
                         "Playing Time: " + playingTime + " minutes\n" +
-                        "Mechanics: " + mechanics + "\n"
+                        "Mechanics: " + mechanics + "\n" +
+                        "Categories: " + categories + "\n"
         );
         allDetails.setEditable(false);
 

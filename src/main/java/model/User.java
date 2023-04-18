@@ -30,6 +30,13 @@ public class User {
         this.id = generateUserId();
     }
 
+    public User(String username, String password, String name, String id) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.id = id;
+    }
+
     /**
      * Returns the username of the user.
      *
@@ -118,5 +125,15 @@ public class User {
         usedIds.add(id);
         return id;
 
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

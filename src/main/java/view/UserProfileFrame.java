@@ -11,7 +11,7 @@ import main.java.model.Collection;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
 
-public class userProfilePanel extends JPanel implements ActionListener{
+public class UserProfileFrame extends JPanel implements ActionListener{
     private final String userID;
     CollectionManager collectionManager = CollectionManager.getInstance();
     /**
@@ -23,45 +23,44 @@ public class userProfilePanel extends JPanel implements ActionListener{
      */
     private static JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
-    private homePageFrame homePage;
+    private HomePageFrame homePage;
 
     /**
      * Imports collections to create one button for each collection.
      * @param userID user's ID
      */
-    public userProfilePanel(String userID, homePageFrame homePage) {
-        this.homePage = homePage;
-        this.userID = userID;
-
+    public UserProfileFrame(String userID, HomePageFrame frame) {
+        homePage = frame;
+        this.userID = "123456";
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
-        JPanel collectionsPanel = new JPanel();
-        //initializes Collections panel
-        tabbedPane.addTab("Collections", collectionsPanel);
+
         //iterate through the list
-        if (collections != null) {
-            for (Collection collection : collections) {
-                JButton collButton = new JButton(collection.getName());
-                add(collButton);
-                collButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JFrame collectionFrame = new JFrame(collection.getName());
-                        collectionFrame.setLayout(new FlowLayout());
-                        List<String> games = collection.getGames();
-                        for (String game : games) {
-                            JPanel collectionLittleDisplayPanel = new collectionLittleDisplayPanel(game, homePage);
-                            collectionFrame.add(collectionLittleDisplayPanel);
-                        }
-                        collectionFrame.setVisible(true);
-                        collectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        collectionFrame.setLocationRelativeTo(null);
-                        collectionFrame.pack();
+        for (Collection collection : collections) {
+            JButton collButton = new JButton(collection.getName());
+            add(collButton);
+            collButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JFrame collectionFrame = new JFrame(collection.getName());
+                    collectionFrame.setLayout(new FlowLayout());
+                    List<String> games = collection.getGames();
+                    for (String game : games) {
+                        JPanel collectionLittleDisplayPanel = new GameDisplayPanel(game, frame);
+                        collectionFrame.add(collectionLittleDisplayPanel);
                     }
-                });
-            }
+                    collectionFrame.setVisible(true);
+                    collectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    collectionFrame.setLocationRelativeTo(null);
+                    collectionFrame.pack();
+                }
+            });
         }
+
+    }
+
+    public static void main(String args[]) {
         //creates the two panels
-        JPanel panel1;
+        JPanel panel1, panel2;
 
         //initializes Account Settings panel with two buttons: logout and change password
         panel1 = new JPanel();
@@ -108,6 +107,9 @@ public class userProfilePanel extends JPanel implements ActionListener{
                         JOptionPane.showMessageDialog(null, "Password update failed");
                     }
                 }
+                else {
+
+                }
             }
         });
 
@@ -115,7 +117,9 @@ public class userProfilePanel extends JPanel implements ActionListener{
         panel1.add(logOutButton);
         panel1.add(passButton);
 
-
+        //initializes Collections panel
+        panel2 = new UserProfileFrame("123456", new HomePageFrame());
+        tabbedPane.addTab("Collections", panel2);
 
         //formats frame
         tabbedPane.setAlignmentY(0);
@@ -131,12 +135,6 @@ public class userProfilePanel extends JPanel implements ActionListener{
         frame.setLocationRelativeTo(null);
         //sets frame to visible
         frame.setVisible(true);
-
-    }
-
-    public static void main(String args[]) {
-        Controller.getInstance().login("alice123", "password123");
-        homePageFrame page = new homePageFrame();
     }
 
     @Override

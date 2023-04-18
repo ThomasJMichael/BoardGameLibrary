@@ -4,26 +4,28 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.naming.ldap.Control;
 import javax.swing.*;
 
 import main.java.controller.Controller;
-import main.java.model.Game;
 import main.java.model.GameDetails;
-import main.java.view.userProfilePanel;
 
 
-public class mainPage extends JPanel implements ActionListener {
+public class MainGamesPanel extends JPanel implements ActionListener {
 
     private static JFrame frame = new JFrame();
     private static JPanel panel = new JPanel(new BorderLayout());
 
-    private homePageFrame homePage;
+    private HomePageFrame homePage;
 
     private JTextField searchBar;
 
     private List<GameDetails> displayedGames;
 
+    private JPanel gameDisplayPanel;
+
+    private String searchTerm;
+
+    private JButton filterGamesButton;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -44,29 +46,46 @@ public class mainPage extends JPanel implements ActionListener {
     }
     */
 
-    public mainPage(homePageFrame frame) {
+    public MainGamesPanel(HomePageFrame frame) {
         homePage = frame;
         setPreferredSize(new Dimension(800, 2500));
         setLayout(new FlowLayout());
 
+        gameDisplayPanel = new JPanel(new FlowLayout());
+        gameDisplayPanel.setPreferredSize(new Dimension(800, 2000));
         searchBar = new JTextField("Enter Search Term...");
         searchBar.setPreferredSize(new Dimension(700, 20));
         searchBar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // search
+                searchTerm = searchBar.getText();
+                displayedGames = Controller.getInstance().searchGamesWithFilters(searchTerm);
+                refreshGames();
             }
         });
 
+
+
         add(searchBar);
+        //add(filterGamesButton);
 
         displayedGames = Controller.getInstance().getRandomGames(50);
         for (GameDetails game : displayedGames) {
-            JPanel gameDisplay = new collectionLittleDisplayPanel(game.getGame().getId(), homePage);
-            add(gameDisplay);
+            JPanel gameDisplay = new GameDisplayPanel(game.getGame().getId(), homePage);
+            gameDisplayPanel.add(gameDisplay);
         }
 
-
+        add(gameDisplayPanel);
+    }
+    public void refreshGames() {
+        gameDisplayPanel.setVisible(false);
+        gameDisplayPanel.removeAll();
+        for (GameDetails game : displayedGames) {
+            JPanel gameDisplay = new GameDisplayPanel(game.getGame().getId(), homePage);
+            gameDisplayPanel.add(gameDisplay);
+        }
+        revalidate();
+        gameDisplayPanel.setVisible(true);
 
     }
     public static void main(String[] args) {

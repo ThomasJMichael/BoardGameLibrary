@@ -235,6 +235,7 @@ public class CollectionManager implements Loadable, Savable {
                 return false;
             } else if (!foundCollection.getGames().contains(gameId)) {
                 foundCollection.addGame(gameId); // add the game to the found collection
+                save();
                 return foundCollection.getGames().contains(gameId);
             } else {
                 System.out.println("Game " + gameId + " already in collection.");
@@ -259,6 +260,7 @@ public class CollectionManager implements Loadable, Savable {
             Collection foundCollection = userCollection.get(collectionIndex);
             if (foundCollection.getGames().contains(game.getId())) {
                 foundCollection.removeGame(game.getId());
+                save();
             }
             else {
                 System.out.println("Game " + game.getName() + " is not currently in collection.");

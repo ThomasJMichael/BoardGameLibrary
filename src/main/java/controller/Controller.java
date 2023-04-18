@@ -185,13 +185,25 @@ public class Controller {
      * Adds a game to the "Favorites" collection for the current user.
      *
      * @param gameId    the ID of the game to add
-     * @return          true if the game was added successfully, false otherwise
+     * @return           true if the game was added successfully, false otherwise
      */
     public boolean addGameToFavorites(String gameId){
         User user = UserDataManager.getInstance().getCurrentUser();
-        Collection userFavorites = CollectionManager.getInstance().getSpecificCollection(user.getId(), "Favorites");
+        Collection userFavorites = CollectionManager.getInstance().getCollectionByName(user.getId(), "Favorites");
         return addGameToCollection(gameId, userFavorites.getId());
     }
+    /**
+     * Removes a game from the "Favorites" collection for the current user.
+     *
+     * @param gameId     the ID of the game to remove.
+     * @return           true if the game was removed successfully, false otherwise
+     */
+    public boolean removeGameFromFavorites(String gameId){
+        User user = UserDataManager.getInstance().getCurrentUser();
+        Collection userFavorites = CollectionManager.getInstance().getCollectionByName(user.getId(), "Favorites");
+        return removeGameFromCollection(gameId, userFavorites.getId());
+    }
+
     /**
      * Removes a game from the collection with the given collectionId.
      * @param gameId        The id of the game to remove from the collection
@@ -199,7 +211,7 @@ public class Controller {
      * @return              true if the game is removed from the collection, false otherwise
      */
     public boolean removeGameFromCollection(String gameId, String collectionId){
-        return CollectionManager.getInstance().removeGameFromCollection(UserDataManager.getInstance().getUsername(), gameId, collectionId);
+        return CollectionManager.getInstance().removeGameFromCollection(UserDataManager.getInstance().getCurrentUser().getId(), gameId, collectionId);
     }
 
     /**
@@ -209,7 +221,7 @@ public class Controller {
      * @return          The list of games that match the query
      */
     public List<GameDetails> searchGamesByQuery(String query){
-        return searchGamesByQuery(query);
+        return SearchManager.getInstance().searchGames(query);
     }
 
     /**
@@ -234,7 +246,7 @@ public class Controller {
         if (specificCollection == null){
             return null;
         }
-        return SearchManager.getInstance().getRecomendedGames(currentUser.getId(), specificCollection.getId(), numberOfRecommendations);
+        return SearchManager.getInstance().getRecommendedGames(currentUser.getId(), specificCollection.getId(), numberOfRecommendations);
     }
    /**
     * Returns a list of randomly selected recommended games.
@@ -463,5 +475,16 @@ public class Controller {
         ReviewManager.getInstance();
         SearchManager.getInstance();
         UserDataManager.getInstance();
+    }
+
+    public Collection getFavoriteGames() {
+        List<Collection> allCollections = getCollectionsByUser(UserDataManager.getInstance().getCurrentUser().getId());
+        for (Collection collection : allCollections){
+            if (collection.getName().equals("Favorites")){
+                return collection;
+            }
+        }
+        System.out.println("No favorites collection found.");
+        return null;
     }
 }
