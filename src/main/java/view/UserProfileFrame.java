@@ -6,24 +6,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import main.java.manager.CollectionManager;
 import main.java.model.Collection;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
 
 public class UserProfileFrame implements ActionListener{
-    private final String userID;
-    CollectionManager collectionManager = CollectionManager.getInstance();
+
     /**
      * Creates new frame.
      */
-    private static JFrame frame = new JFrame();
+    private static final JFrame frame = new JFrame();
     /**
      * Creates a left justified tabbed pane.
      */
-    private static JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+    private static final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
-    private HomePageFrame homePage;
+    private final HomePageFrame homePage;
 
     /**
      * Imports collections to create one button for each collection.
@@ -31,12 +29,17 @@ public class UserProfileFrame implements ActionListener{
      */
     public UserProfileFrame(String userID, HomePageFrame homePage) {
         this.homePage = homePage;
-        this.userID = userID;
 
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
+
         JPanel collectionsPanel = new JPanel();
-        //initializes Collections panel
+        //initializes Collections tab
         tabbedPane.addTab("Collections", collectionsPanel);
+
+        JPanel reviewPanel = new JPanel();
+        //initializes Reviews tab
+        tabbedPane.addTab("Reviews", reviewPanel);
+
         //iterate through the list
         if (collections != null) {
             for (Collection collection : collections) {
@@ -45,16 +48,7 @@ public class UserProfileFrame implements ActionListener{
                 collButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JFrame collectionFrame = new JFrame(collection.getName());
-                        collectionFrame.setLayout(new FlowLayout());
-                        List<String> games = collection.getGames();
-                        for (String game : games) {
-                            JPanel GameDisplayPanel = new GameDisplayPanel(game, homePage);
-                            collectionFrame.add(GameDisplayPanel);
-                        }
-                        collectionFrame.setVisible(true);
-                        collectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        collectionFrame.pack();
+                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID);
                     }
                 });
             }
@@ -132,8 +126,7 @@ public class UserProfileFrame implements ActionListener{
 
     }
 
-    public static void main(String args[]) {
-        Controller.getInstance().login("alice123", "password123");
+    public static void main(String[] args) {
         HomePageFrame page = new HomePageFrame();
     }
 
