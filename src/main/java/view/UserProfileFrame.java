@@ -11,7 +11,7 @@ import main.java.model.Collection;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
 
-public class UserProfileFrame extends JPanel implements ActionListener{
+public class UserProfileFrame implements ActionListener{
     private final String userID;
     CollectionManager collectionManager = CollectionManager.getInstance();
     /**
@@ -41,7 +41,7 @@ public class UserProfileFrame extends JPanel implements ActionListener{
         if (collections != null) {
             for (Collection collection : collections) {
                 JButton collButton = new JButton(collection.getName());
-                add(collButton);
+                collectionsPanel.add(collButton);
                 collButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
