@@ -15,9 +15,9 @@ import java.awt.event.ActionListener;
  */
 
 public class FilterActionListener implements ActionListener {
-    private GameCategory category;
+    private final GameCategory category;
 
-    private JCheckBox filterCheckbox;
+    private final JCheckBox filterCheckbox;
 
 
     public FilterActionListener(GameCategory category, JCheckBox checkbox) {
