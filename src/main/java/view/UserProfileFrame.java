@@ -120,7 +120,7 @@ public class UserProfileFrame extends JPanel implements ActionListener{
         //formats frame
         tabbedPane.setAlignmentY(0);
         frame.add(tabbedPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(900,600);
 
         //set the title with a centered label
