@@ -95,7 +95,7 @@ public class FiltersPanel extends JPanel {
 
         adventureCheckBox = new JCheckBox("Adventure");
         actionlistener = new FilterActionListener(ADVENTURE, adventureCheckBox);
-        abstractStrategyCheckBox.addActionListener(actionlistener);
+        adventureCheckBox.addActionListener(actionlistener);
 
         ageOfReasonCheckBox1 = new JCheckBox("Age of Reason");
         actionlistener = new FilterActionListener(AGE_OF_REASON, ageOfReasonCheckBox1);
