@@ -9,18 +9,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * GameDisplayPanel is a small panel that displays a game's name, thumbnail, a checkbox for
+ * deletion from a collection, and a details button to open a GameDetails panel for further
+ * information. GameDisplayPanel is meant to display games in a long list, like in search results
+ * or in a user's collection.
+ */
+
 public class GameDisplayPanel extends JPanel{
 
     private JLabel gameThumbnail;
     private JLabel gameTitle;
     private JCheckBox checkGame;
-
     private JButton detailsButton;
-
     private JPanel selectionPanel;
     private GameDetails gamedetails;
-
     private HomePageFrame homePage;
+
+    private boolean selected;
 
 
     public GameDisplayPanel(String gameID, HomePageFrame frame) {
@@ -39,7 +45,19 @@ public class GameDisplayPanel extends JPanel{
     private void createUIComponents() {
         String name = gamedetails.getGame().getName();
         gameTitle = new JLabel(name);
+
         checkGame = new JCheckBox();
+        checkGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkGame.isSelected()) {
+                    selected = true;
+                }
+                else {
+                    selected = false;
+                }
+            }
+        });
 
         detailsButton = new JButton("Details");
         detailsButton.addActionListener(new ActionListener() {
@@ -63,6 +81,10 @@ public class GameDisplayPanel extends JPanel{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isSelected() {
+        return selected;
     }
 
     /*
