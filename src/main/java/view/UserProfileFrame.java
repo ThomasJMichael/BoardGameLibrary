@@ -54,7 +54,6 @@ public class UserProfileFrame implements ActionListener{
                         }
                         collectionFrame.setVisible(true);
                         collectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        collectionFrame.setLocationRelativeTo(null);
                         collectionFrame.pack();
                     }
                 });
@@ -67,7 +66,6 @@ public class UserProfileFrame implements ActionListener{
         panel1 = new JPanel();
         tabbedPane.addTab("Account Settings", panel1);
         JButton logOutButton = new JButton("Logout");
-        Controller.getInstance().login("alice123", "password123");
 
         //creates action listener for logout button
         logOutButton.addActionListener(new ActionListener() {
