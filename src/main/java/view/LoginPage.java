@@ -28,7 +28,7 @@ public class LoginPage {
 
     public LoginPage() {
         /**
-         * void ActionPerformed(ActionEvent e): returns void
+         * new ActionListener() -> ActionPerformed(ActionEvent): returns void
          * when the login button is clicked (and released), the system checks if
          * the information is valid for an existing Board Game Library account
          * and either opens the Home Page or shows an error message
@@ -48,18 +48,24 @@ public class LoginPage {
                 }
             }
         });
+        /**
+         * new ActionListener() -> actionPerformed(ActionEvent): returns void
+         * when the register button is clicked, an instance of RegisterPage() will open
+         * and allow the user to create a Board Game Library Account. The login page will
+         * close.
+         */
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                RegisterPage register = new RegisterPage();
+                new RegisterPage();
                 frame.dispose();
             }
         });
 
-        frame = new JFrame("Login");
+        frame = new JFrame("Login"); // initialize frame for login
         frame.setLocationRelativeTo(null);
-        frame.setContentPane(loginPanel);
+        frame.setContentPane(loginPanel); // set the content to match the loginPanel GUI form
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(300,300));
         frame.pack();
@@ -67,6 +73,6 @@ public class LoginPage {
     }
 
     public static void main(String[] args) {
-        LoginPage page = new LoginPage();
+        new LoginPage();
     }
 }

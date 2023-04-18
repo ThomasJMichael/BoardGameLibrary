@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * GameDisplayPanel is a small panel that displays a game's name, thumbnail, a checkbox for
  * deletion from a collection, and a details button to open a GameDetails panel for further
- * information. GameDisplayPanel is meant to display games in a long list, like in search results
+ * information. GameDisplayPanel used to display an individual game in a long list, like in search results
  * or in a user's collection.
  */
 

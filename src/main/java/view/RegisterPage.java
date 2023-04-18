@@ -20,16 +20,22 @@ import java.awt.event.ActionListener;
  */
 
 public class RegisterPage {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton submitButton;
-    private JButton goToLogInButton;
-    private JTextField nameField;
-    private JPanel registerPanel;
-    private JFrame frame;
+    private JPanel registerPanel; // holds the register elements
+    private JTextField nameField; // where the user can enter a name
+    private JTextField usernameField; // where the user can enter a username
+    private JPasswordField passwordField; // where the user can enter a password
+    private JButton submitButton; // submit button for registration
+    private JButton goToLogInButton; // opens log in page
+    private JFrame frame; // holds and displays the register panel
 
 
 public RegisterPage() {
+    /**
+     * new ActionListener() -> actionPerformed(ActionEvent): returns void
+     * when the submit button is clicked, the system gets the name, username, and password
+     * and attempts to register an account with that information. If the username already
+     * exists, the registration will fail and an error message will display.
+     */
     submitButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -39,7 +45,7 @@ public RegisterPage() {
             if (Controller.getInstance().register(username, password, name)) {
                 JOptionPane.showMessageDialog(null, "Registration Successful. Please log in.");
                 frame.setVisible(false);
-                LoginPage login = new LoginPage();
+                new LoginPage();
                 frame.dispose();
             }
             else
@@ -47,20 +53,28 @@ public RegisterPage() {
         }
 
     });
-    frame = new JFrame("Register");
-    frame.setContentPane(registerPanel);
+
+    /**
+     * new ActionListener() -> actionPerformed(ActionEvent): returns void
+     * when the go-to login button is click, the registration page closes and opens
+     * an instance of the LoginPage()
+     */
+    goToLogInButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frame.setVisible(false);
+            new LoginPage();
+        }
+    });
+
+    frame = new JFrame("Register"); // create the frame
+    frame.setContentPane(registerPanel); // set the content of the frame to the Registration GUI form
     frame.setPreferredSize(new Dimension(300,300));
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
-    goToLogInButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            frame.setVisible(false);
-            LoginPage login = new LoginPage();
-        }
-    });
-}
+
+    }
 }
 

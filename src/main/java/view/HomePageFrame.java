@@ -23,15 +23,9 @@ public class HomePageFrame extends JFrame {
     private JPanel searchBar;
     private JPanel gamePanel;
     private JScrollPane gameScroll;
-
     private JPanel mainPage;
-
     private JScrollPane mainScroll;
 
-    // need to add
-
-    // main panel: CENTER
-    // game view: LINE_END
 
     public HomePageFrame() {
         setTitle("Board Game Library");
@@ -65,12 +59,13 @@ public class HomePageFrame extends JFrame {
 
             }
         });
+
+        HomePageFrame thisFrame = this;
         profileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String userID = UserDataManager.getInstance().getCurrentUser().getId();
-                UserProfileFrame userProfile = new UserProfileFrame(userID, HomePageFrame.this);
-                HomePageFrame.this.getContentPane().add(userProfile);
+                new UserProfileFrame(userID, thisFrame);
             }
         });
 
@@ -105,7 +100,6 @@ public class HomePageFrame extends JFrame {
 
     private void showRandomGame() {
         gamePanel = new GameDetailsPanel(Controller.getInstance().getRandomGames(1).get(0), this);
-        //new gamePanel(GameDatabaseManager.getInstance().getGameDetailsByID("374173"), this);
     }
 
 
