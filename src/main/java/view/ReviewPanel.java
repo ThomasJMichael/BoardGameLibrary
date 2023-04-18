@@ -12,10 +12,14 @@ import java.awt.*;
  */
 
 public class ReviewPanel extends JPanel {
-    private JTextField usernameTextField;
-    private JTextField ratingTextField;
-    private JTextArea descriptionTextArea;
+    private final JTextField usernameTextField;
+    private final JTextField ratingTextField;
+    private final JTextArea descriptionTextArea;
 
+    /**
+     * Constructs a ReviewPanel given a Review object
+     * @param R the review to be displayed
+     */
     public ReviewPanel(Review R) {
         String username = R.getUsername();
         usernameTextField = new JTextField(username);

@@ -90,8 +90,8 @@ public class SearchManager {
 
     public List<GameDetails> searchGames(String query) {
         if (query == null || query.isEmpty()) {
-            // Return an empty list if the query is null or empty
-            return new ArrayList<>();
+            // Return all games if empty query
+            return new ArrayList<>(gamesMap.values());
         }
 
         // Perform fuzzy search and get a list of matching games
@@ -259,15 +259,15 @@ public class SearchManager {
      * Checks if the games match the filters.
      *
      * @param games   the games being searched.
-     * @param filters the filters applied to the search.
      * @return the results.
      */
-    public List<GameDetails> filterGames(List<GameDetails> games, List<Predicate<GameDetails>> filters) {
+    public List<GameDetails> filterGames(List<GameDetails> games) {
         List<GameDetails> results = new ArrayList<>();
+        List<Predicate<GameDetails>> activeFilters = new ArrayList<>(FilterManager.getInstance().getPredicates());
 
         for (GameDetails gameDetails : games) {
             boolean matchesFilters = true;
-            for (Predicate<GameDetails> filter : filters) {
+            for (Predicate<GameDetails> filter : activeFilters) {
                 if (!filter.test(gameDetails)) {
                     matchesFilters = false;
                     break;
@@ -279,6 +279,7 @@ public class SearchManager {
         }
         return results;
     }
+
 
     /**
      * Returns a list of recommended games based on the specified collection ID and number of recommendations.
@@ -377,63 +378,73 @@ public class SearchManager {
      * A nested class that provides methods for generating predicates based on different filters.
      */
     public static class FilterManager {
-        private static FilterManager instance = null;
-        private static List<Predicate<GameDetails>> predicates;
+    private static FilterManager instance = null;
+    private static Map<String, Predicate<GameDetails>> predicates;
 
-        /**
-         * Private constructor to prevent instantiation.
-         */
-        private FilterManager() {
-        }
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private FilterManager() {
+        predicates = new HashMap<>();
+    }
 
-        /**
-         * Returns the instance of FilterManager.
-         * Singleton pattern.
-         *
-         * @return the instance of FilterManager
-         */
-        public synchronized static FilterManager getInstance() {
-            if (instance == null) {
-                instance = new FilterManager();
-                predicates = new ArrayList<>();
-                return instance;
-            }
-            return instance;
+    /**
+     * Returns the instance of FilterManager.
+     * Singleton pattern.
+     *
+     * @return the instance of FilterManager
+     */
+    public synchronized static FilterManager getInstance() {
+        if (instance == null) {
+            instance = new FilterManager();
         }
+        return instance;
+    }
 
-        /**
-         * Adds a predicate to the list of predicates.
-         *
-         * @param predicate the predicate to be added
-         */
-        public void addPredicate(Predicate<GameDetails> predicate) {
-            predicates.add(predicate);
-        }
+    /**
+     * Adds a predicate to the map of predicates.
+     *
+     * @param name      the name of the predicate
+     * @param predicate the predicate to be added
+     */
+    public void addPredicate(String name, Predicate<GameDetails> predicate) {
+        predicates.put(name, predicate);
+    }
 
-        /**
-         * Removes a predicate from the list of predicates.
-         *
-         * @param predicate the predicate to be removed
-         */
-        public void removePredicate(Predicate<GameDetails> predicate) {
-            predicates.remove(predicate);
-        }
+    /**
+     * Removes a predicate from the map of predicates.
+     *
+     * @param name the name of the predicate to be removed
+     */
+    public void removePredicate(String name) {
+        predicates.remove(name);
+    }
 
-        /**
-         * Clears the list of predicates.
-         */
-        public void clearPredicates() {
-            predicates.clear();
-        }
+    /**
+     * Clears the map of predicates.
+     */
+    public void clearPredicates() {
+        predicates.clear();
+    }
 
-        /**
-         * Returns the list of predicates.
-         *
-         * @return the list of predicates
-         */
-        public List<Predicate<GameDetails>> getPredicates() {
-            return predicates;
-        }
+    /**
+     * Returns the list of predicates.
+     *
+     * @return the list of predicates
+     */
+    public List<Predicate<GameDetails>> getPredicates() {
+        return new ArrayList<>(predicates.values());
+    }
+
+    /**
+     * Returns the predicate with the given name.
+     *
+     * @param name the name of the predicate
+     * @return the predicate
+     */
+    public Predicate<GameDetails> getPredicate(String name) {
+        return predicates.get(name);
+    }
 
         /**
          * Start of filters

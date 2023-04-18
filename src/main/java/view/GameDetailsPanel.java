@@ -22,35 +22,32 @@ import java.util.List;
 public class GameDetailsPanel extends JPanel {
     private JLabel gameName;
     private JLabel gameImage;
-
     private JButton addToFavoritesButton;
-
     private JLabel addToCollectionLabel;
-
     private JComboBox collectionDropdown;
-
     private JButton confirmButton;
-
     private JLabel reviewLabel;
     private ReviewPanel reviews;
     private JTextArea gameDescription;
     private JTextArea allDetails;
     private GameDetails gamedetails;
-
-    private JPanel addReviewPanel;
-
     private JButton writeAReviewButton;
-
     private HomePageFrame homePage;
 
 
+    /**
+     * constructs a GameDetailsPanel, creates the GUI components through
+     * the createUIComponents() method, and adds the components to the panel
+     * @param game the GameDetails for the selected game
+     * @param frame the frame the panel is displayed on
+     */
     public GameDetailsPanel(GameDetails game, HomePageFrame frame) {
         homePage = frame;
         gamedetails = game;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(400, 1500));
 
-        createUIComponents(); // generate and size game image
+        createUIComponents();
 
         add(gameName);
         add(gameImage);
@@ -82,7 +79,11 @@ public class GameDetailsPanel extends JPanel {
         //gamePanel newPanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0));
     }
 
-
+    /**
+     * creates the UI components, set's their labels, and sets any ActionListeners
+     * includes game title, photo, description, details, reviews, and buttons for
+     * adding the game to the user's collections
+     */
     private void createUIComponents() {
 
         String name = gamedetails.getGame().getName();
@@ -112,10 +113,17 @@ public class GameDetailsPanel extends JPanel {
         String categories = gamedetails.getGame().getCategories().toString();
 
         addToFavoritesButton = new JButton("Add to Favorites");
-        // probably need the favorites to be the very first collection on everyone's list
-        addToFavoritesButton.addActionListener(new ActionListener() {
-            @Override
 
+        addToFavoritesButton.addActionListener(new ActionListener() {
+            /**
+             * adds a listener to the "Add to Favorites" button that adds or removes
+             * a game from the user's Favorites collection. If the game is not favorited yet,
+             * the game is added to favorites and the button changes to "Favorited". If the game
+             * is already in the user's favorites, the game is removed from the user's
+             * favorites and the button changes to "Add to Favorites".
+             * @param e the event to be processed (click)
+             */
+            @Override
             public void actionPerformed(ActionEvent e) {
                 boolean isFavorited = false;
                 if (!isFavorited) {
@@ -140,9 +148,11 @@ public class GameDetailsPanel extends JPanel {
         });
 
         addToCollectionLabel = new JLabel("Add to Collection: ");
+
         List<Collection> collections;
         String[] collectionNames;
-        // want to get the current user's collections
+
+        // if there is no user logged in, mainly for testing
         if (UserDataManager.getInstance().getCurrentUser() == null) {
             collections = Controller.getInstance().getCollectionsByUser("3");
             collectionNames = new String[collections.size()];
@@ -150,15 +160,17 @@ public class GameDetailsPanel extends JPanel {
                 collectionNames[i] = collections.get(i).getName();
             }
             System.out.println("User not logged in");
+
+        // if there is a valid user logged in
         } else {
             collections = Controller.getInstance().getCollectionsByUser(UserDataManager.getInstance().getCurrentUser().getId());
-
-            if (collections == null) {
-                System.out.println("User has no collections.");
+            if (collections == null) { // the user should by default have one collection, but in case they have none
+                //System.out.println("User has no collections.");
                 collectionNames = new String[1];
                 collectionNames[0] = "No Collections";
             } else {
                 collectionNames = new String[collections.size()];
+                // convert the list of collections to an array of collectionNames needed for the JComboBox
                 for (int i = 0; i < collections.size(); i++) {
                     collectionNames[i] = collections.get(i).getName();
                 }
@@ -166,9 +178,15 @@ public class GameDetailsPanel extends JPanel {
         }
         collectionDropdown = new JComboBox<>(collectionNames);
         confirmButton = new JButton("ADD");
-
-        // doesn't work yet, need to get a legitimate user that already has collections
         confirmButton.addActionListener(new ActionListener() {
+            /**
+             * adds an ActionListener to the confirm button to add the currently displayed
+             * game to the collection selected in the JComboBox. If the action was successful, the
+             * system will output a dialogue box indicating success but if the action wasn't successful
+             * (in the case that the game is already in the collection), the system will output
+             * an error dialogue box.
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 int collectionIndex = collectionDropdown.getSelectedIndex();
@@ -214,6 +232,11 @@ public class GameDetailsPanel extends JPanel {
 
         writeAReviewButton = new JButton("Write a Review");
         writeAReviewButton.addActionListener(new ActionListener() {
+            /**
+             * Adds an action listener to the "Write a Review" button to open a
+             * review creation frame
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 createReview();
@@ -223,6 +246,10 @@ public class GameDetailsPanel extends JPanel {
 
     }
 
+    /**
+     * Opens a frame that allows the user to write a review for the game currently
+     * displayed.
+     */
     private void createReview() {
         JFrame reviewCreator = new JFrame("Write Review for " + gamedetails.getGame().getName());
         reviewCreator.setLayout(new BorderLayout());
@@ -245,22 +272,18 @@ public class GameDetailsPanel extends JPanel {
 
         JButton submitReview = new JButton("Submit");
         submitReview.addActionListener(new ActionListener() {
+            /**
+             * Adds an action listener for the "Submit" button that submits the user's
+             * review to the system and adds the review to the game's list of reviews
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 int rating = ratingOptions.getSelectedIndex();
                 String description = enterDescriptionTextArea.getText();
                 Controller.getInstance().addReview(gamedetails.getGame().getId(), description, rating);
+                JOptionPane.showMessageDialog(null, "Review created!");
                 reviewCreator.dispose();
-                // supposed to refresh the game panel to add the new review
-                // but gamedetails.getreviews still returning an empty list after adding the review
-                /*
-                remove(writeAReviewButton);
-                int index = gamedetails.getReviews().size();
-                JPanel newReviewPanel = new reviewPanel(gamedetails.getReviews().get(index));
-                add(newReviewPanel);
-                add(writeAReviewButton);
-
-                 */
             }
         });
 

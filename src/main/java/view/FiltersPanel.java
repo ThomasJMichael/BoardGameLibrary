@@ -1,7 +1,11 @@
 package main.java.view;
 
+import main.java.controller.Controller;
+import main.java.model.GameCategory;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static main.java.model.GameCategory.*;
@@ -13,75 +17,76 @@ import static main.java.model.GameCategory.*;
  */
 
 public class FiltersPanel extends JPanel {
-    private JButton submitButton;
-
     private HomePageFrame frame;
-
-    private JCheckBox abstractStrategyCheckBox;
-    private JCheckBox ancientCheckBox;
-    private JCheckBox bluffingCheckBox1;
-    private JCheckBox comicBookStripCheckBox;
-    private JCheckBox economicCheckBox;
-    private JCheckBox environmentalCheckBox1;
-    private JCheckBox fantasyCheckBox;
-    private JCheckBox horrorCheckBox;
-    private JTextField textField1;
-    private JCheckBox adventureCheckBox;
-    private JCheckBox animalsCheckBox;
-    private JCheckBox cardGameCheckBox;
-
-    private JCheckBox cityBuildingCheckBox;
-    private JCheckBox civilizationCheckBox;
-    private JCheckBox deductionCheckBox;
-    private JCheckBox educationalCheckBox;
-    private JCheckBox expansionForBaseGameCheckBox;
-    private JCheckBox farmingCheckBox;
-    private JCheckBox humorCheckBox;
-    private JCheckBox mazeCheckBox;
-    private JCheckBox ageOfReasonCheckBox1;
-    private JCheckBox arabianCheckBox;
-    private JCheckBox childrenSGameCheckBox1;
-    private JCheckBox collectibleComponentsCheckBox1;
-    private JCheckBox diceCheckBox;
-    private JCheckBox electronicCheckBox;
-    private JCheckBox explorationCheckBox;
-    private JCheckBox fightingCheckBox;
-    private JCheckBox industryManufacturingCheckBox;
-    private JCheckBox medicalCheckBox;
-    private JCheckBox mafiaCheckBox;
-    private JCheckBox medievalCheckBox;
-    private JCheckBox moviesTVRadioThemeCheckBox;
-    private JCheckBox napoleonicCheckBox;
-    private JCheckBox novelBasedCheckBox;
-    private JCheckBox politicalCheckBox;
-    private JCheckBox printAndPlayCheckBox;
-    private JCheckBox renaissanceCheckBox;
-    private JCheckBox spiesSecretAgentsCheckBox1;
-    private JCheckBox transportationCheckBox;
-    private JCheckBox triviaCheckBox1;
-    private JCheckBox memoryCheckBox;
-    private JCheckBox videoGameThemeCheckBox;
-    private JCheckBox travelCheckBox;
-    private JCheckBox territoryBuildingCheckBox1;
-    private JCheckBox scienceFictionCheckBox;
-    private JCheckBox puzzleCheckBox;
-    private JCheckBox postNapoleonicCheckBox;
-    private JCheckBox partyGameCheckBox;
-    private JCheckBox nauticalCheckBox;
-    private JCheckBox murderMysteryCheckBox1;
-    private JCheckBox miniaturesCheckBox;
-    private JCheckBox mythologyCheckBox;
-    private JCheckBox negotiationCheckBox;
-    private JCheckBox pikeAndShotCheckBox;
-    private JCheckBox spaceExplorationCheckBox;
-    private JCheckBox racingCheckBox;
-    private JCheckBox prehistoricCheckBox;
-    private JCheckBox wordGameCheckBox;
-    private JCheckBox sportsCheckBox1;
+    private final JCheckBox abstractStrategyCheckBox;
+    private final JCheckBox ancientCheckBox;
+    private final JCheckBox bluffingCheckBox1;
+    private final JCheckBox comicBookStripCheckBox;
+    private final JCheckBox economicCheckBox;
+    private final JCheckBox environmentalCheckBox1;
+    private final JCheckBox fantasyCheckBox;
+    private final JCheckBox horrorCheckBox;
+    private final JCheckBox adventureCheckBox;
+    private final JCheckBox animalsCheckBox;
+    private final JCheckBox cardGameCheckBox;
+    private final JCheckBox cityBuildingCheckBox;
+    private final JCheckBox civilizationCheckBox;
+    private final JCheckBox deductionCheckBox;
+    private final JCheckBox educationalCheckBox;
+    private final JCheckBox expansionForBaseGameCheckBox;
+    private final JCheckBox farmingCheckBox;
+    private final JCheckBox humorCheckBox;
+    private final JCheckBox mazeCheckBox;
+    private final JCheckBox ageOfReasonCheckBox1;
+    private final JCheckBox arabianCheckBox;
+    private final JCheckBox childrenSGameCheckBox1;
+    private final JCheckBox collectibleComponentsCheckBox1;
+    private final JCheckBox diceCheckBox;
+    private final JCheckBox electronicCheckBox;
+    private final JCheckBox explorationCheckBox;
+    private final JCheckBox fightingCheckBox;
+    private final JCheckBox industryManufacturingCheckBox;
+    private final JCheckBox medicalCheckBox;
+    private final JCheckBox mafiaCheckBox;
+    private final JCheckBox medievalCheckBox;
+    private final JCheckBox moviesTVRadioThemeCheckBox;
+    private final JCheckBox napoleonicCheckBox;
+    private final JCheckBox novelBasedCheckBox;
+    private final JCheckBox politicalCheckBox;
+    private final JCheckBox printAndPlayCheckBox;
+    private final JCheckBox renaissanceCheckBox;
+    private final JCheckBox spiesSecretAgentsCheckBox1;
+    private final JCheckBox transportationCheckBox;
+    private final JCheckBox triviaCheckBox1;
+    private final JCheckBox memoryCheckBox;
+    private final JCheckBox videoGameThemeCheckBox;
+    private final JCheckBox travelCheckBox;
+    private final JCheckBox territoryBuildingCheckBox1;
+    private final JCheckBox scienceFictionCheckBox;
+    private final JCheckBox puzzleCheckBox;
+    private final JCheckBox postNapoleonicCheckBox;
+    private final JCheckBox partyGameCheckBox;
+    private final JCheckBox nauticalCheckBox;
+    private final JCheckBox murderMysteryCheckBox1;
+    private final JCheckBox miniaturesCheckBox;
+    private final JCheckBox mythologyCheckBox;
+    private final JCheckBox negotiationCheckBox;
+    private final JCheckBox pikeAndShotCheckBox;
+    private final JCheckBox spaceExplorationCheckBox;
+    private final JCheckBox racingCheckBox;
+    private final JCheckBox prehistoricCheckBox;
+    private final JCheckBox wordGameCheckBox;
+    private final JCheckBox sportsCheckBox1;
     private final JCheckBox worldWarIICheckBox1;
-    private JCheckBox wargameCheckBox;
-    private JLabel filterLabel;
+    private final JCheckBox wargameCheckBox;
+    private final JLabel filterLabel;
 
+    /**
+     * Parameterized Constructor: creates the FiltersPanel with checkboxes for every
+     * possible GameCategory to filter by, also adds the appropriate action listener
+     * to each checkbox by creating a FilterActionListener object
+     * @param homeFrame the frame the panel sits on
+     */
     public FiltersPanel(HomePageFrame homeFrame) {
         frame = homeFrame;
         setLayout(new FlowLayout());
@@ -112,7 +117,6 @@ public class FiltersPanel extends JPanel {
         arabianCheckBox = new JCheckBox("Arabian");
         actionlistener = new FilterActionListener(ARABIAN, arabianCheckBox);
         arabianCheckBox.addActionListener(actionlistener);
-
 
         bluffingCheckBox1 = new JCheckBox("Bluffing");
         actionlistener = new FilterActionListener(BLUFFING, bluffingCheckBox1);
@@ -334,8 +338,10 @@ public class FiltersPanel extends JPanel {
         actionlistener = new FilterActionListener(WORLD_WAR_II, worldWarIICheckBox1);
         worldWarIICheckBox1.addActionListener(actionlistener);
 
+        // add the filter message
         add(filterLabel);
 
+        // add all the JCheckBoxes
         add(abstractStrategyCheckBox);
         add(adventureCheckBox);
         add(ageOfReasonCheckBox1);
@@ -397,7 +403,45 @@ public class FiltersPanel extends JPanel {
         add(wordGameCheckBox);
         add(worldWarIICheckBox1);
 
-
     }
+
+}
+
+/**
+ * FilterActionListener implements ActionListener to create a custom function for actionPerformed().
+ * If a filter is selected, the given category is added to the filter search list and when the
+ * filter is unselected, the given category is removed from the filter search list
+ */
+
+class FilterActionListener implements ActionListener {
+    private GameCategory category;
+    private JCheckBox filterCheckbox;
+
+    /**
+     * Constructs the FilterActionListener with the given objects
+     * @param category the game category
+     * @param checkbox the checkbox associated with the game category
+     */
+    public FilterActionListener(GameCategory category, JCheckBox checkbox) {
+        this.category = category;
+        filterCheckbox = checkbox;
+    }
+
+    /**
+     * Adds or removes the GameCategory from the filtered search via checking or
+     * unchecking the filterCheckbox
+     * @param e the event to be processed (clicked or unclicked)
+     */
+    public void actionPerformed(ActionEvent e) {
+        if (filterCheckbox.isSelected()) {
+            Controller.getInstance().addCategoryFilter(category.name());
+            System.out.println(category.name() + " selected.");
+        }
+        else {
+            Controller.getInstance().removeCategoryFilter(category.name());
+            System.out.println(category.name() + " unselected.");
+        }
+    }
+
 }
 

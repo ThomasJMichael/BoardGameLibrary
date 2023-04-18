@@ -232,7 +232,7 @@ public class Controller {
      */
     public List<GameDetails> searchGamesWithFilters(String query){
         List<GameDetails> searchResultsNoFilter = searchGamesByQuery(query);
-        return SearchManager.getInstance().filterGames(searchResultsNoFilter, SearchManager.FilterManager.getInstance().getPredicates());
+        return SearchManager.getInstance().filterGames(searchResultsNoFilter);
     }
     /**
      * Returns a list of recommended games based on the user's favorites collection.
@@ -262,17 +262,17 @@ public class Controller {
      *
      * @param predicate The predicate to add to the list of predicates
      */
-    public void addPredicate(Predicate<GameDetails> predicate) {
-        SearchManager.FilterManager.getInstance().addPredicate(predicate);
+    public void addPredicate(String filterName, Predicate<GameDetails> predicate) {
+        SearchManager.FilterManager.getInstance().addPredicate(filterName, predicate);
     }
 
     /**
      * Removes a predicate from the list of predicates to filter games by.
      *
-     * @param predicate The predicate to remove from the list of predicates
+     * @param filterName the string name for the filter to remove.
      */
-    public void removePredicate(Predicate<GameDetails> predicate) {
-        SearchManager.FilterManager.getInstance().removePredicate(predicate);
+    public void removePredicate(String filterName) {
+        SearchManager.FilterManager.getInstance().removePredicate(filterName);
     }
 
     /**
@@ -288,16 +288,14 @@ public class Controller {
      * @param min  The minimum rating to filter games by
      */
     public void addRatingFilter(int min){
-        addPredicate(SearchManager.FilterManager.getInstance().getRatingFilter(min));
+        addPredicate("ratingFilter", SearchManager.FilterManager.getInstance().getRatingFilter(min));
     }
 
     /**
      * Removes a rating filter from the list of predicates to filter games by.
-     *
-     * @param min  The minimum rating to filter games by
      */
-    public void removeRatingFilter(int min){
-        removePredicate(SearchManager.FilterManager.getInstance().getRatingFilter(min));
+    public void removeRatingFilter(){
+        removePredicate("ratingFilter");
     }
 
     /**
@@ -307,7 +305,7 @@ public class Controller {
      * @param maxYear  The maximum year to filter games by
      */
     public void addYearPublishedFilter(int minYear, int maxYear){
-        addPredicate(SearchManager.FilterManager.getInstance().getYearPublishedFilter(minYear, maxYear));
+        addPredicate("yearPublishedFilter",SearchManager.FilterManager.getInstance().getYearPublishedFilter(minYear, maxYear));
     }
 
     /**
@@ -317,7 +315,7 @@ public class Controller {
      * @param maxYear  The maximum year to filter games by
      */
     public void removeYearPublishedFilter(int minYear, int maxYear){
-        removePredicate(SearchManager.FilterManager.getInstance().getYearPublishedFilter(minYear, maxYear));
+        removePredicate("yearPublishedFilter");
     }
 
     /**
@@ -326,7 +324,7 @@ public class Controller {
      * @param category  The category to filter games by
      */
     public void addCategoryFilter(String category){
-        addPredicate(SearchManager.FilterManager.getInstance().getCategoryFilter(category));
+        addPredicate(category, SearchManager.FilterManager.getInstance().getCategoryFilter(category));
     }
 
     /**
@@ -335,7 +333,7 @@ public class Controller {
      * @param category  The category to filter games by
      */
     public void removeCategoryFilter(String category){
-        removePredicate(SearchManager.FilterManager.getInstance().getCategoryFilter(category));
+        removePredicate(category);
     }
 
     /**
@@ -344,7 +342,7 @@ public class Controller {
      * @param mechanic  The mechanic to filter games by
      */
     public void addMechanicFilter(String mechanic){
-        addPredicate(SearchManager.FilterManager.getInstance().getMechanicFilter(mechanic));
+        addPredicate(mechanic, SearchManager.FilterManager.getInstance().getMechanicFilter(mechanic));
     }
 
     /**
@@ -353,7 +351,7 @@ public class Controller {
      * @param mechanic  The mechanic to filter games by
      */
     public void removeMechanicFilter(String mechanic){
-        removePredicate(SearchManager.FilterManager.getInstance().getMechanicFilter(mechanic));
+        removePredicate(mechanic);
     }
 
     /**
@@ -362,7 +360,7 @@ public class Controller {
      * @param designer The designer to filter games by
      */
     public void addDesignerFilter(String designer){
-        addPredicate(SearchManager.FilterManager.getInstance().getDesignerFilter(designer));
+        addPredicate(designer, SearchManager.FilterManager.getInstance().getDesignerFilter(designer));
     }
 
     /**
@@ -371,7 +369,7 @@ public class Controller {
      * @param designer The designer to filter games by
      */
     public void removeDesignerFilter(String designer){
-        removePredicate(SearchManager.FilterManager.getInstance().getDesignerFilter(designer));
+        removePredicate(designer);
     }
 
     /**
@@ -380,7 +378,7 @@ public class Controller {
      * @param minPlayers The minimum number of players to filter games by
      */
     public void addMinPlayersFilter(int minPlayers){
-        addPredicate(SearchManager.FilterManager.getInstance().getMinPlayersFilter(minPlayers));
+        addPredicate("minPlayerFilter", SearchManager.FilterManager.getInstance().getMinPlayersFilter(minPlayers));
     }
 
     /**
@@ -389,7 +387,7 @@ public class Controller {
      * @param minPlayers The minimum number of players to filter games by
      */
     public void removeMinPlayersFilter(int minPlayers){
-        removePredicate(SearchManager.FilterManager.getInstance().getMinPlayersFilter(minPlayers));
+        removePredicate("minPlayerFilter");
     }
 
     /**
@@ -398,7 +396,7 @@ public class Controller {
      * @param maxPlayers The maximum number of players to filter games by
      */
     public void addMaxPlayersFilter(int maxPlayers){
-        addPredicate(SearchManager.FilterManager.getInstance().getMaxPlayersFilter(maxPlayers));
+        addPredicate("maxPlayerFilter", SearchManager.FilterManager.getInstance().getMaxPlayersFilter(maxPlayers));
     }
 
     /**
@@ -407,7 +405,7 @@ public class Controller {
      * @param maxPlayers The maximum number of players to filter games by
      */
     public void removeMaxPlayersFilter(int maxPlayers){
-        removePredicate(SearchManager.FilterManager.getInstance().getMaxPlayersFilter(maxPlayers));
+        removePredicate("maxPlayerFilter");
     }
 
     /**
@@ -417,7 +415,7 @@ public class Controller {
      * @param maxPlaytime maximum playtime
      */
     public void addPlaytimeFilter(int minPlaytime, int maxPlaytime){
-        addPredicate(SearchManager.FilterManager.getInstance().getPlayingTimeFilter(minPlaytime, maxPlaytime));
+        addPredicate("playtimeFilter", SearchManager.FilterManager.getInstance().getPlayingTimeFilter(minPlaytime, maxPlaytime));
     }
 
     /**
@@ -427,7 +425,7 @@ public class Controller {
      * @param maxPlaytime maximum playtime
      */
     public void removePlaytimeFilter(int minPlaytime, int maxPlaytime){
-        removePredicate(SearchManager.FilterManager.getInstance().getPlayingTimeFilter(minPlaytime, maxPlaytime));
+        removePredicate("playTimeFilter");
     }
 
     /**
@@ -436,7 +434,7 @@ public class Controller {
      * @param minAge The minimum age to filter games by
      */
     public void addMinAgeFilter(int minAge){
-        addPredicate(SearchManager.FilterManager.getInstance().getMinAgeFilter(minAge));
+        addPredicate("minAgeFilter", SearchManager.FilterManager.getInstance().getMinAgeFilter(minAge));
     }
 
     /**
@@ -445,7 +443,7 @@ public class Controller {
      * @param minAge The minimum age to filter games by
      */
     public void removeMinAgeFilter(int minAge){
-        removePredicate(SearchManager.FilterManager.getInstance().getMinAgeFilter(minAge));
+        removePredicate("minAgeFilter");
     }
 
     /**
