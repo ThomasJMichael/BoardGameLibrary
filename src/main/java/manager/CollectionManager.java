@@ -171,8 +171,7 @@ public class CollectionManager implements Loadable, Savable {
             return null;
         }
         else {
-            List<Collection> userCollection = collectionMap.get(userId);
-            return userCollection;
+            return collectionMap.get(userId);
         }
     }
 

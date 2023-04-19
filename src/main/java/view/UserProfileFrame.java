@@ -35,6 +35,9 @@ public class UserProfileFrame {
         this.homePage = homePage;
 
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
+        for (Collection collection : collections){
+            System.out.println(collection.getName());
+        }
 
         JPanel collectionsPanel = new JPanel(new BorderLayout());
         JButton createCollection = new JButton("Create Collection");

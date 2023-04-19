@@ -92,7 +92,7 @@ public class Controller {
      * @param rating    The rating of the review
      */
     public void addReview(String gameId, String text, Integer rating){
-        Review newReview = new Review(UserDataManager.getInstance().getUsername(), gameId, text, rating);
+        Review newReview = new Review(UserDataManager.getInstance().getCurrentUser().getId(), gameId, text, rating);
         ReviewManager.getInstance().addReview(newReview);
     }
 
@@ -143,7 +143,7 @@ public class Controller {
      * @return              true if the collection is added, false otherwise
      */
     public boolean addCollection(String name, String description){
-        return CollectionManager.getInstance().createCollection(UserDataManager.getInstance().getUsername(), name, description);
+        return CollectionManager.getInstance().createCollection(UserDataManager.getInstance().getCurrentUser().getId(), name, description);
     }
 
     /**
@@ -153,7 +153,7 @@ public class Controller {
      * @return              true if the collection is deleted, false otherwise
      */
     public boolean deleteCollection(String collectionId){
-        return CollectionManager.getInstance().deleteCollection(UserDataManager.getInstance().getUsername(), collectionId);
+        return CollectionManager.getInstance().deleteCollection(UserDataManager.getInstance().getCurrentUser().getId(), collectionId);
     }
 
     /**
