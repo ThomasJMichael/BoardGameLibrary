@@ -290,6 +290,7 @@ public class CollectionManager implements Loadable, Savable {
 
         if (foundCollection.getGames().contains(gameId)) {
             foundCollection.removeGame(gameId);
+            save();
             return true;
         } else {
             System.out.println("Game " + gameId + " is not currently in collection " + collectionId + ".");
