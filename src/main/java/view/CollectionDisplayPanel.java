@@ -33,12 +33,12 @@ public class CollectionDisplayPanel extends JPanel {
             List<String> games = collection.getGames();
             List<String> selectedGames = new ArrayList<>();
             JButton deleteButton = new JButton("Delete");
-            collectionFrame.add(deleteButton, BorderLayout.EAST);
+            collectionFrame.add(deleteButton);
 
             for (String game : games) {
                 GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
-                JPanel showGames = new GameDisplayPanel(game, homePage);
-                collectionFrame.add(showGames);
+                //JPanel showGames = new GameDisplayPanel(game, homePage);
+                collectionFrame.add(gamePanel);
 
                 if (gamePanel.isSelected()) {
                     selectedGames.add(gamePanel.getGameID());
