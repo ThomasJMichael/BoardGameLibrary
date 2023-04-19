@@ -76,7 +76,7 @@ public enum GameCategory {
      * @param value The name of the category
      */
     GameCategory(String value) {
-        this.categoryName = value.toUpperCase();
+        this.categoryName = value;
     }
     /**
      * Returns the formatted name of the category

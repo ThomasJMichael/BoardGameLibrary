@@ -418,6 +418,7 @@ public class SearchManager {
      */
     public void removePredicate(String name) {
         predicates.remove(name);
+
     }
 
     /**

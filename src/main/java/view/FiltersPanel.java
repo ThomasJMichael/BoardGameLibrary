@@ -90,7 +90,7 @@ public class FiltersPanel extends JPanel {
         filterLabel = new JLabel("Add a filter to your search:");
 
         abstractStrategyCheckBox = new JCheckBox("Abstract Strategy");
-        ActionListener actionlistener = new FilterActionListener(ABSTRACT_STRATEGY, abstractStrategyCheckBox);
+        ActionListener actionlistener = new FilterActionListener(MAZE, abstractStrategyCheckBox);
         abstractStrategyCheckBox.addActionListener(actionlistener);
 
         adventureCheckBox = new JCheckBox("Adventure");
