@@ -4,24 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
-import main.java.model.Collection;
+import main.java.manager.GameDatabaseManager;
+import main.java.manager.ReviewManager;
+import main.java.model.*;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
-import main.java.model.Game;
-import main.java.model.GameDetails;
 
 public class UserProfileFrame {
 
     /**
      * Creates new frame.
      */
-    private static final JFrame frame = new JFrame();
+    private final JFrame frame = new JFrame();
     /**
      * Creates a left justified tabbed pane.
      */
-    private static final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+    private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
     private final HomePageFrame homePage;
     GameDetails details;
@@ -39,7 +40,21 @@ public class UserProfileFrame {
         //initializes Collections tab
         tabbedPane.addTab("Collections", collectionsPanel);
 
-        JPanel reviewPanel = new JPanel();
+        JPanel reviewPanel = new JPanel(new FlowLayout());
+        reviewPanel.setPreferredSize(new Dimension(400, 200));
+        List<Review> allReviews = ReviewManager.getInstance().getFullReviewList();
+        List<Review> userReviews = new ArrayList<>();
+        for (Review R: allReviews) {
+            if (R.getUsername().equals(UserDataManager.getInstance().getUsername())) {
+                userReviews.add(R);
+            }
+        }
+        for (Review R: userReviews) {
+            JLabel gameName = new JLabel(GameDatabaseManager.getGameDetailsByID(R.getGameId()).getGame().getName());
+            ReviewPanel individualReview = new ReviewPanel(R);
+            reviewPanel.add(gameName);
+            reviewPanel.add(individualReview);
+        }
         //initializes Reviews tab
         tabbedPane.addTab("Reviews", reviewPanel);
 
