@@ -76,6 +76,9 @@ public class UserProfileFrame {
 
                     if (log) {
                         JOptionPane.showMessageDialog(null, "Successfully logged out");
+                        frame.dispose();
+                        homePage.dispose();
+                        new LoginPage();
                     } else {
                         JOptionPane.showMessageDialog(null, "Logout failed");
                     }

@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.controller.Controller;
+import main.java.manager.CollectionManager;
 import main.java.model.Collection;
 import main.java.model.Game;
 import main.java.model.GameDetails;
@@ -16,6 +17,8 @@ public class CollectionDisplayPanel extends JPanel {
 
     private final String userID;
 
+    private HomePageFrame homePage;
+
     /**
      * Constructor that populates the collection panel
      * Allows the user to delete games from their collections
@@ -24,15 +27,16 @@ public class CollectionDisplayPanel extends JPanel {
      */
     CollectionDisplayPanel(HomePageFrame homePage, String userID) {
         this.userID = userID;
+        this.homePage = homePage;
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
 
         for (Collection collection : collections) {
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
 
-            List<String> games = collection.getGames();
+            List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collection.getId()).getGames();
             List<String> selectedGames = new ArrayList<>();
-            JButton deleteButton = new JButton("Delete");
+            JButton deleteButton = new JButton("Delete Selected Games");
             collectionFrame.add(deleteButton);
 
             for (String game : games) {
