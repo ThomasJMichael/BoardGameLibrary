@@ -9,8 +9,10 @@ import java.util.List;
 import main.java.model.Collection;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
+import main.java.model.Game;
+import main.java.model.GameDetails;
 
-public class UserProfileFrame implements ActionListener{
+public class UserProfileFrame {
 
     /**
      * Creates new frame.
@@ -22,6 +24,7 @@ public class UserProfileFrame implements ActionListener{
     private static final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
     private final HomePageFrame homePage;
+    GameDetails details;
 
     /**
      * Imports collections to create one button for each collection.
@@ -128,9 +131,5 @@ public class UserProfileFrame implements ActionListener{
 
     public static void main(String[] args) {
         HomePageFrame page = new HomePageFrame();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
     }
 }
