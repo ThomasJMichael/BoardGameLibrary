@@ -53,7 +53,7 @@ public class HomePageFrame extends JFrame {
                 if (JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?") == JOptionPane.YES_OPTION) {
                     Controller.getInstance().logout();
                     setVisible(false);
-                    LoginPage login = new LoginPage();
+                    new LoginPage();
                     dispose();
                 }
 
@@ -103,8 +103,10 @@ public class HomePageFrame extends JFrame {
     }
 
 
+
     public static void main(String[] args) {
         new HomePageFrame();
     }
+
 
 }

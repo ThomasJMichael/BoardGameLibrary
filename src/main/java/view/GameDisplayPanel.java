@@ -24,13 +24,14 @@ public class GameDisplayPanel extends JPanel{
     private JButton detailsButton;
     private JPanel selectionPanel;
     private GameDetails gamedetails;
+    private String gameID;
     private HomePageFrame homePage;
-
     private boolean selected;
 
 
     public GameDisplayPanel(String gameID, HomePageFrame frame) {
         homePage = frame;
+        this.gameID = gameID;
         gamedetails = GameDatabaseManager.getGameDetailsByID(gameID);
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(150, 200));
@@ -42,12 +43,23 @@ public class GameDisplayPanel extends JPanel{
 
     }
 
+    /**
+     * creates UI components, adds their labels, and adds the relevant
+     * action listeners. Includes the game's thumbnail, title, checkbox
+     * and details button.
+     */
     private void createUIComponents() {
         String name = gamedetails.getGame().getName();
         gameTitle = new JLabel(name);
 
         checkGame = new JCheckBox();
         checkGame.addActionListener(new ActionListener() {
+            /**
+             * changes the state of the game panel to either be
+             * selected or not selected for use in deleting a game
+             * from a collection
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (checkGame.isSelected()) {
@@ -61,6 +73,11 @@ public class GameDisplayPanel extends JPanel{
 
         detailsButton = new JButton("Details");
         detailsButton.addActionListener(new ActionListener() {
+            /**
+             * Adds an action listener to the "Details" button to open a
+             * GameDetailsPanel for the chosen game in the HomePageFrame
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 homePage.changeGameView(gamedetails.getGame().getId());
@@ -73,6 +90,7 @@ public class GameDisplayPanel extends JPanel{
 
         selectionPanel.add(detailsButton);
 
+        // creates the image
         try {
             Image thumbnailURL = gamedetails.getThumbnail();
             ImageIcon imageIcon = new ImageIcon(thumbnailURL);
@@ -83,20 +101,18 @@ public class GameDisplayPanel extends JPanel{
         }
     }
 
-    public boolean isSelected() {
-        return selected;
-    }
-
-    /*
-    public static void main(String args[]) {
-        JFrame frame = new JFrame("game");
-        frame.setLayout(new FlowLayout());
-        collectionLittleDisplayPanel panel = new collectionLittleDisplayPanel("374173");
-        frame.add(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
+    /**
+     * returns whether the checkbox is selected or not
+     * to be used for checking if a user has selected a game
+     * to be deleted
+     * @return true if the checkbox is marked, false if it is unmarked
      */
+    public boolean isSelected() {return selected;}
+
+    /**
+     * returns the String gameID of the game currently displayed
+     * @return gameID (String)
+     */
+    public String getGameID() {return gameID;}
+
 }

@@ -4,26 +4,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
-import main.java.manager.CollectionManager;
-import main.java.model.Collection;
+import main.java.manager.GameDatabaseManager;
+import main.java.manager.ReviewManager;
+import main.java.model.*;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
 
-public class UserProfileFrame extends JPanel implements ActionListener{
-    private final String userID;
-    CollectionManager collectionManager = CollectionManager.getInstance();
+public class UserProfileFrame {
+
     /**
      * Creates new frame.
      */
-    private static JFrame frame = new JFrame();
+    private final JFrame frame = new JFrame();
     /**
      * Creates a left justified tabbed pane.
      */
-    private static JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+    private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
-    private HomePageFrame homePage;
+    private final HomePageFrame homePage;
+    GameDetails details;
 
     /**
      * Imports collections to create one button for each collection.
@@ -31,31 +33,40 @@ public class UserProfileFrame extends JPanel implements ActionListener{
      */
     public UserProfileFrame(String userID, HomePageFrame homePage) {
         this.homePage = homePage;
-        this.userID = userID;
 
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
+
         JPanel collectionsPanel = new JPanel();
-        //initializes Collections panel
+        //initializes Collections tab
         tabbedPane.addTab("Collections", collectionsPanel);
+
+        JPanel reviewPanel = new JPanel(new FlowLayout());
+        reviewPanel.setPreferredSize(new Dimension(400, 200));
+        List<Review> allReviews = ReviewManager.getInstance().getFullReviewList();
+        List<Review> userReviews = new ArrayList<>();
+        for (Review R: allReviews) {
+            if (R.getUsername().equals(UserDataManager.getInstance().getUsername())) {
+                userReviews.add(R);
+            }
+        }
+        for (Review R: userReviews) {
+            JLabel gameName = new JLabel(GameDatabaseManager.getGameDetailsByID(R.getGameId()).getGame().getName());
+            ReviewPanel individualReview = new ReviewPanel(R);
+            reviewPanel.add(gameName);
+            reviewPanel.add(individualReview);
+        }
+        //initializes Reviews tab
+        tabbedPane.addTab("Reviews", reviewPanel);
+
         //iterate through the list
         if (collections != null) {
             for (Collection collection : collections) {
                 JButton collButton = new JButton(collection.getName());
-                add(collButton);
+                collectionsPanel.add(collButton);
                 collButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JFrame collectionFrame = new JFrame(collection.getName());
-                        collectionFrame.setLayout(new FlowLayout());
-                        List<String> games = collection.getGames();
-                        for (String game : games) {
-                            JPanel GameDisplayPanel = new GameDisplayPanel(game, homePage);
-                            collectionFrame.add(GameDisplayPanel);
-                        }
-                        collectionFrame.setVisible(true);
-                        collectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        collectionFrame.setLocationRelativeTo(null);
-                        collectionFrame.pack();
+                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID);
                     }
                 });
             }
@@ -67,7 +78,6 @@ public class UserProfileFrame extends JPanel implements ActionListener{
         panel1 = new JPanel();
         tabbedPane.addTab("Account Settings", panel1);
         JButton logOutButton = new JButton("Logout");
-        Controller.getInstance().login("alice123", "password123");
 
         //creates action listener for logout button
         logOutButton.addActionListener(new ActionListener() {
@@ -81,6 +91,9 @@ public class UserProfileFrame extends JPanel implements ActionListener{
 
                     if (log) {
                         JOptionPane.showMessageDialog(null, "Successfully logged out");
+                        frame.dispose();
+                        homePage.dispose();
+                        new LoginPage();
                     } else {
                         JOptionPane.showMessageDialog(null, "Logout failed");
                     }
@@ -134,12 +147,7 @@ public class UserProfileFrame extends JPanel implements ActionListener{
 
     }
 
-    public static void main(String args[]) {
-        Controller.getInstance().login("alice123", "password123");
+    public static void main(String[] args) {
         HomePageFrame page = new HomePageFrame();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
     }
 }

@@ -67,8 +67,19 @@ public class MainGamesPanel extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchTerm = searchBar.getText();
-                displayedGames = Controller.getInstance().searchGamesWithFilters(searchTerm);
-                refreshGames();
+                if (searchTerm.equals("")) {
+                    displayedGames = Controller.getInstance().getRandomGames(50);
+                    refreshGames();
+                }
+                else {
+                    displayedGames = Controller.getInstance().searchGamesWithFilters(searchTerm);
+                    if (displayedGames.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "No results for that search.");
+                    } else {
+                        refreshGames();
+                    }
+                }
+
             }
         });
 

@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-/*
+/**
  *This class manages the details of a specific game, including its associated reviews.
  *It provides methods to retrieve the game and its reviews, add new reviews, and calculate the average rating.
  * The reviews are obtained from the ReviewManager class using the game's ID string as a parameter.
- **/
+ */
 public class GameDetails {
     private final Game game;
     private List<Review> reviews;
