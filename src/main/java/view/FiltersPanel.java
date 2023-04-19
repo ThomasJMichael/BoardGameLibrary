@@ -434,11 +434,11 @@ class FilterActionListener implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         if (filterCheckbox.isSelected()) {
-            Controller.getInstance().addCategoryFilter(category.name());
+            Controller.getInstance().addCategoryFilter(category.toString());
             System.out.println(category.name() + " selected.");
         }
         else {
-            Controller.getInstance().removeCategoryFilter(category.name());
+            Controller.getInstance().removeCategoryFilter(category.toString());
             System.out.println(category.name() + " unselected.");
         }
     }
