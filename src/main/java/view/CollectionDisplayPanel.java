@@ -12,10 +12,16 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionDisplayPanel extends JPanel{
+public class CollectionDisplayPanel extends JPanel {
 
     private final String userID;
 
+    /**
+     * Constructor that populates the collection panel
+     * Allows the user to delete games from their collections
+     * @param homePage object of HomePageFrame
+     * @param userID string to identify the user
+     */
     CollectionDisplayPanel(HomePageFrame homePage, String userID) {
         this.userID = userID;
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
@@ -23,6 +29,7 @@ public class CollectionDisplayPanel extends JPanel{
         for (Collection collection : collections) {
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
+
             List<String> games = collection.getGames();
             List<String> selectedGames = new ArrayList<>();
             JButton deleteButton = new JButton("Delete");
@@ -43,7 +50,7 @@ public class CollectionDisplayPanel extends JPanel{
                             if (component instanceof GameDisplayPanel gamePanel) {
                                 String game = gamePanel.getName();
                                 if (gamePanel.isSelected()) {
-                                    collection.removeGame(game);
+                                    Controller.getInstance().removeGameFromCollection(gamePanel.getGameID(), collection.getId());
                                     selectedGames.remove(game);
                                     collectionFrame.getContentPane().remove(component);
                                 }
