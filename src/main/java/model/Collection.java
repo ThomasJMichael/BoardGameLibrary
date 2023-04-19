@@ -149,6 +149,21 @@ public class Collection {
     }
 
     /**
+     * Returns if the given gameId is in the collection
+     *
+     * @param gameId game id to check if it is in the collection
+     * @return  true if the game is in the collection, false otherwise
+     */
+    public boolean contains(String gameId){
+        for (String idInCollection : games){
+            if (idInCollection.equals(gameId)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Generates a random 6-digit number to be used as a collection id.
      * Checks to make sure the id is not already in use.
      * Adds the id to the set of used ids.

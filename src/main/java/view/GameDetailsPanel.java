@@ -126,7 +126,7 @@ public class GameDetailsPanel extends JPanel {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean isFavorited = false;
+                boolean isFavorited = Controller.getInstance().getFavorites().contains(gamedetails.getGame().getId());
                 if (!isFavorited) {
                     // Add the game to favorites
                     if (Controller.getInstance().addGameToFavorites(gamedetails.getGame().getId())) {
