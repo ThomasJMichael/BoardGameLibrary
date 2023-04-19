@@ -36,12 +36,22 @@ public class UserProfileFrame {
 
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
 
-        JPanel collectionsPanel = new JPanel();
+        JPanel collectionsPanel = new JPanel(new BorderLayout());
+        JButton createCollection = new JButton("Create Collection");
+        createCollection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createCollectionFrame();
+            }
+        });
+
+        collectionsPanel.add(createCollection, BorderLayout.PAGE_START);
+
         //initializes Collections tab
         tabbedPane.addTab("Collections", collectionsPanel);
 
         JPanel reviewPanel = new JPanel(new FlowLayout());
-        reviewPanel.setPreferredSize(new Dimension(400, 200));
+        reviewPanel.setPreferredSize(new Dimension(350, 200));
         List<Review> allReviews = ReviewManager.getInstance().getFullReviewList();
         List<Review> userReviews = new ArrayList<>();
         for (Review R: allReviews) {
@@ -52,17 +62,20 @@ public class UserProfileFrame {
         for (Review R: userReviews) {
             JLabel gameName = new JLabel(GameDatabaseManager.getGameDetailsByID(R.getGameId()).getGame().getName());
             ReviewPanel individualReview = new ReviewPanel(R);
-            reviewPanel.add(gameName);
-            reviewPanel.add(individualReview);
+            JPanel reviewAndGame = new JPanel(new BorderLayout());
+            reviewAndGame.add(gameName, BorderLayout.PAGE_START);
+            reviewAndGame.add(individualReview, BorderLayout.CENTER);
+            reviewPanel.add(reviewAndGame);
         }
         //initializes Reviews tab
         tabbedPane.addTab("Reviews", reviewPanel);
 
         //iterate through the list
+        JPanel collectionButtons = new JPanel(new FlowLayout());
         if (collections != null) {
             for (Collection collection : collections) {
                 JButton collButton = new JButton(collection.getName());
-                collectionsPanel.add(collButton);
+                collectionButtons.add(collButton);
                 collButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -71,6 +84,8 @@ public class UserProfileFrame {
                 });
             }
         }
+        collectionsPanel.add(collectionButtons, BorderLayout.CENTER);
+
         //creates the two panels
         JPanel panel1;
 
@@ -145,6 +160,50 @@ public class UserProfileFrame {
         //sets frame to visible
         frame.setVisible(true);
 
+    }
+
+    public void createCollectionFrame() {
+        JFrame createCollectionFrame = new JFrame("Create a Collection");
+        createCollectionFrame.setLayout(new BorderLayout());
+
+        JPanel getCollectionNamePanel = new JPanel(new FlowLayout());
+        JLabel nameOfCollectionLabel = new JLabel("Name:       ");
+        JTextField collectionNameTextField = new JTextField();
+        collectionNameTextField.setPreferredSize(new Dimension(325, 30));
+        getCollectionNamePanel.add(nameOfCollectionLabel);
+        getCollectionNamePanel.add(collectionNameTextField);
+
+        JPanel getCollectionDescriptionPanel = new JPanel(new FlowLayout());
+        JLabel descriptionOfCollectionLabel = new JLabel("Description: ");
+        JTextArea collectionDescriptionTextArea = new JTextArea();
+        collectionDescriptionTextArea.setPreferredSize(new Dimension(350, 75));
+        getCollectionDescriptionPanel.add(descriptionOfCollectionLabel);
+        getCollectionDescriptionPanel.add(collectionDescriptionTextArea);
+
+        JButton submitCollection = new JButton("Submit");
+        submitCollection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newCollectionName = collectionNameTextField.getText();
+                String newCollectionDescription = collectionDescriptionTextArea.getText();
+                boolean success = Controller.getInstance().addCollection(newCollectionName, newCollectionDescription);
+                if (success) {
+                    JOptionPane.showMessageDialog(null, "Collection successfully created.");
+                    createCollectionFrame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to create collection.");
+                    createCollectionFrame.dispose();
+                }
+            }
+        });
+
+        createCollectionFrame.add(getCollectionNamePanel, BorderLayout.PAGE_START);
+        createCollectionFrame.add(getCollectionDescriptionPanel, BorderLayout.CENTER);
+        createCollectionFrame.add(submitCollection, BorderLayout.PAGE_END);
+
+        createCollectionFrame.pack();
+        createCollectionFrame.setLocationRelativeTo(null);
+        createCollectionFrame.setVisible(true);
     }
 
     public static void main(String[] args) {

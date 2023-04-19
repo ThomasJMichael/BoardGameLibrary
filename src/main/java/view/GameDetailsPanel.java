@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.controller.Controller;
+import main.java.manager.ReviewManager;
 import main.java.manager.UserDataManager;
 import main.java.model.Collection;
 import main.java.model.GameDetails;
@@ -60,7 +61,7 @@ public class GameDetailsPanel extends JPanel {
 
         if (!game.getReviews().isEmpty()) {
             add(reviewLabel);
-            for (Review r : game.getReviews()) {
+            for (Review r : ReviewManager.getInstance().getReviews(gamedetails.getGame().getId())) {
                 reviews = new ReviewPanel(r);
                 add(reviews);
             }
@@ -165,7 +166,6 @@ public class GameDetailsPanel extends JPanel {
         } else {
             collections = Controller.getInstance().getCollectionsByUser(UserDataManager.getInstance().getCurrentUser().getId());
             if (collections == null) { // the user should by default have one collection, but in case they have none
-                //System.out.println("User has no collections.");
                 collectionNames = new String[1];
                 collectionNames[0] = "No Collections";
             } else {
@@ -284,6 +284,7 @@ public class GameDetailsPanel extends JPanel {
                 Controller.getInstance().addReview(gamedetails.getGame().getId(), description, rating);
                 JOptionPane.showMessageDialog(null, "Review created!");
                 reviewCreator.dispose();
+                homePage.changeGameView(gamedetails.getGame().getId());
             }
         });
 
@@ -294,6 +295,10 @@ public class GameDetailsPanel extends JPanel {
         reviewCreator.pack();
         reviewCreator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         reviewCreator.setVisible(true);
+
+    }
+
+    public void refreshGameDetails() {
 
     }
 }
