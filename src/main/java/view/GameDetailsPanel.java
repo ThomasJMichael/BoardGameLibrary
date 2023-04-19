@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.controller.Controller;
+import main.java.manager.GameDatabaseManager;
 import main.java.manager.ReviewManager;
 import main.java.manager.UserDataManager;
 import main.java.model.Collection;
@@ -115,6 +116,10 @@ public class GameDetailsPanel extends JPanel {
 
         addToFavoritesButton = new JButton("Add to Favorites");
 
+        if (Controller.getInstance().getFavoriteGames().getGames().contains(gamedetails.getGame().getId()))
+            addToFavoritesButton.setText("Favorited");
+
+
         addToFavoritesButton.addActionListener(new ActionListener() {
             /**
              * adds a listener to the "Add to Favorites" button that adds or removes
@@ -133,7 +138,7 @@ public class GameDetailsPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + " added to favorites.");
                         addToFavoritesButton.setText("Favorited");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Failed to add game to favorites.");
+                        JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + " is already favorited.");
                     }
                 } else {
                     // Remove the game from favorites
@@ -194,7 +199,7 @@ public class GameDetailsPanel extends JPanel {
                 if (Controller.getInstance().addGameToCollection(gamedetails.getGame().getId(), selectedCollection.getId())) {
                     JOptionPane.showMessageDialog(null, "Added " + name + " to " + collectionDropdown.getSelectedItem() + ".");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Collection " + collectionDropdown.getSelectedItem() + " already contains " + name + ".");
+                    JOptionPane.showMessageDialog(null, collectionDropdown.getSelectedItem() + " already contains " + name + ".");
                 }
             }
         });
