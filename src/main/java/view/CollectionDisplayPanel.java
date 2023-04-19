@@ -24,7 +24,7 @@ public class CollectionDisplayPanel extends JPanel{
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
             List<String> games = collection.getGames();
-            List<String> selectedGames = collection.getGames();
+            List<String> selectedGames = new ArrayList<>();
             JButton deleteButton = new JButton("Delete");
             collectionFrame.add(deleteButton, BorderLayout.EAST);
 
@@ -34,18 +34,18 @@ public class CollectionDisplayPanel extends JPanel{
                 collectionFrame.add(showGames);
 
                 if (gamePanel.isSelected()) {
-                    selectedGames.add(game);
+                    selectedGames.add(gamePanel.getGameID());
                 }
                 deleteButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        collection.removeGame(game);
-                        selectedGames.remove(game);
                         for (Component component : collectionFrame.getContentPane().getComponents()) {
                             if (component instanceof GameDisplayPanel gamePanel) {
-                                if (game.equals(((GameDisplayPanel)component).getName())) {
+                                String game = gamePanel.getName();
+                                if (gamePanel.isSelected()) {
+                                    collection.removeGame(game);
+                                    selectedGames.remove(game);
                                     collectionFrame.getContentPane().remove(component);
-                                    break;
                                 }
                             }
                         }
