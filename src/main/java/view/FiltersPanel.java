@@ -87,6 +87,12 @@ public class FiltersPanel extends JPanel {
     private final JButton addRatingFilter;
     private final JButton removeRatingFilter;
 
+    private final JPanel filterByMinAgePanel;
+    private final JLabel minAgeFilterLabel;
+    private final JTextField minimumAgeField;
+    private final JButton addMinimumAge;
+    private final JButton removeMinimumAge;
+
 
 
     /**
@@ -98,7 +104,7 @@ public class FiltersPanel extends JPanel {
     public FiltersPanel(HomePageFrame homeFrame) {
         frame = homeFrame;
         setLayout(new FlowLayout());
-        setPreferredSize(new Dimension(300,800));
+        setPreferredSize(new Dimension(300,1200));
 
         filterLabel = new JLabel("Add a filter to your search:");
 
@@ -371,6 +377,7 @@ public class FiltersPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Controller.getInstance().removeRatingFilter();
+                JOptionPane.showMessageDialog(null, "Rating filter removed.");
             }
         });
 
@@ -379,7 +386,48 @@ public class FiltersPanel extends JPanel {
         filterByRatingPanel.add(ratingFilterMinimum);
         filterByRatingPanel.add(addRatingFilter);
         filterByRatingPanel.add(removeRatingFilter);
-        filterByRatingPanel.setPreferredSize(new Dimension(200, 200));
+        filterByRatingPanel.setPreferredSize(new Dimension(200, 75));
+
+        minAgeFilterLabel = new JLabel("Minimum Age: ");
+        minimumAgeField = new JTextField();
+        minimumAgeField.setPreferredSize(new Dimension(30,20));
+
+        addMinimumAge = new JButton("Add");
+        addMinimumAge.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int minAge;
+                boolean valid = true;
+                if (minimumAgeField.getText() == null)
+                    valid = false;
+                try {
+                    minAge = Integer.parseInt(minimumAgeField.getText());
+                } catch (NumberFormatException nfe) {
+                    valid = false;
+                    JOptionPane.showMessageDialog(null, "Minimum age must be an integer.");
+                }
+
+                if (valid) {
+                    minAge = Integer.parseInt(minimumAgeField.getText());
+                    Controller.getInstance().addMinAgeFilter(minAge);
+                }
+            }
+        });
+
+        removeMinimumAge = new JButton("Remove Filter");
+        removeMinimumAge.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // want to remove all age filters
+            }
+        });
+
+        filterByMinAgePanel = new JPanel(new FlowLayout());
+        filterByMinAgePanel.setPreferredSize(new Dimension(200,200));
+        filterByMinAgePanel.add(minAgeFilterLabel);
+        filterByMinAgePanel.add(minimumAgeField);
+        filterByMinAgePanel.add(addMinimumAge);
+        filterByMinAgePanel.add(removeMinimumAge);
 
         // add the filter message
         add(filterLabel);
@@ -448,6 +496,8 @@ public class FiltersPanel extends JPanel {
 
         // add the rating filter
         add(filterByRatingPanel);
+
+        add(filterByMinAgePanel);
 
     }
 

@@ -21,6 +21,8 @@ public class HomePageFrame extends JFrame {
     private JButton profileButton;
     private JButton logoutButton;
     private JPanel searchBar;
+
+    private JScrollPane searchScroll;
     private JPanel gamePanel;
     private JScrollPane gameScroll;
     private JPanel mainPage;
@@ -75,6 +77,9 @@ public class HomePageFrame extends JFrame {
 
 
         searchBar = new FiltersPanel(this);
+        searchScroll = new JScrollPane(searchBar, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        searchScroll.setVisible(true);
+
         gameScroll = new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         gameScroll.setVisible(true);
 
@@ -84,7 +89,7 @@ public class HomePageFrame extends JFrame {
 
 
         add(navigationButtonsPanel, BorderLayout.PAGE_START);
-        add(searchBar, BorderLayout.LINE_START);
+        add(searchScroll, BorderLayout.LINE_START);
         add(gameScroll, BorderLayout.LINE_END);
         add(mainScroll,BorderLayout.CENTER);
     }
