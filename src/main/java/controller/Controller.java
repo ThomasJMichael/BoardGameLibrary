@@ -147,6 +147,27 @@ public class Controller {
     }
 
     /**
+     * Changes the name of the specified collection for the active user.
+     *
+     * @param collectionId  The collection to change
+     * @param newName       The new name.
+     */
+    public void changeCollectionName(String collectionId, String newName){
+        User currentUser = UserDataManager.getInstance().getCurrentUser();
+        CollectionManager.getInstance().changeCollectionName(currentUser.getId(), collectionId, newName);
+    }
+
+    /**
+     * Change the name of the specified collection
+     *
+     * @param collectionId  The collection to change
+     * @param newDesc       The new description.
+     */
+    public void changeCollectionDescription(String collectionId, String newDesc){
+        User currentUser = UserDataManager.getInstance().getCurrentUser();
+        CollectionManager.getInstance().changeDescription(currentUser.getId(), collectionId, newDesc);
+    }
+    /**
      * Deletes the collection with the given collectionId.
      *
      * @param collectionId  The id of the collection to delete
