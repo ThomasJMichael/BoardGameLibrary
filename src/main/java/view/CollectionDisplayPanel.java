@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,6 +53,7 @@ public class CollectionDisplayPanel extends JPanel {
             List<String> selectedGames = new ArrayList<>();
             JButton deleteButton = new JButton("Delete Selected Games");
             collectionFrame.add(deleteButton);
+            Collections.sort(games);
 
             for (String game : games) {
                 GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);

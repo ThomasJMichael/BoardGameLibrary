@@ -7,7 +7,7 @@ import java.util.*;
  * Each collection has a name, description, id, and a list of games.
  * The games can be represented by their ids as strings or as actual Game objects.
  */
-public class Collection {
+public class Collection implements  Comparable<Collection>{
     private String name;
     private String description;
     private String id;
@@ -180,5 +180,9 @@ public class Collection {
         return id;
     }
 
+    @Override
+    public int compareTo(Collection other) {
+        return this.getName().compareTo(other.getName());
+    }
 }
 
