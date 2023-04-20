@@ -81,6 +81,14 @@ public class FiltersPanel extends JPanel {
     private final JCheckBox wargameCheckBox;
     private final JLabel filterLabel;
 
+    private final JPanel filterByRatingPanel;
+    private final JLabel ratingFilterLabel;
+    private final JComboBox ratingFilterMinimum;
+    private final JButton addRatingFilter;
+    private final JButton removeRatingFilter;
+
+
+
     /**
      * Parameterized Constructor: creates the FiltersPanel with checkboxes for every
      * possible GameCategory to filter by, also adds the appropriate action listener
@@ -338,6 +346,41 @@ public class FiltersPanel extends JPanel {
         actionlistener = new FilterActionListener(WORLD_WAR_II, worldWarIICheckBox1);
         worldWarIICheckBox1.addActionListener(actionlistener);
 
+        ratingFilterLabel = new JLabel("Minimum Rating: ");
+        Integer[] ratingNums = {1,2,3,4,5};
+        ratingFilterMinimum = new JComboBox<>(ratingNums);
+
+        addRatingFilter = new JButton("Add");
+        addRatingFilter.addActionListener(new ActionListener() {
+            /**
+             * Adds a rating filter to the search given a minimum game rating
+             * @param e the event to be processed (click)
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer ratingMin = ratingFilterMinimum.getSelectedIndex() + 1;
+                Controller.getInstance().addRatingFilter(ratingMin);
+            }
+        });
+
+        removeRatingFilter = new JButton("Remove Filter");
+        /**
+         * Removes the rating filter that is applied
+         */
+        removeRatingFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Controller.getInstance().removeRatingFilter();
+            }
+        });
+
+        filterByRatingPanel = new JPanel(new FlowLayout());
+        filterByRatingPanel.add(ratingFilterLabel);
+        filterByRatingPanel.add(ratingFilterMinimum);
+        filterByRatingPanel.add(addRatingFilter);
+        filterByRatingPanel.add(removeRatingFilter);
+        filterByRatingPanel.setPreferredSize(new Dimension(200, 200));
+
         // add the filter message
         add(filterLabel);
 
@@ -402,6 +445,9 @@ public class FiltersPanel extends JPanel {
         add(wargameCheckBox);
         add(wordGameCheckBox);
         add(worldWarIICheckBox1);
+
+        // add the rating filter
+        add(filterByRatingPanel);
 
     }
 

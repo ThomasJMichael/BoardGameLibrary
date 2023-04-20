@@ -114,6 +114,13 @@ public class GameDetailsPanel extends JPanel {
 
         String categories = gamedetails.getGame().getCategories().toString();
 
+        Double averageRating = GameDatabaseManager.getInstance().getGameDetailsByID(gamedetails.getGame().getId()).averageRating();
+        String averageRatingString;
+        if (averageRating.isNaN())
+            averageRatingString = "Not Available";
+        else
+            averageRatingString = String.valueOf(averageRating);
+
         addToFavoritesButton = new JButton("Add to Favorites");
 
         if (Controller.getInstance().getFavoriteGames().getGames().contains(gamedetails.getGame().getId()))
@@ -131,14 +138,14 @@ public class GameDetailsPanel extends JPanel {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean isFavorited = false;
+                boolean isFavorited = Controller.getInstance().getFavoriteGames().getGames().contains(gamedetails.getGame().getId());
                 if (!isFavorited) {
                     // Add the game to favorites
                     if (Controller.getInstance().addGameToFavorites(gamedetails.getGame().getId())) {
                         JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + " added to favorites.");
                         addToFavoritesButton.setText("Favorited");
                     } else {
-                        JOptionPane.showMessageDialog(null, gamedetails.getGame().getName() + " is already favorited.");
+                        JOptionPane.showMessageDialog(null, "Failed to remove game from favorites.");
                     }
                 } else {
                     // Remove the game from favorites
@@ -217,7 +224,8 @@ public class GameDetailsPanel extends JPanel {
                         "Min Age: " + minAge + "\n" +
                         "Playing Time: " + playingTime + " minutes\n" +
                         "Mechanics: " + mechanics + "\n" +
-                        "Categories: " + categories + "\n"
+                        "Categories: " + categories + "\n" +
+                        "Average Rating: " + averageRatingString + "/5\n"
         );
         allDetails.setEditable(false);
 
