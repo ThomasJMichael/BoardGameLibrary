@@ -71,16 +71,6 @@ public class GameDetailsPanel extends JPanel {
 
     }
 
-
-    // "316624"
-    // "374173"
-    // "381247"
-
-
-    public static void main(String[] args) {
-        //gamePanel newPanel = new gamePanel(Controller.getInstance().getRandomGames(1).get(0));
-    }
-
     /**
      * creates the UI components, set's their labels, and sets any ActionListeners
      * includes game title, photo, description, details, reviews, and buttons for

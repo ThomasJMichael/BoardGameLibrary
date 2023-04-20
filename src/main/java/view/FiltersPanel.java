@@ -19,7 +19,6 @@ public class FiltersPanel extends JPanel {
     /**
      * Object of HomePageFrame
      */
-    private HomePageFrame frame;
     private final JLabel filterLabel;
 
     private final JPanel filterByRatingPanel;
@@ -40,7 +39,6 @@ public class FiltersPanel extends JPanel {
      * @param homeFrame the frame the panel sits on
      */
     public FiltersPanel(HomePageFrame homeFrame) {
-        frame = homeFrame;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(300,1200));
 

@@ -147,6 +147,24 @@ public class UserDataManager implements Loadable, Savable {
     }
 
     /**
+     * Changes the username of the current user.
+     *
+     * @param newUsername the new password of the current user.
+     * @return            true if the username was changed successfully, false otherwise.
+     */
+    public boolean changeUsername(String newUsername) {
+        if (instance == null) {
+            getInstance();
+        }
+        if (currentUser == null) {
+            return false;
+        }
+        currentUser.setUsername(newUsername);
+        save();
+        return true;
+    }
+
+    /**
      * Gets the name of the current user.
      * @return the name of the current user.
      */

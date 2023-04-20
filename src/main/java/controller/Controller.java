@@ -85,6 +85,16 @@ public class Controller {
     }
 
     /**
+     * Changes the username of the current user.
+     *
+     * @param newUsername The new username of the user.
+     * @return            true if the username change is successful, false otherwise.
+     */
+    public boolean changeUsername(String newUsername) {
+        return UserDataManager.getInstance().changeUsername(newUsername);
+    }
+
+    /**
      * Adds a review to the game with the given gameId.
      *
      * @param gameId    The id of the game to add the review to

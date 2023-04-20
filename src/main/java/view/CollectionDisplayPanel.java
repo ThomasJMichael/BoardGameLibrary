@@ -43,10 +43,10 @@ public class CollectionDisplayPanel extends JPanel {
         collectionID = collection.getId();
         this.userID = userID;
         this.homePage = homePage;
-        List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
 
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
+            collectionFrame.setPreferredSize(new Dimension(1100,800));
 
             List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
             List<String> selectedGames = new ArrayList<>();
@@ -55,7 +55,6 @@ public class CollectionDisplayPanel extends JPanel {
 
             for (String game : games) {
                 GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
-                //JPanel showGames = new GameDisplayPanel(game, homePage);
                 collectionFrame.add(gamePanel);
 
                 if (gamePanel.isSelected()) {

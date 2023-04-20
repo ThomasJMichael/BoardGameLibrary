@@ -146,17 +146,37 @@ public class UserProfileFrame {
                     boolean checkYes = Controller.getInstance().changePassword(oldPassword, newPassword);
 
                     if (checkYes) {
-                        JOptionPane.showMessageDialog(null, "Password successfully updated");
+                        JOptionPane.showMessageDialog(null, "Password successfully updated.");
                     }
                     else {
-                        JOptionPane.showMessageDialog(null, "Password update failed");
+                        JOptionPane.showMessageDialog(null, "Password update failed.");
                     }
+                }
+            }
+        });
+
+        JButton usernameButton = new JButton("Change username");
+        usernameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newUsername = JOptionPane.showInputDialog("Enter your new username");
+                if (newUsername != null && !newUsername.isEmpty()) {
+                    boolean success = Controller.getInstance().changeUsername(newUsername);
+                    if (success)
+                        JOptionPane.showMessageDialog(null, "Username successfully updated.");
+                    else
+                        JOptionPane.showMessageDialog(null, "Username update failed.");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Please enter a username.");
+                    actionPerformed(e);
                 }
             }
         });
 
         //adds buttons to panel
         panel1.add(logOutButton);
+        panel1.add(usernameButton);
         panel1.add(passButton);
 
 
