@@ -420,10 +420,8 @@ public class Controller {
 
     /**
      * Removes a min players filter from the list of predicates to filter games by.
-     *
-     * @param minPlayers The minimum number of players to filter games by
      */
-    public void removeMinPlayersFilter(int minPlayers){
+    public void removeMinPlayersFilter(){
         removePredicate("minPlayerFilter");
     }
 
@@ -476,10 +474,8 @@ public class Controller {
 
     /**
      * Removes a min age filter from the list of predicates to filter games by.
-     *
-     * @param minAge The minimum age to filter games by
      */
-    public void removeMinAgeFilter(int minAge){
+    public void removeMinAgeFilter(){
         removePredicate("minAgeFilter");
     }
 
