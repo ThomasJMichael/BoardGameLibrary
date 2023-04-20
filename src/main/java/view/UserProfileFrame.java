@@ -152,6 +152,10 @@ public class UserProfileFrame {
                         JOptionPane.showMessageDialog(null, "Password update failed.");
                     }
                 }
+                else {
+                    JOptionPane.showMessageDialog(null, "Old or new password cannot be blank");
+                    actionPerformed(e);
+                }
             }
         });
 
