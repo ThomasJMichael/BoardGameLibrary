@@ -226,11 +226,4 @@ public class UserProfileFrame {
         createCollectionFrame.setVisible(true);
     }
 
-    /**
-     * Main method. Calls the HomePageFrame, which calls the UserProfileFrame when the 'Profile' button is clicked
-     * @param args an array of command-line arguments for the application
-     */
-    public static void main(String[] args) {
-        HomePageFrame page = new HomePageFrame();
-    }
 }

@@ -133,62 +133,10 @@ public class MainGamesPanel extends JPanel {
         gameDisplayPanel.setVisible(true);
 
     }
+
     /**
      * Main method that displays a title, a search bar, and random games.
      * @param args an array of command-line arguments for the application
      */
-    public static void main(String[] args) {
-        //main page title
-        JLabel title = new JLabel("Board Game Library");
-        title.setFont(new Font("Mulish", 0, 50));
-        title.setHorizontalAlignment(0);
 
-        panel.add(title, BorderLayout.NORTH);
-
-        //create search bar and button
-        JTextField search = new JTextField(null, 50);
-        JButton searchButton = new JButton("Search");
-        searchButton.setFont(new Font("Mulish", 0, 15));
-        JPanel searchP = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        searchP.add(search);
-        searchP.add(searchButton);
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Controller.getInstance().searchGamesByQuery(query);
-            }
-        });
-
-        //panel to show the randomly generated games
-        JPanel randomPanel = new JPanel();
-        randomPanel.setLayout(new FlowLayout());
-        List<GameDetails> randomGames = Controller.getInstance().getRandomGames(50);
-
-        //iterate through the list
-        for (GameDetails game : randomGames) {
-            JButton gameButton = new JButton(game.getGame().getName());
-            randomPanel.add(gameButton);
-            gameButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JFrame gameFrame = new JFrame(game.getGame().getName());
-                    gameFrame.setLayout(new FlowLayout());
-                    String gameD = game.getGame().getDescription();
-                    JTextArea text = new JTextArea(gameD);
-                    gameFrame.add(text);
-                    gameFrame.setSize(500,300);
-                    gameFrame.setVisible(true);
-                }
-
-            });
-        }
-
-        panel.add(searchP, BorderLayout.CENTER);
-        panel.add(randomPanel);
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900, 600);
-        frame.add(panel);
-        frame.setVisible(true);
-    }
 }
