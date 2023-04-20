@@ -354,7 +354,7 @@ public class FiltersPanel extends JPanel {
         removeMinimumAge.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // want to remove all age filters
+                Controller.getInstance().removeMinAgeFilter();
             }
         });
 
