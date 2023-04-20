@@ -266,6 +266,7 @@ public class GameDetailsPanel extends JPanel {
     private void createReview() {
         JFrame reviewCreator = new JFrame("Write Review for " + gamedetails.getGame().getName());
         reviewCreator.setLayout(new BorderLayout());
+        reviewCreator.setLocationRelativeTo(null);
 
         JPanel getRating = new JPanel(new FlowLayout());
         JLabel reviewNumberLabel = new JLabel("Rating (out of five):");
@@ -292,18 +293,41 @@ public class GameDetailsPanel extends JPanel {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                int rating = ratingOptions.getSelectedIndex();
+                int rating = ratingOptions.getSelectedIndex() + 1;
                 String description = enterDescriptionTextArea.getText();
-                Controller.getInstance().addReview(gamedetails.getGame().getId(), description, rating);
-                JOptionPane.showMessageDialog(null, "Review created!");
-                reviewCreator.dispose();
-                homePage.changeGameView(gamedetails.getGame().getId());
+                if (description.equals(""))
+                    JOptionPane.showMessageDialog(null,"Please add a description for your review.");
+                else {
+                    Controller.getInstance().addReview(gamedetails.getGame().getId(), description, rating);
+                    JOptionPane.showMessageDialog(null, "Review created!");
+                    reviewCreator.dispose();
+                    homePage.changeGameView(gamedetails.getGame().getId());
+                }
             }
         });
 
+        JButton cancelReview = new JButton("Cancel");
+        cancelReview.addActionListener(new ActionListener() {
+            /**
+             * confirms if user would like to close the review frame
+             * if yes, close the frame and cancel the review
+             * if no or cancel, review creation continues
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel review creation?") == JOptionPane.YES_OPTION)
+                    reviewCreator.dispose();
+            }
+        });
+
+        JPanel confirmButtons = new JPanel(new FlowLayout());
+        confirmButtons.add(cancelReview);
+        confirmButtons.add(submitReview);
+
         reviewCreator.add(getRating, BorderLayout.PAGE_START);
         reviewCreator.add(getDescription, BorderLayout.CENTER);
-        reviewCreator.add(submitReview, BorderLayout.PAGE_END);
+        reviewCreator.add(confirmButtons, BorderLayout.PAGE_END);
         reviewCreator.setLocationRelativeTo(null);
         reviewCreator.pack();
         reviewCreator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -311,7 +335,4 @@ public class GameDetailsPanel extends JPanel {
 
     }
 
-    public void refreshGameDetails() {
-
-    }
 }
