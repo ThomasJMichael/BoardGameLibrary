@@ -157,6 +157,27 @@ public class Controller {
     }
 
     /**
+     * Changes the name of the specified collection for the active user.
+     *
+     * @param collectionId  The collection to change
+     * @param newName       The new name.
+     */
+    public void changeCollectionName(String collectionId, String newName){
+        User currentUser = UserDataManager.getInstance().getCurrentUser();
+        CollectionManager.getInstance().changeCollectionName(currentUser.getId(), collectionId, newName);
+    }
+
+    /**
+     * Change the name of the specified collection
+     *
+     * @param collectionId  The collection to change
+     * @param newDesc       The new description.
+     */
+    public void changeCollectionDescription(String collectionId, String newDesc){
+        User currentUser = UserDataManager.getInstance().getCurrentUser();
+        CollectionManager.getInstance().changeDescription(currentUser.getId(), collectionId, newDesc);
+    }
+    /**
      * Deletes the collection with the given collectionId.
      *
      * @param collectionId  The id of the collection to delete
@@ -336,11 +357,8 @@ public class Controller {
 
     /**
      * Removes a year published filter from the list of predicates to filter games by.
-     *
-     * @param minYear  The minimum year to filter games by
-     * @param maxYear  The maximum year to filter games by
      */
-    public void removeYearPublishedFilter(int minYear, int maxYear){
+    public void removeYearPublishedFilter(){
         removePredicate("yearPublishedFilter");
     }
 
@@ -409,10 +427,8 @@ public class Controller {
 
     /**
      * Removes a min players filter from the list of predicates to filter games by.
-     *
-     * @param minPlayers The minimum number of players to filter games by
      */
-    public void removeMinPlayersFilter(int minPlayers){
+    public void removeMinPlayersFilter(){
         removePredicate("minPlayerFilter");
     }
 
@@ -427,10 +443,8 @@ public class Controller {
 
     /**
      * Removes a max players filter from the list of predicates to filter games by.
-     *
-     * @param maxPlayers The maximum number of players to filter games by
      */
-    public void removeMaxPlayersFilter(int maxPlayers){
+    public void removeMaxPlayersFilter(){
         removePredicate("maxPlayerFilter");
     }
 
@@ -446,11 +460,8 @@ public class Controller {
 
     /**
      * Removes a min playtime and max playtime filter from the list of predicates to filter games by.
-     *
-     * @param minPlaytime minimum playtime
-     * @param maxPlaytime maximum playtime
      */
-    public void removePlaytimeFilter(int minPlaytime, int maxPlaytime){
+    public void removePlaytimeFilter(){
         removePredicate("playTimeFilter");
     }
 
@@ -465,10 +476,8 @@ public class Controller {
 
     /**
      * Removes a min age filter from the list of predicates to filter games by.
-     *
-     * @param minAge The minimum age to filter games by
      */
-    public void removeMinAgeFilter(int minAge){
+    public void removeMinAgeFilter(){
         removePredicate("minAgeFilter");
     }
 

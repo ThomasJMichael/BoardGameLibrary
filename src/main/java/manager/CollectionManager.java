@@ -107,6 +107,30 @@ public class CollectionManager implements Loadable, Savable {
             return userCollection.contains(newCollection);
         }
     }
+
+    /**
+     * Changes the name of the specified collection
+     *
+     * @param userId        The string user id for the collection to change the name of
+     * @param collectionId  The collection id for the collection to change
+     * @param newName       The new name
+     */
+    public void changeCollectionName(String userId, String collectionId, String newName){
+        Collection collection = getSpecificCollection(userId, collectionId);
+        collection.setName(newName);
+    }
+
+    /**
+     * Change the description of the given collection
+     *
+     * @param userId        The id for the user that has the collection
+     * @param collectionId  The collection to change
+     * @param newDesc       The new description
+     */
+    public void changeDescription(String userId, String collectionId, String newDesc){
+        Collection collection = getSpecificCollection(userId, collectionId);
+        collection.setDescription(newDesc);
+    }
     /**
      * Deletes the given collection from the user with the given id.
      *
