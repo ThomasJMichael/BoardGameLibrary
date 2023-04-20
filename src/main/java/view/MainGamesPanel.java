@@ -10,50 +10,60 @@ import main.java.controller.Controller;
 import main.java.model.GameDetails;
 
 /**
- * MainGamesPanel displays a list of recommended games upon user log-in or it displays the
- * results of a search through a search bar
+ * MainGamesPanel displays a list of recommended games upon user log-in
+ * Can also display the results of a search through a search bar.
  */
+public class MainGamesPanel extends JPanel {
 
+    /**
+     * Creates new JFrame
+     */
+    private static final JFrame frame = new JFrame();
+    /**
+     * Creates new JPanel
+     */
+    private static final JPanel panel = new JPanel(new BorderLayout());
 
-public class MainGamesPanel extends JPanel implements ActionListener {
+    /**
+     * Creates HomePageFrame object
+     */
+    private final HomePageFrame homePage;
 
-    private static JFrame frame = new JFrame();
-    private static JPanel panel = new JPanel(new BorderLayout());
+    /**
+     * variable for the search bar
+     */
+    private final JTextField searchBar;
 
-    private HomePageFrame homePage;
+    /**
+     * Button to refresh recommended games
+     */
+    private final JButton refreshRecommendedButton;
 
-    private JTextField searchBar;
+    /**
+     * Button to find random games
+     */
+    private final JButton findRandomGamesButton;
 
-    private JButton refreshRecommendedButton;
-
-    private JButton findRandomGamesButton;
-
+    /**
+     * New list of GameDetails type
+     */
     private List<GameDetails> displayedGames;
 
-    private JPanel gameDisplayPanel;
+    /**
+     * Declares new JPanel
+     */
+    private final JPanel gameDisplayPanel;
 
+    /**
+     * Variable for the search term a user types
+     */
     private String searchTerm;
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-    /*
-    public abstract class userProfile extends userProfilePanel {
-
-        /**
-         * Imports collections to create one button for each collection.
-         *
-         * @param userID user's ID
-         *
-        public userProfile(String userID) {
-            super(userID);
-        }
-    }
-    */
-
+    /**
+     * Constructor for the MainGamesPanel.
+     * @param frame object of HomePageFrame
+     */
     public MainGamesPanel(HomePageFrame frame) {
         homePage = frame;
         setPreferredSize(new Dimension(800, 2500));
@@ -108,6 +118,10 @@ public class MainGamesPanel extends JPanel implements ActionListener {
 
         add(gameDisplayPanel);
     }
+
+    /**
+     * Method to refresh the gameDisplayPanel.
+     */
     public void refreshGames() {
         gameDisplayPanel.setVisible(false);
         gameDisplayPanel.removeAll();
@@ -119,6 +133,10 @@ public class MainGamesPanel extends JPanel implements ActionListener {
         gameDisplayPanel.setVisible(true);
 
     }
+    /**
+     * Main method that displays a title, a search bar, and random games.
+     * @param args an array of command-line arguments for the application
+     */
     public static void main(String[] args) {
         //main page title
         JLabel title = new JLabel("Board Game Library");

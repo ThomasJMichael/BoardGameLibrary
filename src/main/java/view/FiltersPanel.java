@@ -15,8 +15,10 @@ import static main.java.model.GameCategory.*;
  * search by, which are found in the GameCategory model. Uses the FilterActionListener class
  * to monitor adding/removing filters related to checking and unchecking category boxes.
  */
-
 public class FiltersPanel extends JPanel {
+    /**
+     * Object of HomePageFrame
+     */
     private HomePageFrame frame;
     private final JCheckBox abstractStrategyCheckBox;
     private final JCheckBox ancientCheckBox;

@@ -13,12 +13,24 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CollectionDisplayPanel will display the games inside the collection the user clicks on.
+ */
 public class CollectionDisplayPanel extends JPanel {
 
+    /**
+     * String to hold the user ID
+     */
     private final String userID;
 
+    /**
+     * Object of the HomePageFrame
+     */
     private HomePageFrame homePage;
 
+    /**
+     * String to hold the collection ID
+      */
     private String collectionID;
 
     /**
