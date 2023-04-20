@@ -205,6 +205,22 @@ public class Controller {
     }
 
     /**
+     * Returns the collection Favorites for the current user
+     *
+     * @return Favorites collection
+     */
+    public Collection getFavorites(){
+        User user = UserDataManager.getInstance().getCurrentUser();
+        List<Collection> userCollections = getCollectionsByUser(user.getId());
+        for (Collection col : userCollections){
+            if (col.getName().equals("Favorites")){
+                return col;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Removes a game from the collection with the given collectionId.
      * @param gameId        The id of the game to remove from the collection
      * @param collectionId  The id of the collection to remove the game from
