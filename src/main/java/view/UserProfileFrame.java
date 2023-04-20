@@ -13,6 +13,9 @@ import main.java.model.*;
 import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
 
+/**
+ * Class to create the user's profile frame.
+ */
 public class UserProfileFrame {
 
     /**
@@ -30,6 +33,7 @@ public class UserProfileFrame {
     /**
      * Imports collections to create one button for each collection.
      * @param userID user's ID
+     * @param homePage calls the homePage frame
      */
     public UserProfileFrame(String userID, HomePageFrame homePage) {
         this.homePage = homePage;
@@ -54,6 +58,10 @@ public class UserProfileFrame {
         reviewPanel.setPreferredSize(new Dimension(350, 200));
         List<Review> allReviews = ReviewManager.getInstance().getFullReviewList();
         List<Review> userReviews = new ArrayList<>();
+
+        /**
+         * Iterates through a user's reviews and displays them to the user profile
+         */
         for (Review R: allReviews) {
             if (R.getUsername().equals(UserDataManager.getInstance().getUsername())) {
                 userReviews.add(R);
@@ -70,7 +78,10 @@ public class UserProfileFrame {
         //initializes Reviews tab
         tabbedPane.addTab("Reviews", reviewPanel);
 
-        //iterate through the list
+
+        /**
+         * Iterates through collections to display a button for each collection.
+         */
         JPanel collectionButtons = new JPanel(new FlowLayout());
         if (collections != null) {
             for (Collection collection : collections) {
@@ -84,6 +95,7 @@ public class UserProfileFrame {
                 });
             }
         }
+        //adds the buttons to the panel
         collectionsPanel.add(collectionButtons, BorderLayout.CENTER);
 
         //creates the two panels
@@ -116,9 +128,13 @@ public class UserProfileFrame {
 
             }
         });
+        //creates button to change a user's password
         JButton passButton = new JButton("Change password");
 
-        //creates action listeners for change password button
+        /**
+         * Checks that neither the new password nor the old password are null.
+         * Calls the controller to change the password.
+         */
         passButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,6 +178,9 @@ public class UserProfileFrame {
 
     }
 
+    /**
+     * Constructor to allow the user to create a new collection.
+     */
     public void createCollectionFrame() {
         JFrame createCollectionFrame = new JFrame("Create a Collection");
         createCollectionFrame.setLayout(new BorderLayout());
@@ -197,6 +216,7 @@ public class UserProfileFrame {
             }
         });
 
+        //adds the new collection to the new collection
         createCollectionFrame.add(getCollectionNamePanel, BorderLayout.PAGE_START);
         createCollectionFrame.add(getCollectionDescriptionPanel, BorderLayout.CENTER);
         createCollectionFrame.add(submitCollection, BorderLayout.PAGE_END);
@@ -206,6 +226,10 @@ public class UserProfileFrame {
         createCollectionFrame.setVisible(true);
     }
 
+    /**
+     * Main method. Calls the HomePageFrame, which calls the UserProfileFrame when the 'Profile' button is clicked
+     * @param args an array of command-line arguments for the application
+     */
     public static void main(String[] args) {
         HomePageFrame page = new HomePageFrame();
     }
