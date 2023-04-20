@@ -79,7 +79,7 @@ public class UserProfileFrame {
                 collButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID);
+                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection);
                     }
                 });
             }

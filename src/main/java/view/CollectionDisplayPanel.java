@@ -19,22 +19,24 @@ public class CollectionDisplayPanel extends JPanel {
 
     private HomePageFrame homePage;
 
+    private String collectionID;
+
     /**
      * Constructor that populates the collection panel
      * Allows the user to delete games from their collections
      * @param homePage object of HomePageFrame
      * @param userID string to identify the user
      */
-    CollectionDisplayPanel(HomePageFrame homePage, String userID) {
+    CollectionDisplayPanel(HomePageFrame homePage, String userID, Collection collection) {
+        collectionID = collection.getId();
         this.userID = userID;
         this.homePage = homePage;
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
 
-        for (Collection collection : collections) {
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
 
-            List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collection.getId()).getGames();
+            List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
             List<String> selectedGames = new ArrayList<>();
             JButton deleteButton = new JButton("Delete Selected Games");
             collectionFrame.add(deleteButton);
@@ -74,4 +76,3 @@ public class CollectionDisplayPanel extends JPanel {
 
 
     }
-}
