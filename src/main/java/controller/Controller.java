@@ -347,11 +347,8 @@ public class Controller {
 
     /**
      * Removes a year published filter from the list of predicates to filter games by.
-     *
-     * @param minYear  The minimum year to filter games by
-     * @param maxYear  The maximum year to filter games by
      */
-    public void removeYearPublishedFilter(int minYear, int maxYear){
+    public void removeYearPublishedFilter(){
         removePredicate("yearPublishedFilter");
     }
 
@@ -436,10 +433,8 @@ public class Controller {
 
     /**
      * Removes a max players filter from the list of predicates to filter games by.
-     *
-     * @param maxPlayers The maximum number of players to filter games by
      */
-    public void removeMaxPlayersFilter(int maxPlayers){
+    public void removeMaxPlayersFilter(){
         removePredicate("maxPlayerFilter");
     }
 
@@ -455,11 +450,8 @@ public class Controller {
 
     /**
      * Removes a min playtime and max playtime filter from the list of predicates to filter games by.
-     *
-     * @param minPlaytime minimum playtime
-     * @param maxPlaytime maximum playtime
      */
-    public void removePlaytimeFilter(int minPlaytime, int maxPlaytime){
+    public void removePlaytimeFilter(){
         removePredicate("playTimeFilter");
     }
 
