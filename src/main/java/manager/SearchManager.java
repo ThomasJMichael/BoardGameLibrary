@@ -27,6 +27,8 @@ public class SearchManager {
     }
 
     /**
+     * Returns the current of the search manager or initializes a new instance.
+     *
      * @return the new instance of SearchManager.
      */
     public static SearchManager getInstance() {

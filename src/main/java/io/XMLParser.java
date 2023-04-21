@@ -22,9 +22,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /*
- * XMLParser.java
- *
- *
  * This class provides methods to parse XML data and convert it into Java objects for various board game related data,
  * including users, games, reviews, and collections.
  *
@@ -43,7 +40,6 @@ public class XMLParser {
 
     /**
      Parses an XML file containing game data and returns a list of Game objects.
-
      @param xmlFile the xml file for the game database
      @return a list of Game objects parsed from the XML file
      */
@@ -134,8 +130,7 @@ public class XMLParser {
     /**
      Parses the given XML file containing user data and returns a list of User objects.
      The XML file should contain a root element "users", which has child elements "user".
-     Each "user" element should have attributes "id" and "username", and can optionally
-     contain child elements "name" and "email".
+     Each "user" element should have attributes "id", "password, and "username"
 
      @param xmlFile the XML file containing user data
      @return a list of User objects parsed from the XML file
@@ -173,7 +168,7 @@ public class XMLParser {
     }
 
     /**
-     This method parses an XML file containing review data and returns a list of Review objects.
+     Parses an XML file containing review data and returns a list of Review objects.
 
      @param xmlFile the XML file to be parsed.
      @return a List of Review objects parsed from the XML file. If there is any error during the parsing process, null is returned.

@@ -7,7 +7,7 @@ import java.util.List;
  * Provides methods to access and modify these attributes.
  */
 public class Game {
-    public static GameCategory Category;
+
     private String id;
     private String name;
     private int yearPublished;
@@ -24,6 +24,12 @@ public class Game {
     private List<String> mechanics;
     private List<String> designers;
 
+    /**
+     * Default constructor used by parser. Just uses setters to modify the data.
+     */
+    public Game(){
+
+    }
     /**
      * Returns the id of the game.
      *

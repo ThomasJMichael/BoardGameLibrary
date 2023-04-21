@@ -261,7 +261,7 @@ public class Controller {
     }
 
     /**
-     * Returns a List<GameDetails> that is sorted alphabetically from the games in the collection
+     * Returns a List of GameDetails that is sorted alphabetically from the games in the collection
       * @param collectionId     The collection to sort
      * @return                  The list of GameDetails that is sorted
      */
