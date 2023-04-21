@@ -44,6 +44,7 @@ public class CollectionDisplayPanel extends JPanel {
         collectionID = collection.getId();
         this.userID = userID;
         this.homePage = homePage;
+        UserProfileFrame userFrame = new UserProfileFrame(userID, homePage);
 
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
@@ -54,6 +55,24 @@ public class CollectionDisplayPanel extends JPanel {
             JButton sortByOrderAdded = new JButton("Sort Games by Order Added");
             collectionFrame.add(sortCollection);
             collectionFrame.add(sortByOrderAdded);
+
+            List<Collection> collections = CollectionManager.getInstance().getCollections(userID);
+            JButton deleteCollection = new JButton("Delete Collection");
+            deleteCollection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean deleted = Controller.getInstance().deleteCollection(collectionID);
+                if (deleted) {
+                    JOptionPane.showMessageDialog(null, "Collection successfully deleted");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Collection could not be deleted");
+                }
+                collectionFrame.setVisible(false);
+                userFrame.refreshCollectionButtons();
+            }
+        });
+        collectionFrame.add(deleteCollection);
 
             List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
             if (games != null) {
