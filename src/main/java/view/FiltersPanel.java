@@ -355,6 +355,7 @@ public class FiltersPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Controller.getInstance().removeMinAgeFilter();
+                JOptionPane.showMessageDialog(null, "Minimum age filter removed.");
             }
         });
 
