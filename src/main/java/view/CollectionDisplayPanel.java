@@ -50,12 +50,16 @@ public class CollectionDisplayPanel extends JPanel {
             collectionFrame.setPreferredSize(new Dimension(1100,800));
 
             List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
+            List<String> gamesOrderAdded = new ArrayList<>();
             List<String> selectedGames = new ArrayList<>();
             JButton deleteButton = new JButton("Delete Selected Games");
-            collectionFrame.add(deleteButton);
-            Collections.sort(games);
+            JButton sortCollection = new JButton("Sort Games Alphabetically");
+            JButton sortByOrderAdded = new JButton("Sort Games by Order Added");
+            collectionFrame.add(sortCollection);
+            collectionFrame.add(sortByOrderAdded);
 
             for (String game : games) {
+                gamesOrderAdded.add(game);
                 GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
                 collectionFrame.add(gamePanel);
 
@@ -81,6 +85,48 @@ public class CollectionDisplayPanel extends JPanel {
                 });
             }
 
+
+            sortCollection.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Controller.getInstance().sortCollectionAlphabetically(collectionID);
+                    for (Component component : collectionFrame.getContentPane().getComponents()) {
+                        if (component instanceof GameDisplayPanel gamePanel) {
+                            collectionFrame.getContentPane().remove(component);
+                        }
+                    }
+                    collectionFrame.remove(deleteButton);
+                    List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
+                    for (int i = 0; i < games.size(); i++) {
+                        GameDisplayPanel gamePanel = new GameDisplayPanel(games.get(i), homePage);
+                        collectionFrame.add(gamePanel);
+                    }
+                    collectionFrame.add(deleteButton);
+                    collectionFrame.validate();
+                    collectionFrame.repaint();
+                }
+            });
+
+            sortByOrderAdded.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (Component component : collectionFrame.getContentPane().getComponents()) {
+                        if (component instanceof GameDisplayPanel gamePanel) {
+                            collectionFrame.getContentPane().remove(component);
+                        }
+                    }
+                    collectionFrame.remove(deleteButton);
+                    for (String game : gamesOrderAdded) {
+                        GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
+                        collectionFrame.add(gamePanel);
+                    }
+                    collectionFrame.add(deleteButton);
+                    collectionFrame.validate();
+                    collectionFrame.repaint();
+                }
+            });
+
+            collectionFrame.add(deleteButton);
             collectionFrame.setVisible(true);
             collectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             collectionFrame.pack();
