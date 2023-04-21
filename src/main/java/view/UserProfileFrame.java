@@ -16,7 +16,7 @@ import main.java.controller.Controller;
 /**
  * Class to create the user's profile frame.
  */
-public class UserProfileFrame {
+public class UserProfileFrame extends JFrame{
 
     /**
      * Creates new frame.
