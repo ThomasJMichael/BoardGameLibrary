@@ -137,6 +137,9 @@ public class Collection{
      * @return  the list of games in the collection.
      */
     public List<String> getGames() {
+        if (games == null){
+            return new ArrayList<>();
+        }
         return games;
     }
 
