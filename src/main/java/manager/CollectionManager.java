@@ -117,6 +117,7 @@ public class CollectionManager implements Loadable, Savable {
     public void changeCollectionName(String userId, String collectionId, String newName){
         Collection collection = getSpecificCollection(userId, collectionId);
         collection.setName(newName);
+        save();
     }
 
     /**

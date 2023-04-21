@@ -58,12 +58,34 @@ public class CollectionDisplayPanel extends JPanel {
             collectionFrame.setLayout(new FlowLayout());
             collectionFrame.setPreferredSize(new Dimension(1100,800));
 
+            JLabel descriptionLabel = new JLabel("Description: ");
             //creates text area for the game description
             JTextArea description = new JTextArea(collection.getDescription());
+            description.setPreferredSize(new Dimension(500,75));
             description.setLineWrap(true);
             description.setWrapStyleWord(true);
             description.setEditable(true);
+
+            collectionFrame.add(descriptionLabel);
             collectionFrame.add(description);
+
+            JButton changeName = new JButton("Change Collection Name");
+            changeName.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String newName = JOptionPane.showInputDialog("Enter a new collection name: ");
+                    if (newName != null && !newName.isEmpty()) {
+                        Controller.getInstance().changeCollectionName(collectionID, newName);
+                        collectionFrame.setTitle(newName);
+                        userFrame.refreshCollectionButtons();
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Please enter a name.");
+                        actionPerformed(e);
+                    }
+                }
+            });
+
 
             //creates buttons to manage collection
             JButton deleteButton = new JButton("Delete Selected Games");
@@ -107,6 +129,7 @@ public class CollectionDisplayPanel extends JPanel {
 
         //adds to frame
         collectionFrame.add(deleteCollection);
+        collectionFrame.add(changeName);
 
             //deletes games if they are selected and user clicks 'delete selected games'
             List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
