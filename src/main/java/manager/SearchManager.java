@@ -88,6 +88,13 @@ public class SearchManager {
         return matchingGames;
     }
 
+    /**
+     * Implements a fuzzy search on the query and a smart search to look at other aspects of a game
+     * to help a user search.
+     *
+     * @param query The query to search for
+     * @return The list of games that match
+     */
     public List<GameDetails> searchGames(String query) {
         if (query == null || query.isEmpty()) {
             // Return all games if empty query
@@ -108,9 +115,6 @@ public class SearchManager {
 
         return smartResults;
     }
-
-
-
 
     private List<GameDetails> fuzzySearch(String query) {
         if (gamesMap == null || gamesMap.isEmpty()) {
@@ -143,9 +147,6 @@ public class SearchManager {
         return results;
     }
 
-
-
-
     private List<GameDetails> smartSearch(String query, List<GameDetails> games) {
         if (query == null || query.isEmpty() || games == null || games.isEmpty()) {
             // Handle the case where query is null or empty or games is null or empty
@@ -161,6 +162,15 @@ public class SearchManager {
         return results;
     }
 
+    /**
+     * Utilized the Levenshtein distance algorithm to find the minimum number of insertion deletions or substitutions
+     * Required to match the given strings
+     *
+     * @param str1        The first string
+     * @param str2        The second string
+     * @param maxDistance the maximum amount of distance two string can be apart to match
+     * @return True if the strings match, false otherwise
+     */
     private boolean fuzzyMatch(String str1, String str2, int maxDistance) {
         if (str1 == null || str2 == null) {
             // Handle the case where str1 or str2 is null
@@ -212,7 +222,7 @@ public class SearchManager {
         relevance += countMatches(gameName, query.toLowerCase()) * 10;
         relevance += countMatches(gameDescription, query.toLowerCase()) * 5;
         relevance += gameDesigners.stream().mapToInt(designer -> countMatches(designer, query.toLowerCase()) * 2).sum();
-        relevance += gameCategories.stream().mapToInt(category ->countMatches(category, query.toLowerCase()) * 2).sum();
+        relevance += gameCategories.stream().mapToInt(category -> countMatches(category, query.toLowerCase()) * 2).sum();
 
         return relevance;
     }
@@ -227,6 +237,7 @@ public class SearchManager {
         }
         return count;
     }
+
     /**
      * Searches with filters applied.
      *
@@ -258,7 +269,7 @@ public class SearchManager {
     /**
      * Checks if the games match the filters.
      *
-     * @param games   the games being searched.
+     * @param games the games being searched.
      * @return the results.
      */
     public List<GameDetails> filterGames(List<GameDetails> games) {
@@ -378,74 +389,74 @@ public class SearchManager {
      * A nested class that provides methods for generating predicates based on different filters.
      */
     public static class FilterManager {
-    private static FilterManager instance = null;
-    private static Map<String, Predicate<GameDetails>> predicates;
+        private static FilterManager instance = null;
+        private static Map<String, Predicate<GameDetails>> predicates;
 
-    /**
-     * Private constructor to prevent instantiation.
-     */
-    private FilterManager() {
-        predicates = new HashMap<>();
-    }
-
-    /**
-     * Returns the instance of FilterManager.
-     * Singleton pattern.
-     *
-     * @return the instance of FilterManager
-     */
-    public synchronized static FilterManager getInstance() {
-        if (instance == null) {
-            instance = new FilterManager();
+        /**
+         * Private constructor to prevent instantiation.
+         */
+        private FilterManager() {
+            predicates = new HashMap<>();
         }
-        return instance;
-    }
 
-    /**
-     * Adds a predicate to the map of predicates.
-     *
-     * @param name      the name of the predicate
-     * @param predicate the predicate to be added
-     */
-    public void addPredicate(String name, Predicate<GameDetails> predicate) {
-        predicates.put(name, predicate);
-    }
+        /**
+         * Returns the instance of FilterManager.
+         * Singleton pattern.
+         *
+         * @return the instance of FilterManager
+         */
+        public synchronized static FilterManager getInstance() {
+            if (instance == null) {
+                instance = new FilterManager();
+            }
+            return instance;
+        }
 
-    /**
-     * Removes a predicate from the map of predicates.
-     *
-     * @param name the name of the predicate to be removed
-     */
-    public void removePredicate(String name) {
-        predicates.remove(name);
+        /**
+         * Adds a predicate to the map of predicates.
+         *
+         * @param name      the name of the predicate
+         * @param predicate the predicate to be added
+         */
+        public void addPredicate(String name, Predicate<GameDetails> predicate) {
+            predicates.put(name, predicate);
+        }
 
-    }
+        /**
+         * Removes a predicate from the map of predicates.
+         *
+         * @param name the name of the predicate to be removed
+         */
+        public void removePredicate(String name) {
+            predicates.remove(name);
 
-    /**
-     * Clears the map of predicates.
-     */
-    public void clearPredicates() {
-        predicates.clear();
-    }
+        }
 
-    /**
-     * Returns the list of predicates.
-     *
-     * @return the list of predicates
-     */
-    public List<Predicate<GameDetails>> getPredicates() {
-        return new ArrayList<>(predicates.values());
-    }
+        /**
+         * Clears the map of predicates.
+         */
+        public void clearPredicates() {
+            predicates.clear();
+        }
 
-    /**
-     * Returns the predicate with the given name.
-     *
-     * @param name the name of the predicate
-     * @return the predicate
-     */
-    public Predicate<GameDetails> getPredicate(String name) {
-        return predicates.get(name);
-    }
+        /**
+         * Returns the list of predicates.
+         *
+         * @return the list of predicates
+         */
+        public List<Predicate<GameDetails>> getPredicates() {
+            return new ArrayList<>(predicates.values());
+        }
+
+        /**
+         * Returns the predicate with the given name.
+         *
+         * @param name the name of the predicate
+         * @return the predicate
+         */
+        public Predicate<GameDetails> getPredicate(String name) {
+            return predicates.get(name);
+        }
 
         /**
          * Start of filters

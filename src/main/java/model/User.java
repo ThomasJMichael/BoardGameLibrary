@@ -30,6 +30,14 @@ public class User {
         this.id = generateUserId();
     }
 
+    /**
+     * Constructor used by the parser since the user will already have an id to store
+     *
+     * @param username  The username of the User
+     * @param password  The password of the User
+     * @param name      The name of the User
+     * @param id        The id of the User
+     */
     public User(String username, String password, String name, String id) {
         this.username = username;
         this.password = password;
@@ -127,6 +135,11 @@ public class User {
 
     }
 
+    /**
+     * Formatted User object used for testing.
+     *
+     * @return formatted string
+     */
     @Override
     public String toString() {
         return "User{" +

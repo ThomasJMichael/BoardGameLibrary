@@ -240,17 +240,16 @@ public class Controller {
      *
      * @return Favorites collection
      */
-    public Collection getFavorites(){
-        User user = UserDataManager.getInstance().getCurrentUser();
-        List<Collection> userCollections = getCollectionsByUser(user.getId());
-        for (Collection col : userCollections){
-            if (col.getName().equals("Favorites")){
-                return col;
+    public Collection getFavoriteGames() {
+        List<Collection> allCollections = getCollectionsByUser(UserDataManager.getInstance().getCurrentUser().getId());
+        for (Collection collection : allCollections){
+            if (collection.getName().equals("Favorites")){
+                return collection;
             }
         }
+        System.out.println("No favorites collection found.");
         return null;
     }
-
     /**
      * Removes a game from the collection with the given collectionId.
      * @param gameId        The id of the game to remove from the collection
@@ -520,14 +519,4 @@ public class Controller {
         UserDataManager.getInstance();
     }
 
-    public Collection getFavoriteGames() {
-        List<Collection> allCollections = getCollectionsByUser(UserDataManager.getInstance().getCurrentUser().getId());
-        for (Collection collection : allCollections){
-            if (collection.getName().equals("Favorites")){
-                return collection;
-            }
-        }
-        System.out.println("No favorites collection found.");
-        return null;
-    }
 }

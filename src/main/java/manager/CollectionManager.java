@@ -66,10 +66,6 @@ public class CollectionManager implements Loadable, Savable {
      * @param id the id of the user
      */
     public void createCollection(String id) {
-        // if user id exists
-        // add to their list of collections
-        // collectionMap.put(user, );
-
         if (collectionMap.get(id) == null) {
             System.out.println("User not found.");
         }
@@ -185,6 +181,7 @@ public class CollectionManager implements Loadable, Savable {
 
     /**
      * Returns the collections of the user with the given userId as a list.
+     *
      * @param userId    the userId of the user
      * @return      the list of collections
      */
