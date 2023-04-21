@@ -49,79 +49,82 @@ public class CollectionDisplayPanel extends JPanel {
             collectionFrame.setLayout(new FlowLayout());
             collectionFrame.setPreferredSize(new Dimension(1100,800));
 
-            List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
-            List<String> selectedGames = new ArrayList<>();
             JButton deleteButton = new JButton("Delete Selected Games");
             JButton sortCollection = new JButton("Sort Games Alphabetically");
             JButton sortByOrderAdded = new JButton("Sort Games by Order Added");
             collectionFrame.add(sortCollection);
             collectionFrame.add(sortByOrderAdded);
 
-            for (String game : games) {
-                GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
-                collectionFrame.add(gamePanel);
+            List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
+            if (games != null) {
+                List<String> selectedGames = new ArrayList<>();
 
-                if (gamePanel.isSelected()) {
-                    selectedGames.add(gamePanel.getGameID());
+                for (String game : games) {
+                    GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
+                    collectionFrame.add(gamePanel);
+
+                    if (gamePanel.isSelected()) {
+                        selectedGames.add(gamePanel.getGameID());
+                    }
+                    deleteButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            for (Component component : collectionFrame.getContentPane().getComponents()) {
+                                if (component instanceof GameDisplayPanel gamePanel) {
+                                    String game = gamePanel.getName();
+                                    if (gamePanel.isSelected()) {
+                                        Controller.getInstance().removeGameFromCollection(gamePanel.getGameID(), collection.getId());
+                                        selectedGames.remove(game);
+                                        collectionFrame.getContentPane().remove(component);
+                                    }
+                                }
+                            }
+                            collectionFrame.validate();
+                            collectionFrame.repaint();
+                        }
+                    });
                 }
-                deleteButton.addActionListener(new ActionListener() {
+
+
+                sortCollection.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        List<GameDetails> sortedGames = Controller.getInstance().getSortedCollectionAlphabetical(collectionID);
+                        for (Component component : collectionFrame.getContentPane().getComponents()) {
+                            if (component instanceof GameDisplayPanel gamePanel) {
+                                collectionFrame.getContentPane().remove(component);
+                            }
+                        }
+                        collectionFrame.remove(deleteButton);
+                        for (GameDetails game : sortedGames) {
+                            GameDisplayPanel gamePanel = new GameDisplayPanel(game.getGame().getId(), homePage);
+                            collectionFrame.add(gamePanel);
+                        }
+                        collectionFrame.add(deleteButton);
+                        collectionFrame.validate();
+                        collectionFrame.repaint();
+                    }
+                });
+
+                sortByOrderAdded.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         for (Component component : collectionFrame.getContentPane().getComponents()) {
                             if (component instanceof GameDisplayPanel gamePanel) {
-                                String game = gamePanel.getName();
-                                if (gamePanel.isSelected()) {
-                                    Controller.getInstance().removeGameFromCollection(gamePanel.getGameID(), collection.getId());
-                                    selectedGames.remove(game);
-                                    collectionFrame.getContentPane().remove(component);
-                                }
+                                collectionFrame.getContentPane().remove(component);
                             }
                         }
+                        collectionFrame.remove(deleteButton);
+                        for (String game : games) {
+                            GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
+                            collectionFrame.add(gamePanel);
+                        }
+                        collectionFrame.add(deleteButton);
                         collectionFrame.validate();
                         collectionFrame.repaint();
                     }
                 });
             }
-
-
-            sortCollection.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    List<GameDetails> sortedGames = Controller.getInstance().getSortedCollectionAlphabetical(collectionID);
-                    for (Component component : collectionFrame.getContentPane().getComponents()) {
-                        if (component instanceof GameDisplayPanel gamePanel) {
-                            collectionFrame.getContentPane().remove(component);
-                        }
-                    }
-                    collectionFrame.remove(deleteButton);
-                    for (GameDetails game: sortedGames) {
-                        GameDisplayPanel gamePanel = new GameDisplayPanel(game.getGame().getId(), homePage);
-                        collectionFrame.add(gamePanel);
-                    }
-                    collectionFrame.add(deleteButton);
-                    collectionFrame.validate();
-                    collectionFrame.repaint();
-                }
-            });
-
-            sortByOrderAdded.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    for (Component component : collectionFrame.getContentPane().getComponents()) {
-                        if (component instanceof GameDisplayPanel gamePanel) {
-                            collectionFrame.getContentPane().remove(component);
-                        }
-                    }
-                    collectionFrame.remove(deleteButton);
-                    for (String game : games) {
-                        GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
-                        collectionFrame.add(gamePanel);
-                    }
-                    collectionFrame.add(deleteButton);
-                    collectionFrame.validate();
-                    collectionFrame.repaint();
-                }
-            });
 
             collectionFrame.add(deleteButton);
             collectionFrame.setVisible(true);

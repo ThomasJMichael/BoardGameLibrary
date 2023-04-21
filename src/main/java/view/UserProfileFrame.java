@@ -28,7 +28,12 @@ public class UserProfileFrame {
     private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
     private final HomePageFrame homePage;
-    GameDetails details;
+
+    private JPanel collectionButtons;
+
+    private JPanel collectionsPanel;
+
+    private String userID;
 
     /**
      * Imports collections to create one button for each collection.
@@ -37,10 +42,11 @@ public class UserProfileFrame {
      */
     public UserProfileFrame(String userID, HomePageFrame homePage) {
         this.homePage = homePage;
+        this.userID = userID;
 
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
 
-        JPanel collectionsPanel = new JPanel(new BorderLayout());
+        collectionsPanel = new JPanel(new BorderLayout());
         JButton createCollection = new JButton("Create Collection");
         createCollection.addActionListener(new ActionListener() {
             @Override
@@ -82,7 +88,7 @@ public class UserProfileFrame {
         /**
          * Iterates through collections to display a button for each collection.
          */
-        JPanel collectionButtons = new JPanel(new FlowLayout());
+        collectionButtons = new JPanel(new FlowLayout());
         if (collections != null) {
             for (Collection collection : collections) {
                 JButton collButton = new JButton(collection.getName());
@@ -205,7 +211,7 @@ public class UserProfileFrame {
     /**
      * Constructor to allow the user to create a new collection.
      */
-    public void createCollectionFrame() {
+    private void createCollectionFrame() {
         JFrame createCollectionFrame = new JFrame("Create a Collection");
         createCollectionFrame.setLayout(new BorderLayout());
 
@@ -233,6 +239,7 @@ public class UserProfileFrame {
                 if (success) {
                     JOptionPane.showMessageDialog(null, "Collection successfully created.");
                     createCollectionFrame.dispose();
+                    refreshCollectionButtons();
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to create collection.");
                     createCollectionFrame.dispose();
@@ -240,7 +247,7 @@ public class UserProfileFrame {
             }
         });
 
-        //adds the new collection to the new collection
+        //adds the components to the collection creation frame
         createCollectionFrame.add(getCollectionNamePanel, BorderLayout.PAGE_START);
         createCollectionFrame.add(getCollectionDescriptionPanel, BorderLayout.CENTER);
         createCollectionFrame.add(submitCollection, BorderLayout.PAGE_END);
@@ -249,5 +256,26 @@ public class UserProfileFrame {
         createCollectionFrame.setLocationRelativeTo(null);
         createCollectionFrame.setVisible(true);
     }
+
+    private void refreshCollectionButtons() {
+        collectionButtons.removeAll();
+        List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
+        if (collections != null) {
+            for (Collection collection : collections) {
+                JButton collButton = new JButton(collection.getName());
+                collectionButtons.add(collButton);
+                collButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection);
+                    }
+                });
+            }
+        }
+        collectionButtons.validate();
+        collectionButtons.repaint();
+        collectionsPanel.add(collectionButtons, BorderLayout.CENTER);
+    }
+
 
 }
