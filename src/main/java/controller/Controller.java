@@ -262,9 +262,9 @@ public class Controller {
     }
 
     /**
-     * Sorts the games in a collection alphabetically
-     *
-     * @param collectionId  The collection to sort
+     * Returns a List<GameDetails> that is sorted alphabetically from the games in the collection
+      * @param collectionId     The collection to sort
+     * @return                  The list of GameDetails that is sorted
      */
     public List<GameDetails> getSortedCollectionAlphabetical(String collectionId){
         User user = UserDataManager.getInstance().getCurrentUser();
