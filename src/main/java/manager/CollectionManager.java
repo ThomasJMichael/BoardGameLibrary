@@ -291,6 +291,13 @@ public class CollectionManager implements Loadable, Savable {
         }
     }
 
+    /**
+     * Removes a game from the specified collection
+     * @param userId        The user who the collection belongs to
+     * @param gameId        The game to remove
+     * @param collectionId  The collection the game is in
+     * @return              True if the game was removed, false otherwise
+     */
     public boolean removeGameFromCollection(String userId, String gameId, String collectionId) {
         List<Collection> userCollection = collectionMap.get(userId);
         if (userCollection == null) {
@@ -321,23 +328,19 @@ public class CollectionManager implements Loadable, Savable {
     }
 
     /**
-     * Sorts the games in a collection alphabetically
+     * Returns a sorted list of the GameDetails for a collection
      *
      * @param userId        The user who has the collection to sort
      * @param collectionId  The collection to sort
      */
-    public void sortGamesAlphabetically(String userId, String collectionId){
+    public List<GameDetails> getSortedGamesAlphabetical(String userId, String collectionId){
         List<String> gameIds = getSpecificCollection(userId, collectionId).getGames();
         List<GameDetails> games = new ArrayList<>();
         for (String game : gameIds){
             games.add(GameDatabaseManager.getGameDetailsByID(game));
         }
         games.sort((Comparator.comparing(game -> game.getGame().getName())));
-        gameIds.clear();
-        for (GameDetails game : games){
-            gameIds.add(game.getGame().getId());
-        }
-        getSpecificCollection(userId, collectionId).setGames(gameIds);
+        return games;
     }
 
     /**

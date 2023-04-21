@@ -266,9 +266,9 @@ public class Controller {
      *
      * @param collectionId  The collection to sort
      */
-    public void sortCollectionAlphabetically(String collectionId){
+    public List<GameDetails> getSortedCollectionAlphabetical(String collectionId){
         User user = UserDataManager.getInstance().getCurrentUser();
-        CollectionManager.getInstance().sortGamesAlphabetically(user.getId(), collectionId);
+        return CollectionManager.getInstance().getSortedGamesAlphabetical(user.getId(), collectionId);
     }
 
     /**
