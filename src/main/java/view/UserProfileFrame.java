@@ -239,7 +239,11 @@ public class UserProfileFrame extends JFrame{
 
         JPanel getCollectionDescriptionPanel = new JPanel(new FlowLayout());
         JLabel descriptionOfCollectionLabel = new JLabel("Description: ");
+
         JTextArea collectionDescriptionTextArea = new JTextArea();
+        collectionDescriptionTextArea.setLineWrap(true);
+        collectionDescriptionTextArea.setWrapStyleWord(true);
+
         collectionDescriptionTextArea.setPreferredSize(new Dimension(350, 75));
         getCollectionDescriptionPanel.add(descriptionOfCollectionLabel);
         getCollectionDescriptionPanel.add(collectionDescriptionTextArea);
