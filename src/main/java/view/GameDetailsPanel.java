@@ -275,6 +275,8 @@ public class GameDetailsPanel extends JPanel {
         JLabel getDescriptionLabel = new JLabel("Enter Description:");
         JTextArea enterDescriptionTextArea = new JTextArea();
         enterDescriptionTextArea.setPreferredSize(new Dimension(350,75));
+        enterDescriptionTextArea.setLineWrap(true);
+        enterDescriptionTextArea.setWrapStyleWord(true);
 
         getDescription.add(getDescriptionLabel);
         getDescription.add(enterDescriptionTextArea);
@@ -331,6 +333,10 @@ public class GameDetailsPanel extends JPanel {
 
     }
 
+
+    /**
+     * refreshes the list of reviews to display any newly written reviews
+     */
     private void refreshReviewPanel() {
         remove(reviewsPanel);
         remove(writeAReviewButton);

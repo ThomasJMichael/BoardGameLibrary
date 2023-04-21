@@ -28,7 +28,6 @@ public class LoginPage {
 
     public LoginPage() {
         /**
-         * new ActionListener() -> ActionPerformed(ActionEvent): returns void
          * when the login button is clicked (and released), the system checks if
          * the information is valid for an existing Board Game Library account
          * and either opens the Home Page or shows an error message
@@ -49,7 +48,6 @@ public class LoginPage {
             }
         });
         /**
-         * new ActionListener() -> actionPerformed(ActionEvent): returns void
          * when the register button is clicked, an instance of RegisterPage() will open
          * and allow the user to create a Board Game Library Account. The login page will
          * close.

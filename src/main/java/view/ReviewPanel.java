@@ -30,9 +30,11 @@ public class ReviewPanel extends JPanel {
         String description = R.getText();
         descriptionTextArea = new JTextArea(
                 "Username:\t" + username + "\n" +
-                "Rating:\t" + rating + "\n" +
+                "Rating:\t" + rating + "/5\n" +
                 "Description:\t" + description);
-        descriptionTextArea.setPreferredSize(new Dimension(350, 75));
+        descriptionTextArea.setPreferredSize(new Dimension(350, 150));
+        descriptionTextArea.setLineWrap(true);
+        descriptionTextArea.setWrapStyleWord(true);
         add(descriptionTextArea);
 
     }

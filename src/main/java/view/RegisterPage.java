@@ -28,10 +28,11 @@ public class RegisterPage {
     private JButton goToLogInButton; // opens log in page
     private JFrame frame; // holds and displays the register panel
 
-
-public RegisterPage() {
     /**
-     * new ActionListener() -> actionPerformed(ActionEvent): returns void
+     * constructs the register page
+     */
+    public RegisterPage() {
+    /**
      * when the submit button is clicked, the system gets the name, username, and password
      * and attempts to register an account with that information. If the username already
      * exists, the registration will fail and an error message will display.

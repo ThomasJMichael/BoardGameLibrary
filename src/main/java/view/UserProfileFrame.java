@@ -14,17 +14,12 @@ import main.java.manager.UserDataManager;
 import main.java.controller.Controller;
 
 /**
- * Class to create the user's profile frame.
+ * UserProfileFrame holds a tabbed pane that displays a user's collections, their reviews
+ * and their settings.
  */
 public class UserProfileFrame extends JFrame{
 
-    /**
-     * Creates new frame.
-     */
     private final JFrame frame = new JFrame();
-    /**
-     * Creates a left justified tabbed pane.
-     */
     private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
     private final HomePageFrame homePage;
@@ -36,7 +31,7 @@ public class UserProfileFrame extends JFrame{
     private String userID;
 
     /**
-     * Imports collections to create one button for each collection.
+     * Constructs the userprofile and creates the tabbed panes
      * @param userID user's ID
      * @param homePage calls the homePage frame
      */
@@ -49,6 +44,10 @@ public class UserProfileFrame extends JFrame{
         collectionsPanel = new JPanel(new BorderLayout());
         JButton createCollection = new JButton("Create Collection");
         createCollection.addActionListener(new ActionListener() {
+            /**
+             * Calls method to create a new collection
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 createCollectionFrame();
@@ -89,14 +88,20 @@ public class UserProfileFrame extends JFrame{
          * Iterates through collections to display a button for each collection.
          */
         collectionButtons = new JPanel(new FlowLayout());
+        UserProfileFrame frame = this;
         if (collections != null) {
             for (Collection collection : collections) {
                 JButton collButton = new JButton(collection.getName());
                 collectionButtons.add(collButton);
                 collButton.addActionListener(new ActionListener() {
+                    /**
+                     * Opes a CollectionDisplayPanel for the given collection
+                     *
+                     * @param e the event to be processed
+                     */
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection);
+                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection, frame);
                     }
                 });
             }
@@ -114,6 +119,10 @@ public class UserProfileFrame extends JFrame{
 
         //creates action listener for logout button
         logOutButton.addActionListener(new ActionListener() {
+            /**
+             * Logs the user out of the library
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (UserDataManager.getInstance().getCurrentUser() == null) {
@@ -134,6 +143,7 @@ public class UserProfileFrame extends JFrame{
 
             }
         });
+
         //creates button to change a user's password
         JButton passButton = new JButton("Change password");
 
@@ -167,6 +177,11 @@ public class UserProfileFrame extends JFrame{
 
         JButton usernameButton = new JButton("Change username");
         usernameButton.addActionListener(new ActionListener() {
+            /**
+             * calls controller and uses input dialogue box to change
+             * the current user's username
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 String newUsername = JOptionPane.showInputDialog("Enter your new username");
@@ -209,7 +224,7 @@ public class UserProfileFrame extends JFrame{
     }
 
     /**
-     * Constructor to allow the user to create a new collection.
+     * opens frame to allow the use to create a new collection
      */
     private void createCollectionFrame() {
         JFrame createCollectionFrame = new JFrame("Create a Collection");
@@ -224,19 +239,28 @@ public class UserProfileFrame extends JFrame{
 
         JPanel getCollectionDescriptionPanel = new JPanel(new FlowLayout());
         JLabel descriptionOfCollectionLabel = new JLabel("Description: ");
+
         JTextArea collectionDescriptionTextArea = new JTextArea();
+        collectionDescriptionTextArea.setLineWrap(true);
+        collectionDescriptionTextArea.setWrapStyleWord(true);
+
         collectionDescriptionTextArea.setPreferredSize(new Dimension(350, 75));
         getCollectionDescriptionPanel.add(descriptionOfCollectionLabel);
         getCollectionDescriptionPanel.add(collectionDescriptionTextArea);
 
         JButton submitCollection = new JButton("Submit");
         submitCollection.addActionListener(new ActionListener() {
+            /**
+             *  creates a new collection given user input for name
+             *  and description
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 String newCollectionName = collectionNameTextField.getText();
                 String newCollectionDescription = collectionDescriptionTextArea.getText();
                 boolean success = Controller.getInstance().addCollection(newCollectionName, newCollectionDescription);
-                if (success) {
+                if (success && !newCollectionName.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Collection successfully created.");
                     createCollectionFrame.dispose();
                     refreshCollectionButtons();
@@ -257,7 +281,11 @@ public class UserProfileFrame extends JFrame{
         createCollectionFrame.setVisible(true);
     }
 
+    /**
+     * refreshes list of collection buttons in case of add/delete
+     */
     public void refreshCollectionButtons() {
+        UserProfileFrame frame = this;
         collectionButtons.removeAll();
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
         if (collections != null) {
@@ -265,9 +293,14 @@ public class UserProfileFrame extends JFrame{
                 JButton collButton = new JButton(collection.getName());
                 collectionButtons.add(collButton);
                 collButton.addActionListener(new ActionListener() {
+                    /**
+                     * clicking a collection button creates a collection
+                     * display panel for that collection
+                     * @param e the event to be processed
+                     */
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection);
+                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection, frame);
                     }
                 });
             }

@@ -29,6 +29,11 @@ public class GameDisplayPanel extends JPanel{
     private boolean selected;
 
 
+    /**
+     * Constructs a game display panel
+     * @param gameID the game to be displayed
+     * @param frame  the frame that holds the panel
+     */
     public GameDisplayPanel(String gameID, HomePageFrame frame) {
         homePage = frame;
         this.gameID = gameID;
