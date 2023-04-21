@@ -30,6 +30,11 @@ public class CollectionDisplayPanel extends JPanel {
     private HomePageFrame homePage;
 
     /**
+     * Object of the UserProfileFrame
+     */
+    private UserProfileFrame userFrame;
+
+    /**
      * String to hold the collection ID
       */
     private String collectionID;
@@ -44,7 +49,7 @@ public class CollectionDisplayPanel extends JPanel {
         collectionID = collection.getId();
         this.userID = userID;
         this.homePage = homePage;
-        UserProfileFrame userFrame = new UserProfileFrame(userID, homePage);
+        //this.userFrame = userFrame;
 
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
