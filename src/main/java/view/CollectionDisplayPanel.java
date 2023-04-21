@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,18 +53,43 @@ public class CollectionDisplayPanel extends JPanel {
         this.homePage = homePage;
         this.userFrame = userFrame;
 
+            //creates and formats frame
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
             collectionFrame.setPreferredSize(new Dimension(1100,800));
 
+            //creates text area for the game description
+            JTextArea description = new JTextArea(collection.getDescription());
+            description.setLineWrap(true);
+            description.setWrapStyleWord(true);
+            description.setEditable(true);
+            collectionFrame.add(description);
+
+            //creates buttons to manage collection
             JButton deleteButton = new JButton("Delete Selected Games");
             JButton sortCollection = new JButton("Sort Games Alphabetically");
             JButton sortByOrderAdded = new JButton("Sort Games by Order Added");
+
+            //focus listener to update the description when the user is no longer working in the text box
+            description.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    String newDescription = description.getText();
+                    if (!newDescription.equals(collection.getDescription())) {
+                        Controller.getInstance().changeCollectionDescription(collectionID, newDescription);
+                    }
+                }
+            });
+
+            //adds to frame
             collectionFrame.add(sortCollection);
             collectionFrame.add(sortByOrderAdded);
 
+
             List<Collection> collections = CollectionManager.getInstance().getCollections(userID);
             JButton deleteCollection = new JButton("Delete Collection");
+
+            //action listener to delete a collection
             deleteCollection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,8 +104,11 @@ public class CollectionDisplayPanel extends JPanel {
                 userFrame.refreshCollectionButtons();
             }
         });
+
+        //adds to frame
         collectionFrame.add(deleteCollection);
 
+            //deletes games if they are selected and user clicks 'delete selected games'
             List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
             if (games != null) {
                 List<String> selectedGames = new ArrayList<>();
@@ -110,6 +140,7 @@ public class CollectionDisplayPanel extends JPanel {
                 }
 
 
+                //sorts the collection when user clicks button
                 sortCollection.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -130,6 +161,7 @@ public class CollectionDisplayPanel extends JPanel {
                     }
                 });
 
+                //sorts the collection when user clicks the button
                 sortByOrderAdded.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -150,6 +182,7 @@ public class CollectionDisplayPanel extends JPanel {
                 });
             }
 
+            //adds to frame
             collectionFrame.add(deleteButton);
             collectionFrame.setVisible(true);
             collectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
