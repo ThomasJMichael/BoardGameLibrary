@@ -102,7 +102,7 @@ public class Controller {
      * @param rating    The rating of the review
      */
     public void addReview(String gameId, String text, Integer rating){
-        Review newReview = new Review(UserDataManager.getInstance().getCurrentUser().getId(), gameId, text, rating);
+        Review newReview = new Review(UserDataManager.getInstance().getCurrentUser().getUsername(), gameId, text, rating);
         ReviewManager.getInstance().addReview(newReview);
     }
 
