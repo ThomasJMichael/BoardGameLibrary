@@ -7,6 +7,7 @@ import main.java.io.Savable;
 import main.java.io.XMLParser;
 import main.java.model.Collection;
 import main.java.model.Game;
+import main.java.model.GameDetails;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -19,9 +20,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The CollectionManager class is responsible for managing collections of games for users.
@@ -319,6 +318,26 @@ public class CollectionManager implements Loadable, Savable {
             System.out.println("Game " + gameId + " is not currently in collection " + collectionId + ".");
             return false;
         }
+    }
+
+    /**
+     * Sorts the games in a collection alphabetically
+     *
+     * @param userId        The user who has the collection to sort
+     * @param collectionId  The collection to sort
+     */
+    public void sortGamesAlphabetically(String userId, String collectionId){
+        List<String> gameIds = getSpecificCollection(userId, collectionId).getGames();
+        List<GameDetails> games = new ArrayList<>();
+        for (String game : gameIds){
+            games.add(GameDatabaseManager.getGameDetailsByID(game));
+        }
+        games.sort((Comparator.comparing(game -> game.getGame().getName())));
+        gameIds.clear();
+        for (GameDetails game : games){
+            gameIds.add(game.getGame().getId());
+        }
+        getSpecificCollection(userId, collectionId).setGames(gameIds);
     }
 
     /**

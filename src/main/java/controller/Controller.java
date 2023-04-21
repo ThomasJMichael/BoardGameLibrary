@@ -262,6 +262,16 @@ public class Controller {
     }
 
     /**
+     * Sorts the games in a collection alphabetically
+     *
+     * @param collectionId  The collection to sort
+     */
+    public void sortCollectionAlphabetically(String collectionId){
+        User user = UserDataManager.getInstance().getCurrentUser();
+        CollectionManager.getInstance().sortGamesAlphabetically(user.getId(), collectionId);
+    }
+
+    /**
      * Searches for games by the given query.
      *
      * @param query     The query to search for
