@@ -36,6 +36,8 @@ public class GameDetailsPanel extends JPanel {
     private JButton writeAReviewButton;
     private HomePageFrame homePage;
 
+    private JPanel reviewsPanel;
+
 
     /**
      * constructs a GameDetailsPanel, creates the GUI components through
@@ -60,14 +62,17 @@ public class GameDetailsPanel extends JPanel {
         add(gameDescription);
         add(allDetails);
 
-        if (!game.getReviews().isEmpty()) {
-            add(reviewLabel);
+        reviewsPanel = new JPanel(new FlowLayout());
+        reviewsPanel.setPreferredSize(new Dimension(400, 1000));
+        if (!ReviewManager.getInstance().getReviews(gamedetails.getGame().getId()).isEmpty()) {
+            reviewsPanel.add(reviewLabel);
             for (Review r : ReviewManager.getInstance().getReviews(gamedetails.getGame().getId())) {
                 reviews = new ReviewPanel(r);
-                add(reviews);
+                reviewsPanel.add(reviews);
             }
         }
-        add(writeAReviewButton);
+        reviewsPanel.add(writeAReviewButton);
+        add(reviewsPanel);
 
     }
 
@@ -291,6 +296,7 @@ public class GameDetailsPanel extends JPanel {
                     Controller.getInstance().addReview(gamedetails.getGame().getId(), description, rating);
                     JOptionPane.showMessageDialog(null, "Review created!");
                     reviewCreator.dispose();
+                    refreshReviewPanel();
                     homePage.changeGameView(gamedetails.getGame().getId());
                 }
             }
@@ -322,6 +328,28 @@ public class GameDetailsPanel extends JPanel {
         reviewCreator.pack();
         reviewCreator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         reviewCreator.setVisible(true);
+
+    }
+
+    private void refreshReviewPanel() {
+        remove(reviewsPanel);
+        remove(writeAReviewButton);
+        reviewsPanel.removeAll();
+        if (!ReviewManager.getInstance().getReviews(gamedetails.getGame().getId()).isEmpty()) {
+            reviewsPanel.add(reviewLabel);
+            for (Review r : ReviewManager.getInstance().getReviews(gamedetails.getGame().getId())) {
+                reviews = new ReviewPanel(r);
+                reviewsPanel.add(reviews);
+            }
+        }
+        reviewsPanel.validate();
+        reviewsPanel.repaint();
+
+        add(reviewsPanel);
+        add(writeAReviewButton);
+
+        validate();
+        repaint();
 
     }
 
