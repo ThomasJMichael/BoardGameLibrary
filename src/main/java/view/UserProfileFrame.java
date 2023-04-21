@@ -257,7 +257,7 @@ public class UserProfileFrame {
         createCollectionFrame.setVisible(true);
     }
 
-    private void refreshCollectionButtons() {
+    public void refreshCollectionButtons() {
         collectionButtons.removeAll();
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
         if (collections != null) {
