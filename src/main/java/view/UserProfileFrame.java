@@ -49,6 +49,10 @@ public class UserProfileFrame extends JFrame{
         collectionsPanel = new JPanel(new BorderLayout());
         JButton createCollection = new JButton("Create Collection");
         createCollection.addActionListener(new ActionListener() {
+            /**
+             * Calls method to create a new collection
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 createCollectionFrame();
@@ -89,14 +93,20 @@ public class UserProfileFrame extends JFrame{
          * Iterates through collections to display a button for each collection.
          */
         collectionButtons = new JPanel(new FlowLayout());
+        UserProfileFrame frame = this;
         if (collections != null) {
             for (Collection collection : collections) {
                 JButton collButton = new JButton(collection.getName());
                 collectionButtons.add(collButton);
                 collButton.addActionListener(new ActionListener() {
+                    /**
+                     * Opes a CollectionDisplayPanel for the given collection
+                     *
+                     * @param e the event to be processed
+                     */
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection);
+                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection, frame);
                     }
                 });
             }
@@ -114,6 +124,10 @@ public class UserProfileFrame extends JFrame{
 
         //creates action listener for logout button
         logOutButton.addActionListener(new ActionListener() {
+            /**
+             * Log's the user out of the library
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (UserDataManager.getInstance().getCurrentUser() == null) {
@@ -134,6 +148,7 @@ public class UserProfileFrame extends JFrame{
 
             }
         });
+
         //creates button to change a user's password
         JButton passButton = new JButton("Change password");
 
@@ -258,6 +273,7 @@ public class UserProfileFrame extends JFrame{
     }
 
     public void refreshCollectionButtons() {
+        UserProfileFrame frame = this;
         collectionButtons.removeAll();
         List<Collection> collections = Controller.getInstance().getCollectionsByUser(userID);
         if (collections != null) {
@@ -267,7 +283,7 @@ public class UserProfileFrame extends JFrame{
                 collButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection);
+                        CollectionDisplayPanel collectionDisplayPanel = new CollectionDisplayPanel(homePage, userID, collection, frame);
                     }
                 });
             }

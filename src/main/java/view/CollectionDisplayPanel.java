@@ -45,11 +45,11 @@ public class CollectionDisplayPanel extends JPanel {
      * @param homePage object of HomePageFrame
      * @param userID string to identify the user
      */
-    CollectionDisplayPanel(HomePageFrame homePage, String userID, Collection collection) {
+    CollectionDisplayPanel(HomePageFrame homePage, String userID, Collection collection, UserProfileFrame userFrame) {
         collectionID = collection.getId();
         this.userID = userID;
         this.homePage = homePage;
-        //this.userFrame = userFrame;
+        this.userFrame = userFrame;
 
             JFrame collectionFrame = new JFrame(collection.getName());
             collectionFrame.setLayout(new FlowLayout());
