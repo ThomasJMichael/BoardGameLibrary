@@ -23,40 +23,14 @@ public class MainGamesPanel extends JPanel {
      * Creates new JPanel
      */
     private static final JPanel panel = new JPanel(new BorderLayout());
-
-    /**
-     * Creates HomePageFrame object
-     */
     private final HomePageFrame homePage;
-
-    /**
-     * variable for the search bar
-     */
     private final JTextField searchBar;
 
-    /**
-     * Button to refresh recommended games
-     */
     private final JButton refreshRecommendedButton;
 
-    /**
-     * Button to find random games
-     */
     private final JButton findRandomGamesButton;
-
-    /**
-     * New list of GameDetails type
-     */
     private List<GameDetails> displayedGames;
-
-    /**
-     * Declares new JPanel
-     */
     private final JPanel gameDisplayPanel;
-
-    /**
-     * Variable for the search term a user types
-     */
     private String searchTerm;
 
 
@@ -74,6 +48,10 @@ public class MainGamesPanel extends JPanel {
         searchBar = new JTextField("Enter Search Term...");
         searchBar.setPreferredSize(new Dimension(650, 20));
         searchBar.addActionListener(new ActionListener() {
+            /**
+             * displays the results of a search
+             * @param e the event to be processed (press enter)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchTerm = searchBar.getText();
@@ -88,6 +66,10 @@ public class MainGamesPanel extends JPanel {
 
         refreshRecommendedButton = new JButton("Find Recommended Games");
         refreshRecommendedButton.addActionListener(new ActionListener() {
+            /**
+             * displays a list of recommended games
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 displayedGames = Controller.getInstance().getRecommendedGames(50);
@@ -98,6 +80,10 @@ public class MainGamesPanel extends JPanel {
 
         findRandomGamesButton = new JButton("Find Random Games");
         findRandomGamesButton.addActionListener(new ActionListener() {
+            /**
+             * displays a list of random games
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 displayedGames = Controller.getInstance().getRandomGames(50);
@@ -133,10 +119,5 @@ public class MainGamesPanel extends JPanel {
         gameDisplayPanel.setVisible(true);
 
     }
-
-    /**
-     * Main method that displays a title, a search bar, and random games.
-     * @param args an array of command-line arguments for the application
-     */
 
 }

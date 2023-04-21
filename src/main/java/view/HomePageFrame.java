@@ -28,7 +28,9 @@ public class HomePageFrame extends JFrame {
     private JPanel mainPage;
     private JScrollPane mainScroll;
 
-
+    /**
+     * constructs a home page
+     */
     public HomePageFrame() {
         setTitle("Board Game Library");
         setLayout(new BorderLayout());
@@ -44,12 +46,19 @@ public class HomePageFrame extends JFrame {
 
     }
 
+    /**
+     * Instantiates the labels, buttons, and frames that go on the panel
+     */
     private void createPanelComponents() {
 
         profileButton = new JButton("Profile");
 
         logoutButton = new JButton("Logout");
         logoutButton.addActionListener(new ActionListener() {
+            /**
+             * logs the user out of the library
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?") == JOptionPane.YES_OPTION) {
@@ -64,6 +73,10 @@ public class HomePageFrame extends JFrame {
 
         HomePageFrame thisFrame = this;
         profileButton.addActionListener(new ActionListener() {
+            /**
+             * opens the current user's profile frame
+             * @param e the event to be processed (click)
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 String userID = UserDataManager.getInstance().getCurrentUser().getId();
@@ -94,7 +107,10 @@ public class HomePageFrame extends JFrame {
         add(mainScroll,BorderLayout.CENTER);
     }
 
-
+    /**
+     * change the game displayed on the game details panel
+     * @param gameID the ID of the game to be displayed
+     */
     public void changeGameView(String gameID) {
         gamePanel = new GameDetailsPanel(GameDatabaseManager.getGameDetailsByID(gameID), this);
         remove(gameScroll);
@@ -103,6 +119,10 @@ public class HomePageFrame extends JFrame {
         revalidate();
     }
 
+    /**
+     * display a random game in the game details panel, used opon
+     * login to the library
+     */
     private void showRandomGame() {
         gamePanel = new GameDetailsPanel(Controller.getInstance().getRandomGames(1).get(0), this);
     }

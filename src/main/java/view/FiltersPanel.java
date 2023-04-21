@@ -16,9 +16,6 @@ import static main.java.model.GameCategory.*;
  * to monitor adding/removing filters related to checking and unchecking category boxes.
  */
 public class FiltersPanel extends JPanel {
-    /**
-     * Object of HomePageFrame
-     */
     private final JLabel filterLabel;
 
     private final JPanel filterByRatingPanel;
@@ -33,7 +30,7 @@ public class FiltersPanel extends JPanel {
 
 
     /**
-     * Parameterized Constructor: creates the FiltersPanel with checkboxes for every
+     * creates the FiltersPanel with checkboxes for every
      * possible GameCategory to filter by, also adds the appropriate action listener
      * to each checkbox by creating a FilterActionListener object
      * @param homeFrame the frame the panel sits on
@@ -330,6 +327,10 @@ public class FiltersPanel extends JPanel {
 
         addMinimumAge = new JButton("Add");
         addMinimumAge.addActionListener(new ActionListener() {
+            /**
+             * adds a minimum age filter to the search
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 int minAge;
@@ -352,6 +353,10 @@ public class FiltersPanel extends JPanel {
 
         removeMinimumAge = new JButton("Remove Filter");
         removeMinimumAge.addActionListener(new ActionListener() {
+            /**
+             * removes any minimum age filters added to the search
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 Controller.getInstance().removeMinAgeFilter();

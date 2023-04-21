@@ -21,24 +21,9 @@ import java.util.List;
  */
 public class CollectionDisplayPanel extends JPanel {
 
-    /**
-     * String to hold the user ID
-     */
     private final String userID;
-
-    /**
-     * Object of the HomePageFrame
-     */
     private HomePageFrame homePage;
-
-    /**
-     * Object of the UserProfileFrame
-     */
     private UserProfileFrame userFrame;
-
-    /**
-     * String to hold the collection ID
-      */
     private String collectionID;
 
     /**
@@ -71,6 +56,10 @@ public class CollectionDisplayPanel extends JPanel {
 
             JButton changeName = new JButton("Change Collection Name");
             changeName.addActionListener(new ActionListener() {
+                /**
+                 * allows the user to change the name of the selected collection
+                 * @param e the event to be processed
+                 */
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String newName = JOptionPane.showInputDialog("Enter a new collection name: ");
@@ -113,6 +102,10 @@ public class CollectionDisplayPanel extends JPanel {
 
             //action listener to delete a collection
             deleteCollection.addActionListener(new ActionListener() {
+                /**
+                 * allows the user to delete the current collection
+                 * @param e the event to be processed
+                 */
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean deleted = Controller.getInstance().deleteCollection(collectionID);
@@ -144,6 +137,10 @@ public class CollectionDisplayPanel extends JPanel {
                         selectedGames.add(gamePanel.getGameID());
                     }
                     deleteButton.addActionListener(new ActionListener() {
+                        /**
+                         * removes selected games from the collection
+                         * @param e the event to be processed
+                         */
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             for (Component component : collectionFrame.getContentPane().getComponents()) {
@@ -165,6 +162,10 @@ public class CollectionDisplayPanel extends JPanel {
 
                 //sorts the collection when user clicks button
                 sortCollection.addActionListener(new ActionListener() {
+                    /**
+                     * displays the games in the collection in alphabetical order
+                     * @param e the event to be processed
+                     */
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         List<GameDetails> sortedGames = Controller.getInstance().getSortedCollectionAlphabetical(collectionID);
@@ -186,6 +187,10 @@ public class CollectionDisplayPanel extends JPanel {
 
                 //sorts the collection when user clicks the button
                 sortByOrderAdded.addActionListener(new ActionListener() {
+                    /**
+                     * displays the games in the collection in the order they were added
+                     * @param e the event to be processed
+                     */
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         for (Component component : collectionFrame.getContentPane().getComponents()) {

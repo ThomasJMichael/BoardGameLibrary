@@ -333,6 +333,10 @@ public class GameDetailsPanel extends JPanel {
 
     }
 
+
+    /**
+     * refreshes the list of reviews to display any newly written reviews
+     */
     private void refreshReviewPanel() {
         remove(reviewsPanel);
         remove(writeAReviewButton);
