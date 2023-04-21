@@ -50,7 +50,6 @@ public class CollectionDisplayPanel extends JPanel {
             collectionFrame.setPreferredSize(new Dimension(1100,800));
 
             List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
-            List<String> gamesOrderAdded = new ArrayList<>();
             List<String> selectedGames = new ArrayList<>();
             JButton deleteButton = new JButton("Delete Selected Games");
             JButton sortCollection = new JButton("Sort Games Alphabetically");
@@ -59,7 +58,6 @@ public class CollectionDisplayPanel extends JPanel {
             collectionFrame.add(sortByOrderAdded);
 
             for (String game : games) {
-                gamesOrderAdded.add(game);
                 GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
                 collectionFrame.add(gamePanel);
 
@@ -89,16 +87,15 @@ public class CollectionDisplayPanel extends JPanel {
             sortCollection.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Controller.getInstance().sortCollectionAlphabetically(collectionID);
+                    List<GameDetails> sortedGames = Controller.getInstance().getSortedCollectionAlphabetical(collectionID);
                     for (Component component : collectionFrame.getContentPane().getComponents()) {
                         if (component instanceof GameDisplayPanel gamePanel) {
                             collectionFrame.getContentPane().remove(component);
                         }
                     }
                     collectionFrame.remove(deleteButton);
-                    List<String> games = CollectionManager.getInstance().getSpecificCollection(userID, collectionID).getGames();
-                    for (int i = 0; i < games.size(); i++) {
-                        GameDisplayPanel gamePanel = new GameDisplayPanel(games.get(i), homePage);
+                    for (GameDetails game: sortedGames) {
+                        GameDisplayPanel gamePanel = new GameDisplayPanel(game.getGame().getId(), homePage);
                         collectionFrame.add(gamePanel);
                     }
                     collectionFrame.add(deleteButton);
@@ -116,7 +113,7 @@ public class CollectionDisplayPanel extends JPanel {
                         }
                     }
                     collectionFrame.remove(deleteButton);
-                    for (String game : gamesOrderAdded) {
+                    for (String game : games) {
                         GameDisplayPanel gamePanel = new GameDisplayPanel(game, homePage);
                         collectionFrame.add(gamePanel);
                     }
